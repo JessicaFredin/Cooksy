@@ -9,11 +9,15 @@ import ReactDOM from "react-dom";
 import Logo from "./Logo";
 import Links from "./Links";
 import Search from "./Search";
+import ProfileAvatar from "../ProfileAvatar";
+import Button from "../Button";
+import Avatar from "../../assets/images/avatar.png";
+import ProfileMenu from "../ProfileMenu";
 
-const Navbar = () => {
+function Navbar() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
-
+	const [user, setUser] = useState(null); // Holds user data
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 
 	const openPopup = () => {
@@ -24,24 +28,43 @@ const Navbar = () => {
 		setIsPopupOpen(false);
 	};
 
-	// Check if user is logged in
+	const toggleProfileMenu = () => {
+		setMenuOpen((prev) => !prev);
+	};
+
 	useEffect(() => {
 		axios
-			.get("/auth/user", { withCredentials: true })
-			.then((response) => setIsLoggedIn(true))
-			.catch(() => setIsLoggedIn(false));
+			.get(import.meta.env.VITE_APP_BACKEND_URL + "/auth/user", {
+				withCredentials: true,
+			})
+			.then((response) => {
+				console.log("User authenticated:", response.data);
+				// Handle user authentication (e.g., save user data in state)
+				setIsLoggedIn(true);
+				setUser(response.data); // Save user data
+			})
+			.catch(() => {
+				console.log("User not authenticated");
+				setIsLoggedIn(false);
+				setUser(null);
+			});
 	}, []);
 
 	// Handle logout
 	const handleLogout = async () => {
-		await axios.post("/auth/logout", {}, { withCredentials: true });
+		await axios.post(
+			import.meta.env.VITE_APP_BACKEND_URL + "/auth/logout",
+			{},
+			{ withCredentials: true }
+		);
 		setIsLoggedIn(false);
+		setUser(null);
 	};
 
 	return (
 		<nav className="grid grid-cols-12 gap-4 py-4 bg-white/10 backdrop-blur-sm shadow-lg fixed w-full">
 			{/* Grid Background */}
-			<div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
+			{/* <div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
 				<div className="bg-purple-300"></div>
 				<div className="bg-purple-300"></div>
 				<div className="bg-purple-300"></div>
@@ -54,7 +77,7 @@ const Navbar = () => {
 				<div className="bg-purple-300"></div>
 				<div className="bg-purple-300"></div>
 				<div className="bg-purple-300"></div>
-			</div>
+			</div> */}
 
 			{/* Navigation Links */}
 			<div className="col-start-2 col-span-3 hidden md:flex ">
@@ -65,8 +88,6 @@ const Navbar = () => {
 			<div className="col-start-6 col-span-2 grid items-center">
 				<Logo />
 			</div>
-
-		
 
 			{/* Search and User/Actions */}
 			<div className="col-start-10 col-span-2 flex justify-end items-center space-x-4">
@@ -81,30 +102,39 @@ const Navbar = () => {
 				{/* Dynamic content based on logged-in state */}
 				{isLoggedIn ? (
 					<div className="flex items-center space-x-2">
-						<a
-							href="/add-recipe"
-							className="hidden md:inline-block px-4 py-2 bg-pink-500 text-white rounded-lg"
-						>
-							Add Recipe
-						</a>
-						<img
-							src="/user-avatar.png"
+						<div className="hidden md:inline-block flex-nowrap">
+							<Button size="small" iconPosition="right">
+								Add recipe
+							</Button>
+						</div>
+						{/* <a href="/add-recipe">Add Recipe</a> */}
+
+						{/* <img
+							src={Avatar}
 							alt="Profile"
 							className="w-8 h-8 rounded-full cursor-pointer"
-						/>
-						<button
-							onClick={handleLogout}
-							className="hidden md:inline-block text-gray-600 hover:text-red-600"
-						>
-							Logout
-						</button>
+						/> */}
+
+						<div className="relative">
+							{/* Avatar */}
+							<ProfileAvatar
+								user={user}
+								onClick={toggleProfileMenu}
+							/>
+
+							{/* Profile Menu */}
+							<ProfileMenu
+								isOpen={menuOpen}
+								onLogOut={handleLogout}
+							/>
+						</div>
 					</div>
 				) : (
 					<button
 						onClick={openPopup}
 						className="w-6 h-6 p-4 bg-pink-500 text-white rounded-full flex items-center justify-center"
 					>
-						<FontAwesomeIcon icon={faUser} className="text-black" />
+						<FontAwesomeIcon icon={faUser} className="text-white" />
 					</button>
 				)}
 
@@ -178,6 +208,6 @@ const Navbar = () => {
 				)}
 		</nav>
 	);
-};
+}
 
 export default Navbar;

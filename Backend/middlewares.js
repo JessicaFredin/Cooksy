@@ -1,12 +1,22 @@
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
-import passport from "passport";
+import passport from "./config/passport.js";
+import cors from "cors";
+
 
 const setupMiddlewares = (app) => {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(express.static("public"));
+
+	app.use(
+		cors({
+			origin: "http://localhost:5173", // Your frontend's URL
+			credentials: true, // Allow cookies
+		})
+	);
+
 
 	// Configure session middleware
 	app.use(

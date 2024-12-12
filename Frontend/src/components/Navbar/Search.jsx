@@ -5,60 +5,75 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function Search({ onSearch }) {
-	// const [query, setQuery] = useState("");
+	const [isOpen, setIsOpen] = useState(false); // Tracks if the search bar is open
+	const [query, setQuery] = useState(""); // Holds the search input
 
-	// const handleInputChange = (e) => {
-	// 	setQuery(e.target.value);
-	// };
+	// Toggle search bar visibility and reset the input when closing
+	const toggleSearch = () => {
+		setIsOpen(!isOpen);
+		if (isOpen) {
+			setQuery(""); // Clear query when closing the search bar
+		}
+	};
 
-	// const handleSearch = (e) => {
-	// 	e.preventDefault();
-	// 	if (onSearch) {
-	// 		onSearch(query); // Pass the search query to the parent component or context
-	// 	}
-	// };
+	const handleInputChange = (e) => {
+		setQuery(e.target.value);
+	};
 
+	const handleSearch = (e) => {
+		e.preventDefault();
+		if (onSearch) {
+			onSearch(query); // Pass the search query to the parent component
+		}
+	};
 
-    	const [isOpen, setIsOpen] = useState(false);
-		const [query, setQuery] = useState("");
-
-		// Handle toggle for the search bar
-		const toggleSearch = () => {
-			setIsOpen(!isOpen);
-			setQuery(""); // Clear the input when toggling
-		};
-
-		const handleInputChange = (e) => {
-			setQuery(e.target.value);
-		};
-
-		const handleSearch = (e) => {
-			e.preventDefault();
-			if (onSearch) {
-				onSearch(query); // Pass the search query to the parent component or context
-			}
-    };
-    
 	return (
-        <div className="relative flex items-center bg-white rounded-full shadow-md w-[250px] h-[35px]">
-            
-			<form onSubmit={handleSearch} className="flex items-center">
-				<input
-					type="text"
-					value={query}
-					onChange={handleInputChange}
-					placeholder="Search for recipe"
-					className="flex-1 h-full rounded-full px-6 bg-white text-gray-400 placeholder-gray-100 focus:outline-none"
-				/>
-				<button
-					type="submit"
-					className="absolute right-2 w-[25px] h-[25px] bg-pink-500 rounded-full flex items-center justify-center shadow-sm"
-				>
-					<FontAwesomeIcon icon={faSearch} className="text-white text-sm" />
-				</button>
+		<div className="relative flex items-center h-[35px]">
+			{/* Sliding Input Field */}
+			<form
+				onSubmit={handleSearch}
+				className={`absolute right-[30px] flex items-center h-[35px] bg-white shadow-md rounded-full transition-all duration-300 ${
+					isOpen ? "w-[250px] opacity-100" : "w-0 opacity-0"
+				}`}
+				style={{ overflow: "hidden" }}
+			>
+				{isOpen && (
+					<>
+						{/* Input Field */}
+						<input
+							type="text"
+							value={query}
+							onChange={handleInputChange}
+							placeholder="Search for recipe"
+							className="flex-1 h-full px-6 text-gray-400 placeholder-gray-100 focus:outline-none bg-transparent"
+						/>
+						{/* Inner Submit Button */}
+						<button
+							type="submit"
+							className="absolute right-2 w-[25px] h-[25px] bg-pink-500 rounded-full flex items-center justify-center shadow-sm"
+						>
+							<FontAwesomeIcon
+								icon={faSearch}
+								className="text-white text-sm"
+							/>
+						</button>
+					</>
+				)}
 			</form>
+
+			{/* Outer Toggle Button */}
+			<button
+				type="button"
+				onClick={toggleSearch}
+				className="z-10 w-[35px] h-[35px] bg-transparent rounded-full flex items-center justify-center transition-transform duration-300"
+			>
+				<FontAwesomeIcon
+					icon={isOpen ? faTimes : faSearch}
+					className="text-black"
+				/>
+			</button>
 		</div>
 	);
-};
+}
 
 export default Search;

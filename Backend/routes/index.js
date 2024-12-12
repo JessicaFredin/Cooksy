@@ -1,13 +1,19 @@
 import express from "express";
-import authRoutes from "./authRoutes.js";
+import auth from "./auth.js";
+// import verify from "./verify.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-router.use("/auth", authRoutes); // Routes related to authentication
+const app = express();
+
+app.use(express.json());
+
+app.use("/auth", auth); // Routes related to authentication
+// app.use("/verify", verify);
 
 // Example default route
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
 	res.send("Hello, World!");
 });
 
-export default router;
+export default app;
