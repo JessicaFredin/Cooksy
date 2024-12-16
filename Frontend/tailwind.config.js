@@ -5,6 +5,7 @@ export default {
 		extend: {
 			colors: {
 				white: "#fafafa",
+				whiteFull: "#fff",
 				black: "#333333",
 				gray: {
 					100: "rgba(51, 51, 51, 10)",

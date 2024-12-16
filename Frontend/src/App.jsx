@@ -2,23 +2,20 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar/Navbar";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/SignUpForm";
-import AuthContainer from "./components/AuthContainer";
+import CreateRecipePage from "./pages/CreateRecipePage";
 
 function App() {
 	return (
 		<Router>
 			<Navbar />
-			<Routes>
-				<Route path="/login" element={<LoginForm />} />
-				<Route path="/auth" element={<AuthContainer />} />
-				<Route path="/register" element={<RegisterForm />} />
-				<Route path="/" element={Navbar} />
-
-				
-			</Routes>
+			<main className="pt-16">
+				<Routes>
+					<Route path="/add-recipe" element={<CreateRecipePage />} />
+					<Route path="/" element={Navbar} />
+				</Routes>
+			</main>
 		</Router>
 	);
 }

@@ -1,8 +1,15 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from "react-router-dom";
 
-function Links() {
+function Links({ isMobile }) {
 	return (
-		<div className="space-x-6 hidden md:flex justify-center items-center ">
+		<div
+			className={`${
+				isMobile
+					? "flex flex-col space-y-4 items-start p-4"
+					: "space-x-6 hidden md:flex justify-center items-center"
+			}`}
+		>
 			<NavLink
 				to="/"
 				className={({ isActive }) =>
@@ -24,6 +31,7 @@ function Links() {
 			>
 				Recipes
 			</NavLink>
+
 			<NavLink
 				to="/articles"
 				className={({ isActive }) =>
@@ -34,6 +42,7 @@ function Links() {
 			>
 				Articles
 			</NavLink>
+
 			<NavLink
 				to="/categories"
 				className={({ isActive }) =>

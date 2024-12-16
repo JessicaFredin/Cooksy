@@ -1,13 +1,17 @@
-
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 function Button({
 	size = "medium",
 	children,
 	onClick,
+	className,
 	icon = null,
 	iconPosition = "left",
+	to = null, // New prop for navigation
 }) {
+	const navigate = useNavigate();
+
 	// Define classes for different button sizes
 	const sizeClasses = {
 		large: "py-3 px-6 text-lg",
@@ -20,10 +24,19 @@ function Button({
 	const baseClass =
 		"bg-pink-500 text-white rounded-full flex items-center justify-center space-x-2 transition-all duration-300 ease-in-out hover:bg-pink-600 whitespace-nowrap z-50";
 
+	const handleClick = (e) => {
+		if (onClick) {
+			onClick(e); // Execute any custom onClick logic
+		}
+		if (to) {
+			navigate(to); // Navigate to the specified path
+		}
+	};
+
 	return (
 		<button
-			onClick={onClick}
-			className={`${baseClass} ${sizeClasses[size]}`}
+			onClick={handleClick}
+			className={`${baseClass} ${sizeClasses[size]} ${className}`}
 		>
 			{icon && iconPosition === "left" && (
 				<span className="inline-flex items-center">{icon}</span>
@@ -38,11 +51,19 @@ function Button({
 
 // Prop type validation for better usability
 Button.propTypes = {
-	size: PropTypes.oneOf(["large", "medium", "small", "mini"]),
+	size: PropTypes.oneOf([
+		"large",
+		"medium",
+		"small",
+		"mini",
+		"mediumMoreWidth",
+	]),
 	children: PropTypes.node.isRequired,
 	onClick: PropTypes.func,
 	icon: PropTypes.node, // Accepts JSX for an icon
 	iconPosition: PropTypes.oneOf(["left", "right"]), // Icon position
+	to: PropTypes.string, // Path to navigate to
+	className: PropTypes.node
 };
 
 export default Button;
