@@ -51,15 +51,20 @@ function Navbar() {
 			});
 	}, []);
 
+
 	// Handle logout
 	const handleLogout = async () => {
-		await axios.post(
-			import.meta.env.VITE_APP_BACKEND_URL + "/auth/logout",
-			{},
-			{ withCredentials: true }
-		);
-		setIsLoggedIn(false);
-		setUser(null);
+		try {
+			await axios.post(
+				import.meta.env.VITE_APP_BACKEND_URL + "/auth/logout",
+				{},
+				{ withCredentials: true }
+			);
+			setIsLoggedIn(false);
+			setUser(null);
+		} catch (error) {
+			console.error("Logout failed", error);
+		}
 	};
 
 	return (
