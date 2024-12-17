@@ -26,15 +26,37 @@ function NewsletterPage() {
 
 	return (
 		<div>
-			<Swoosh />
-			
 			{/* "container" för själva innehållet med grid-layouten */}
-			<div className="grid-layouten grid grid-cols-12 gap-x-4 py-32">
+			<div className="grid grid-cols-12 gap-x-4 pt-32">
 				{/* Huvudrubrik placerad med grid*/}
 				<div className="col-start-2 col-span-3">
 					<HeadingWithLine text="Newsletter" />
 				</div>
+			</div>
 
+			<div className="relative overflow-hidden">
+				{/* Swoosh Background */}
+				<Swoosh className="w-full h-auto" />
+
+				{/* Text Content */}
+				<div className="absolute inset-0 grid grid-cols-12 items-center justify-center">
+					<div className="col-start-2 col-span-10 text-left">
+						<h2 className="text-2xl md:text-3xl lg:text-4xl font-medium mb-4">
+							New Recipes and Fresh Inspiration Every Week!
+						</h2>
+						<p className="text-gray-700 text-sm md:text-base lg:text-lg">
+							Get inspired to cook healthy and delicious meals
+							with Cooksy&apos;s weekly newsletter! As a
+							subscriber, you&apos;ll receive easy-to-follow
+							recipes, tailored to fit a variety of dietary needs
+							like gluten-free, low-calorie, and lactose-free
+							options—straight to your inbox.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div className="grid grid-cols-12 gap-x-4 py-32">
 				{/* Underubrik och huvudtext */}
 				<div className="col-start-2 col-span-10">
 					<div className="relative z-10">
@@ -43,11 +65,11 @@ function NewsletterPage() {
 						</h2>
 						<p className="text-gray-700 text-sm">
 							Get inspired to cook healthy and delicious meals
-							with Cooksy&apos;s weekly newsletter! As a subscriber,
-							you&apos;ll receive easy-to-follow recipes, tailored
-							to fit a variety of dietary needs like gluten-free,
-							low-calorie, and lactose-free options—straight to
-							your inbox.
+							with Cooksy&apos;s weekly newsletter! As a
+							subscriber, you&apos;ll receive easy-to-follow
+							recipes, tailored to fit a variety of dietary needs
+							like gluten-free, low-calorie, and lactose-free
+							options—straight to your inbox.
 						</p>
 					</div>
 
@@ -59,14 +81,14 @@ function NewsletterPage() {
 									1. Choose the type of recipes and
 									inspiration you&apos;d like to receive
 								</h3>
-								<div class="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-4 xl:gap-x-24 md:gap-y-10">
-									 <NewsletterCard></NewsletterCard>
-                                     <NewsletterCard></NewsletterCard>
-                                     <NewsletterCard></NewsletterCard>
-                                     <NewsletterCard></NewsletterCard>
-                                     <NewsletterCard></NewsletterCard>
-                                     <NewsletterCard></NewsletterCard>
-                                </div>
+								<div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-4 xl:gap-x-24 md:gap-y-10">
+									<NewsletterCard></NewsletterCard>
+									<NewsletterCard></NewsletterCard>
+									<NewsletterCard></NewsletterCard>
+									<NewsletterCard></NewsletterCard>
+									<NewsletterCard></NewsletterCard>
+									<NewsletterCard></NewsletterCard>
+								</div>
 							</div>
 
 							<div className="bg-[#ffffff] p-6 rounded-lg shadow-md">

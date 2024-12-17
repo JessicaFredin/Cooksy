@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json());
 
 app.use("/auth", auth); // Routes related to authentication
-// app.use("/verify", verify);
 
 // Example default route
 app.get("/", (req, res) => {

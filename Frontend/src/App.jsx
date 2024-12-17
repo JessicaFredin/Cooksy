@@ -14,17 +14,22 @@ import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import AboutCooksyPage from "./pages/AboutCooksyPage";
 import NewsletterPage from "./pages/NewsletterPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
 	return (
 		<Router>
+			<ScrollToTop />
 			<Navbar />
 			<main className="pt-16">
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					<Route path="/add-recipe" element={<CreateRecipePage />} />
 					<Route path="/contact" element={<Contact />} />
-					<Route path="/contact-post-submt" element={<ContactPostSubmit />} />
+					<Route
+						path="/contact-post-submt"
+						element={<ContactPostSubmit />}
+					/>
 					<Route path="/cookies" element={<Cookies />} />
 					<Route path="/about" element={<AboutCooksyPage />} />
 					<Route path="/newsletter" element={<NewsletterPage />} />
@@ -37,6 +42,7 @@ function App() {
 				<Footer />
 			</main>
 		</Router>
+		
 	);
 }
 

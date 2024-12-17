@@ -7,7 +7,7 @@ function Newsletter() {
 	return (
 		<div
 			className={`relative cursor-pointer transition-all duration-300
-      ${isActive ? "border-4 border-lime-400" : "border-0 rounded-2xl border-4 border-white"} 
+      ${isActive ? "border-4 border-lime-400" : "rounded-2xl border-4 border-white"} 
       rounded-lg shadow-lg`}
 			onClick={() => setIsActive(!isActive)}
 		>
