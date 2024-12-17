@@ -2,6 +2,26 @@
 import React, { useState } from "react";
 import HeadingWithLine from "../components/HeadingWithLine";
 import Button from "../components/Button";
+import NutritionInformation from "../components/NutritionInformation";
+
+// List of unit options for the dropdown
+const unitOptions = [
+	"gram",
+	"kilogram",
+	"milliliter",
+	"liter",
+	"cup",
+	"tablespoon",
+	"teaspoon",
+	"piece",
+	"slice",
+	"pinch",
+	"oz",
+	"lb",
+	"quart",
+	"pint",
+	"gallon",
+];
 
 function CreateRecipePage() {
 	const [ingredients, setIngredients] = useState([
@@ -15,6 +35,13 @@ function CreateRecipePage() {
 
 	const addStep = () => {
 		setSteps([...steps, ""]);
+	};
+
+	// Handle changes in input fields dynamically
+	const handleIngredientChange = (index, field, value) => {
+		const updatedIngredients = [...ingredients];
+		updatedIngredients[index][field] = value;
+		setIngredients(updatedIngredients);
 	};
 
 	return (
@@ -134,7 +161,7 @@ function CreateRecipePage() {
 							</div>
 						</div>
 
-						{/* Ingredients */}
+						{/* Ingredients Section */}
 						<div>
 							<label className="block font-semibold mb-2">
 								Ingredients
@@ -144,60 +171,77 @@ function CreateRecipePage() {
 									className="grid grid-cols-12 gap-4 mb-2"
 									key={index}
 								>
+									{/* Volume Input */}
 									<input
 										type="text"
 										placeholder="Volume"
-										className="col-span-3 border rounded-lg p-2"
+										value={ingredient.volume}
+										onChange={(e) =>
+											handleIngredientChange(
+												index,
+												"volume",
+												e.target.value
+											)
+										}
+										className="col-span-3 border rounded-lg p-2 placeholder:text-black/30"
 									/>
-									<input
-										type="text"
-										placeholder="Unit"
-										className="col-span-3 border rounded-lg p-2"
-									/>
+
+									{/* Unit Dropdown */}
+									<select
+										value={ingredient.unit}
+										onChange={(e) =>
+											handleIngredientChange(
+												index,
+												"unit",
+												e.target.value
+											)
+										}
+										className="col-span-3 border rounded-lg p-2 bg-whiteFull"
+									>
+										<option value="" disabled>
+											Unit
+										</option>
+										{unitOptions.map((unit) => (
+											<option key={unit} value={unit}>
+												{unit.charAt(0).toUpperCase() +
+													unit.slice(1)}
+											</option>
+										))}
+									</select>
+
+									{/* Name Input */}
 									<input
 										type="text"
 										placeholder="Name"
-										className="col-span-6 border rounded-lg p-2"
+										value={ingredient.name}
+										onChange={(e) =>
+											handleIngredientChange(
+												index,
+												"name",
+												e.target.value
+											)
+										}
+										className="col-span-6 border rounded-lg p-2 placeholder:text-black/30"
 									/>
 								</div>
 							))}
 
+							{/* Add Ingredient Button */}
 							<Button
 								size="medium"
-								onClick={addIngredient}
-								className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:bg-black/10 "
+								onClick={(e) => {
+									e.preventDefault(); // Prevent form submission
+									addIngredient();
+								}}
+								className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:bg-gray-100 "
 							>
 								Add Ingredient +
 							</Button>
 						</div>
 
-						{/* Nutrition Information */}
-						<div>
-							<label className="block font-semibold mb-2">
-								Nutrition Information
-							</label>
-							<div className="grid grid-cols-4 gap-4">
-								<input
-									type="number"
-									placeholder="Protein"
-									className="border rounded-lg p-2"
-								/>
-								<input
-									type="number"
-									placeholder="Carbs"
-									className="border rounded-lg p-2"
-								/>
-								<input
-									type="number"
-									placeholder="Fat"
-									className="border rounded-lg p-2"
-								/>
-								<input
-									type="number"
-									placeholder="Energy (kcal)"
-									className="border rounded-lg p-2"
-								/>
-							</div>
+						<div className="space-y-4">
+							{/* Nutrition Information */}
+							<NutritionInformation ingredients={ingredients} />
 						</div>
 
 						{/* Instructions */}

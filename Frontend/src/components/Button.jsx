@@ -63,7 +63,7 @@ Button.propTypes = {
 	icon: PropTypes.node, // Accepts JSX for an icon
 	iconPosition: PropTypes.oneOf(["left", "right"]), // Icon position
 	to: PropTypes.string, // Path to navigate to
-	className: PropTypes.node
+	className: PropTypes.node,
 };
 
 export default Button;
