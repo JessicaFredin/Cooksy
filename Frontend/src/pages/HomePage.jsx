@@ -2,7 +2,9 @@ import SearchField from "../components/SearchField";
 import CooksyHatImage from "../assets/images/CooksyHat.png";
 import SwooshLine from "../assets/svg/SwooshLine";
 import HighlightedHeader from "../components/HighlightedHeader";
-
+import MainIngredient from "../components/MainIngredient";
+import Blogpost from "../components/Blogpost";
+import HeadingWithLine from "../components/HeadingWithLine";
 
 function HomePage() {
 	return (
@@ -74,6 +76,27 @@ function HomePage() {
 
 			<div className="w-full">
 				<SwooshLine />
+			</div>
+			<div className="grid-layouten grid grid-cols-12 gap-x-4 py-32">
+				<div className="col-start-2 pb-10">
+					<HeadingWithLine text="MainIngredient"/>
+				</div>
+				
+				<div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+					<MainIngredient/>
+			     	<MainIngredient/>
+				    <MainIngredient/>
+		    		<MainIngredient/>
+		    	</div>
+				<div className="col-start-2 col-span-10 py-10">
+					<HeadingWithLine text="Food and Health: Research & Findings"/>
+				</div>
+
+				<div className="col-start-2 col-span-10 grid grid-rows-2 gap-4">
+					<Blogpost/>
+			     	<Blogpost/>
+		    	</div>
+			
 			</div>
 		</div>
 	);

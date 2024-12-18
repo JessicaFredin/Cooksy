@@ -51,6 +51,8 @@ function Navbar() {
 			});
 	}, []);
 
+	
+
 
 	// Handle logout
 	const handleLogout = async () => {
@@ -121,17 +123,20 @@ function Navbar() {
 								onClick={toggleProfileMenu}
 							/>
 
+
 							{/* Profile Menu */}
 							<ProfileMenu
 								isOpen={menuOpen}
 								onLogOut={handleLogout}
 							/>
+
+					
 						</div>
 					</div>
 				) : (
 					<button
 						onClick={openPopup}
-						className="w-6 h-6 p-4 bg-pink-500 text-white rounded-full flex items-center justify-center"
+						className="w-10 h-10 p-4 bg-pink-500 text-white rounded-full flex items-center justify-center"
 					>
 						<FontAwesomeIcon icon={faUser} className="text-white" />
 					</button>

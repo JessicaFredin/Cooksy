@@ -183,15 +183,40 @@ router.post("/login", async (req, res) => {
 // 	}
 // });
 
-// Fetch logged-in user
+
+
+// // Fetch logged-in user
+// router.get("/user", (req, res) => {
+// 	if (req.isAuthenticated()) {
+// 		const { id, first_name, last_name, email } = req.user;
+// 		res.status(200).json({ id, first_name, last_name, email });
+// 	} else {
+// 		res.status(401).json({ message: "Not logged in" });
+// 	}
+// });
+
+
+
+// Fetch the authenticated user
 router.get("/user", (req, res) => {
 	if (req.isAuthenticated()) {
-		const { id, first_name, last_name, email } = req.user;
-		res.status(200).json({ id, first_name, last_name, email });
+		const { id, first_name, last_name, email, profile_picture_url } = req.user;
+		res.status(200).json({
+			id,
+			first_name,
+			last_name,
+			email,
+			profile_picture_url, // Include the profile picture URL
+		});
 	} else {
 		res.status(401).json({ message: "Not logged in" });
 	}
 });
+
+
+
+
+
 
 
 // Redirect to Google login
@@ -208,6 +233,9 @@ router.get("/google/callback",
 		res.redirect("http://localhost:5173/"); // Redirect to the frontend/home after login
 	}
 );
+
+
+
 
 // Logout route
 router.post("/logout", (req, res) => {

@@ -1,50 +1,15 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import HeadingWithLine from "../components/HeadingWithLine";
 import Button from "../components/Button";
 import NutritionInformation from "../components/NutritionInformation";
 import StepInstructions from "../components/StepInstructions";
-
-// List of unit options for the dropdown
-const unitOptions = [
-	"gram",
-	"kilogram",
-	"milliliter",
-	"liter",
-	"cup",
-	"tablespoon",
-	"teaspoon",
-	"piece",
-	"slice",
-	"pinch",
-	"oz",
-	"lb",
-	"quart",
-	"pint",
-	"gallon",
-];
+import SelectButton from "../components/SelectButton";
+import Ingredients from "../components/Ingredients";
 
 function CreateRecipePage() {
 	const [ingredients, setIngredients] = useState([
 		{ volume: "", unit: "", name: "" },
 	]);
-	const [steps, setSteps] = useState([""]);
-
-	const addIngredient = () => {
-		setIngredients([...ingredients, { volume: "", unit: "", name: "" }]);
-	};
-
-	const addStep = () => {
-		setSteps([...steps, ""]);
-	};
-
-	// Handle changes in input fields dynamically
-	const handleIngredientChange = (index, field, value) => {
-		const updatedIngredients = [...ingredients];
-		updatedIngredients[index][field] = value;
-		setIngredients(updatedIngredients);
-	};
-
 	return (
 		<div className="grid grid-cols-12 gap-x-4 py-12">
 			{/* Grid Background */}
@@ -64,14 +29,14 @@ function CreateRecipePage() {
 			</div> */}
 
 			{/* Page Container */}
-			<div className="col-start-2 col-span-10 max-w-4xl">
+			<div className="col-start-2 col-span-10">
 				<div>
 					<HeadingWithLine text="Create your own recipe" />
 				</div>
 
 				<form className="grid gap-6">
 					{/* Recipe Title */}
-					<div className="space-y-5 w-1/2">
+					<div className="space-y-5 lg:w-1/2">
 						<div>
 							<label className="block font-semibold mb-2">
 								Recipe Title
@@ -161,121 +126,33 @@ function CreateRecipePage() {
 								/>
 							</div>
 						</div>
-
 						{/* Ingredients Section */}
-						<div>
-							<label className="block font-semibold mb-2">
-								Ingredients
-							</label>
-							{ingredients.map((ingredient, index) => (
-								<div
-									className="grid grid-cols-12 gap-4 mb-2"
-									key={index}
-								>
-									{/* Volume Input */}
-									<input
-										type="text"
-										placeholder="Volume"
-										value={ingredient.volume}
-										onChange={(e) =>
-											handleIngredientChange(
-												index,
-												"volume",
-												e.target.value
-											)
-										}
-										className="col-span-3 border rounded-lg p-2 placeholder:text-black/30"
-									/>
-
-									{/* Unit Dropdown */}
-									<select
-										value={ingredient.unit}
-										onChange={(e) =>
-											handleIngredientChange(
-												index,
-												"unit",
-												e.target.value
-											)
-										}
-										className="col-span-3 border rounded-lg p-2 bg-whiteFull"
-									>
-										<option value="" disabled>
-											Unit
-										</option>
-										{unitOptions.map((unit) => (
-											<option key={unit} value={unit}>
-												{unit.charAt(0).toUpperCase() +
-													unit.slice(1)}
-											</option>
-										))}
-									</select>
-
-									{/* Name Input */}
-									<input
-										type="text"
-										placeholder="Name"
-										value={ingredient.name}
-										onChange={(e) =>
-											handleIngredientChange(
-												index,
-												"name",
-												e.target.value
-											)
-										}
-										className="col-span-6 border rounded-lg p-2 placeholder:text-black/30"
-									/>
-								</div>
-							))}
-
-							{/* Add Ingredient Button */}
-							<Button
-								size="medium"
-								onClick={(e) => {
-									e.preventDefault(); // Prevent form submission
-									addIngredient();
-								}}
-								className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:!bg-gray-100 "
-							>
-								Add Ingredient +
-							</Button>
+						<div className="space-y-10">
+							<Ingredients ingredients={ingredients}/>
 						</div>
-
+                        {/* Nutrition Information */}
 						<div className="space-y-4">
-							{/* Nutrition Information */}
 							<NutritionInformation ingredients={ingredients} />
 						</div>
 
 						{/* Instructions */}
-						<div className="space-y-4">
+						<div className="space-y-10">
 							{/* Step Instructions */}
 							<StepInstructions />
 						</div>
 
-					
 						{/* Categories */}
-						<div>
-							<label className="block font-semibold mb-2">
+						<div className="space-y-4">
+							<label className="font-bold text-lg mb-4">
 								Add Category
 							</label>
-							<div className="flex flex-wrap gap-2">
-								<button
-									type="button"
-									className="px-3 py-1 bg- rounded-lg"
-								>
-									Low-carb
-								</button>
-								<button
-									type="button"
-									className="px-3 py-1 bg- rounded-lg"
-								>
-									High-protein
-								</button>
-								<button
-									type="button"
-									className="px-3 py-1 bg- rounded-lg"
-								>
-									Vegan
-								</button>
+							<div className="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-4">
+								<SelectButton title="Low-calorie"/>
+								<SelectButton title="Low-sugar"/>
+								<SelectButton title="High-fiber"/>
+								<SelectButton title="Low-carb"/>
+								<SelectButton title="High protein"/>
+								<SelectButton title="American"/>
 							</div>
 						</div>
 

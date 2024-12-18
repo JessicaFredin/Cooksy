@@ -24,7 +24,7 @@ function StepInstructions() {
 	};
 
 	return (
-		<div className="max-w-md mx-auto p-4">
+		<div className="">
 			<h2 className="font-bold text-lg mb-4">Instructions</h2>
 			{steps.map((step, index) => (
 				<div key={index} className="flex items-center mb-2">

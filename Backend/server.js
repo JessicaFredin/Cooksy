@@ -5,8 +5,6 @@ import routes from "./routes/index.js";
 import session from "express-session";
 import passport from "./config/passport.js";
 
-
-
 dotenv.config();
 
 const app = express();
