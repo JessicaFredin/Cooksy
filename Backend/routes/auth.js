@@ -205,7 +205,7 @@ router.get("/google/callback",
 		failureRedirect: "/login",
 	}),
 	(req, res) => {
-		res.redirect("/"); // Redirect to the frontend/home after login
+		res.redirect("http://localhost:5173/"); // Redirect to the frontend/home after login
 	}
 );
 

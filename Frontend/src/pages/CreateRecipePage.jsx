@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import HeadingWithLine from "../components/HeadingWithLine";
 import Button from "../components/Button";
 import NutritionInformation from "../components/NutritionInformation";
+import StepInstructions from "../components/StepInstructions";
 
 // List of unit options for the dropdown
 const unitOptions = [
@@ -233,7 +234,7 @@ function CreateRecipePage() {
 									e.preventDefault(); // Prevent form submission
 									addIngredient();
 								}}
-								className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:bg-gray-100 "
+								className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:!bg-gray-100 "
 							>
 								Add Ingredient +
 							</Button>
@@ -245,28 +246,12 @@ function CreateRecipePage() {
 						</div>
 
 						{/* Instructions */}
-						<div>
-							<label className="block font-semibold mb-2">
-								Instructions
-							</label>
-							{steps.map((step, index) => (
-								<div className="mb-2" key={index}>
-									<textarea
-										className="w-full border rounded-lg p-2"
-										placeholder={`Step ${index + 1}`}
-										rows="2"
-									></textarea>
-								</div>
-							))}
-							<button
-								type="button"
-								onClick={addStep}
-								className="text-pink-500 font-semibold"
-							>
-								+ Add Step
-							</button>
+						<div className="space-y-4">
+							{/* Step Instructions */}
+							<StepInstructions />
 						</div>
 
+					
 						{/* Categories */}
 						<div>
 							<label className="block font-semibold mb-2">
@@ -275,19 +260,19 @@ function CreateRecipePage() {
 							<div className="flex flex-wrap gap-2">
 								<button
 									type="button"
-									className="px-3 py-1 bg-gray-200 rounded-lg"
+									className="px-3 py-1 bg- rounded-lg"
 								>
 									Low-carb
 								</button>
 								<button
 									type="button"
-									className="px-3 py-1 bg-gray-200 rounded-lg"
+									className="px-3 py-1 bg- rounded-lg"
 								>
 									High-protein
 								</button>
 								<button
 									type="button"
-									className="px-3 py-1 bg-gray-200 rounded-lg"
+									className="px-3 py-1 bg- rounded-lg"
 								>
 									Vegan
 								</button>
