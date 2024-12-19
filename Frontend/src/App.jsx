@@ -18,35 +18,50 @@ import ScrollToTop from "./components/ScrollToTop";
 import ProfilePage from "./pages/ProfilePage";
 import ArticlesPage from "./pages/ArticlesPage";
 import CategoriesPage from "./pages/CategoriesPage";
+import UserProvider from "../contexts/UserContext";
 
 function App() {
 	return (
 		<Router>
-			<ScrollToTop />
-			<Navbar />
-			<main className="pt-16">
-				<Routes>
-					<Route path="/" element={<HomePage />} />
-					<Route path="/add-recipe" element={<CreateRecipePage />} />
-					<Route path="/contact" element={<Contact />} />
-					<Route
-						path="/contact-post-submt"
-						element={<ContactPostSubmit />}
-					/>
-					<Route path="/cookies" element={<Cookies />} />
-					<Route path="/about" element={<AboutCooksyPage />} />
-					<Route path="/newsletter" element={<NewsletterPage />} />
-					<Route
-						path="/terms-and-conditions"
-						element={<TermsAndConditions />}
-					/>
-					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
-					<Route path="/profile" element={<ProfilePage />} />
-					<Route path="/articles" element={<ArticlesPage />} />
-					<Route path="/categories" element={<CategoriesPage />} />
-				</Routes>
-				<Footer />
-			</main>
+			<UserProvider>
+				<ScrollToTop />
+				<Navbar />
+				<main className="pt-16">
+					<Routes>
+						<Route path="/" element={<HomePage />} />
+						<Route
+							path="/add-recipe"
+							element={<CreateRecipePage />}
+						/>
+						<Route path="/contact" element={<Contact />} />
+						<Route
+							path="/contact-post-submt"
+							element={<ContactPostSubmit />}
+						/>
+						<Route path="/cookies" element={<Cookies />} />
+						<Route path="/about" element={<AboutCooksyPage />} />
+						<Route
+							path="/newsletter"
+							element={<NewsletterPage />}
+						/>
+						<Route
+							path="/terms-and-conditions"
+							element={<TermsAndConditions />}
+						/>
+						<Route
+							path="/privacy-policy"
+							element={<PrivacyPolicy />}
+						/>
+						<Route path="/profile" element={<ProfilePage />} />
+						<Route path="/articles" element={<ArticlesPage />} />
+						<Route
+							path="/categories"
+							element={<CategoriesPage />}
+						/>
+					</Routes>
+					<Footer />
+				</main>
+			</UserProvider>
 		</Router>
 	);
 }

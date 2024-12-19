@@ -3,7 +3,6 @@ import axios from "axios";
 import Button from "../components/Button";
 import { CameraIcon } from "../assets/icons/Cameraicon";
 
-
 function ProfilePage() {
 	const [profile, setProfile] = useState(null);
 	const [isEditingBio, setIsEditingBio] = useState(false);
@@ -11,8 +10,6 @@ function ProfilePage() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [bioLength, setBioLength] = useState(0);
 	const [isOverLimit, setIsOverLimit] = useState(false);
-
-	
 
 	useEffect(() => {
 		// Fetch user profile
@@ -100,10 +97,8 @@ function ProfilePage() {
 								  }`
 								: "https://placehold.co/400x400"
 						}
-						alt="Profile"
+						alt="Profile picture"
 						className="rounded-lg h-full min-h-[300px] object-cover w-full"
-
-
 					/>
 
 					<label
@@ -142,7 +137,7 @@ function ProfilePage() {
 							</p>
 						</div>
 					</div>
-					<div className="text-gray-700 leading-relaxed">
+					{/* <div className="text-gray-700 leading-relaxed">
 						{isEditingBio ? (
 							<div>
 								<textarea
@@ -212,6 +207,81 @@ function ProfilePage() {
 								>
 									Edit
 								</Button>
+							</div>
+						)}
+					</div> */}
+
+					<div className="text-gray-700 leading-relaxed">
+						{isEditingBio ? (
+							<div>
+								<textarea
+									placeholder="Add your bio here..."
+									value={bio}
+									onChange={handleBioChange}
+									maxLength="1000"
+									className={`w-full border rounded-md p-2 ${
+										isOverLimit
+											? "border-red-500"
+											: "border-gray-300"
+									}`}
+								/>
+								<p
+									className={`text-sm mt-1 ${
+										isOverLimit
+											? "text-red-500"
+											: "text-gray-600"
+									}`}
+								>
+									{bioLength}/1000 characters
+								</p>
+								<div className="flex justify-end mt-2">
+									<Button
+										onClick={handleBioSave}
+										size="medium"
+										className={`${
+											isOverLimit
+												? "bg-gray-300 cursor-not-allowed"
+												: "bg-green-500"
+										} text-white`}
+										disabled={isOverLimit}
+									>
+										Save
+									</Button>
+									<Button
+										onClick={() => {
+											setIsEditingBio(false);
+											setBioLength(
+												profile.bio
+													? profile.bio.length
+													: 0
+											);
+											setBio(profile.bio || "");
+										}}
+										size="medium"
+										className="bg-gray-200 text-black ml-2"
+									>
+										Cancel
+									</Button>
+								</div>
+							</div>
+						) : (
+							<div>
+								<p className="mb-4">
+									{profile.bio || (
+										<span className="text-gray-400">
+											{bio}
+										</span>
+									)}
+								</p>
+								<div className="flex justify-end">
+									<Button
+										onClick={() => setIsEditingBio(true)}
+										size="medium"
+										className="bg-pink-500 text-white"
+									>
+										Edit
+									</Button>
+								</div>
 							</div>
 						)}
 					</div>

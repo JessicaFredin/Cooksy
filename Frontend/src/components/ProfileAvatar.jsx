@@ -133,7 +133,7 @@ function ProfileAvatar({ user, onClick }) {
 
 	return user?.profile_picture_url ? (
 		<img
-			src={user.profile_picture_url} // Correct property
+			src={import.meta.env.VITE_APP_BACKEND_URL + user.profile_picture_url} // Correct property
 			alt={`${user.first_name} ${user.last_name}`}
 			className="w-10 h-10 rounded-full cursor-pointer object-cover"
 			onClick={onClick}
