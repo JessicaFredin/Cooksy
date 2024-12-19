@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 /*import img from "../assets/images/peaches.jpg"*/
+import NewsletterCardImg from "../assets/images/NewsletterCardImg.png"
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
@@ -8,12 +9,12 @@ const Blogpost = ({ image, title, description }) => {
 
   return (
     <Link><div className="max-w-full bg-white rounded-lg shadow-md overflow-hidden md:flex ">
-    {/* Image Section 
+    {/* Image Section */}
     <img
       className="w-full object-cover md:w-4/5 lg:w-3/5"
-      src={img} // Replace with actual image
+      src={NewsletterCardImg} // Replace with actual image
       alt="Peaches"
-    />*/}
+    />
 
     {/* Content Section */}
     <div className="p-4 md:p-6 md:w-full flex flex-col justify-between">
@@ -21,7 +22,7 @@ const Blogpost = ({ image, title, description }) => {
         <h2 className="text-lg md:text-xl font-bold mb-2 text-gray-800">
           Peaches: A Nutritional Powerhouse
         </h2>
-        <p className="text-gray-600 text-sm md:text-base md:text-xs lg:text-sm">
+        <p className="text-gray-600 text-sm md:text-xs lg:text-sm">
           Peaches are low in calories and rich in vitamins A and C,
           antioxidants, and fiber, making them beneficial for immune health
           and digestion.

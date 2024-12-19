@@ -5,6 +5,7 @@ import validator from "validator";
 import passport from "passport";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import authenticateUser from "../middleware/authenticate.js";
 
 const router = express.Router();
 
@@ -87,44 +88,50 @@ router.post("/register", async (req, res) => {
 
 // Verify the code
 router.post("/verify-code", async (req, res) => {
-    const { email, code } = req.body;
+	const { email, code } = req.body;
 
-    try {
-        const result = await pool.query(
-            "SELECT code_hash, expires_at FROM email_verifications WHERE email = $1",
-            [email]
-        );
+	try {
+		const result = await pool.query(
+			"SELECT code_hash, expires_at FROM email_verifications WHERE email = $1",
+			[email]
+		);
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: "No verification code found" });
-        }
+		if (result.rows.length === 0) {
+			return res
+				.status(404)
+				.json({ message: "No verification code found" });
+		}
 
 		const { code_hash, expires_at } = result.rows[0];
 		console.log(code_hash);
 
-        if (new Date() > new Date(expires_at)) {
-            return res.status(400).json({ message: "Verification code expired" });
-        }
+		if (new Date() > new Date(expires_at)) {
+			return res
+				.status(400)
+				.json({ message: "Verification code expired" });
+		}
 
-        const isCodeValid = await bcrypt.compare(code, code_hash);
-        if (!isCodeValid) {
-            return res.status(400).json({ message: "Invalid verification code" });
-        }
+		const isCodeValid = await bcrypt.compare(code, code_hash);
+		if (!isCodeValid) {
+			return res
+				.status(400)
+				.json({ message: "Invalid verification code" });
+		}
 
-        await pool.query(
-            "UPDATE users SET is_verified = true WHERE email = $1",
-            [email]
-        );
+		await pool.query(
+			"UPDATE users SET is_verified = true WHERE email = $1",
+			[email]
+		);
 
-        await pool.query("DELETE FROM email_verifications WHERE email = $1", [
-            email,
-        ]);
+		await pool.query("DELETE FROM email_verifications WHERE email = $1", [
+			email,
+		]);
 
-        res.status(200).json({ message: "Email successfully verified" });
-    } catch (error) {
-        console.error("Error verifying code:", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
+		res.status(200).json({ message: "Email successfully verified" });
+	} catch (error) {
+		console.error("Error verifying code:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
 });
 
 router.post("/login", async (req, res) => {
@@ -183,8 +190,6 @@ router.post("/login", async (req, res) => {
 // 	}
 // });
 
-
-
 // // Fetch logged-in user
 // router.get("/user", (req, res) => {
 // 	if (req.isAuthenticated()) {
@@ -195,37 +200,43 @@ router.post("/login", async (req, res) => {
 // 	}
 // });
 
-
+// // Fetch the authenticated user
+// router.get("/user", (req, res) => {
+// 	if (req.isAuthenticated()) {
+// 		const { id, first_name, last_name, email, profile_picture_url } = req.user;
+// 		res.status(200).json({
+// 			id,
+// 			first_name,
+// 			last_name,
+// 			email,
+// 			profile_picture_url, // Include the profile picture URL
+// 		});
+// 	} else {
+// 		res.status(401).json({ message: "Not logged in" });
+// 	}
+// });
 
 // Fetch the authenticated user
-router.get("/user", (req, res) => {
-	if (req.isAuthenticated()) {
-		const { id, first_name, last_name, email, profile_picture_url } = req.user;
-		res.status(200).json({
-			id,
-			first_name,
-			last_name,
-			email,
-			profile_picture_url, // Include the profile picture URL
-		});
-	} else {
-		res.status(401).json({ message: "Not logged in" });
-	}
+router.get("/user", authenticateUser, (req, res) => {
+	const { id, first_name, last_name, email, profile_picture_url } = req.user;
+	res.status(200).json({
+		id,
+		first_name,
+		last_name,
+		email,
+		profile_picture_url,
+	});
 });
 
-
-
-
-
-
-
 // Redirect to Google login
-router.get("/google",
+router.get(
+	"/google",
 	passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 // Google callback URL
-router.get("/google/callback",
+router.get(
+	"/google/callback",
 	passport.authenticate("google", {
 		failureRedirect: "/login",
 	}),
@@ -233,9 +244,6 @@ router.get("/google/callback",
 		res.redirect("http://localhost:5173/"); // Redirect to the frontend/home after login
 	}
 );
-
-
-
 
 // Logout route
 router.post("/logout", (req, res) => {

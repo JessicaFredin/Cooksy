@@ -53,10 +53,10 @@ function Contact() {
 	}
 
 	return (
-		<div className="bg-white min-h-screen p-4 sm:p-6 md:p-8 lg:p-12 grid grid-cols-12 gap-4">
+		<div className="bg-white min-h-screen sm:p-6 md:p-8 lg:p-12 grid grid-cols-12 gap-4">
 			{/* Rubrik och introduktion placerat i kolumn 2 */}
 			<div className="col-start-2 col-span-10">
-				<div className="col-start-2 col-span-3">
+				<div className="col-start-2 col-span-10">
 					<HeadingWithLine text="Contact" />
 				</div>
 				<p className="text-black text-base sm:text-lg md:text-xl mb-6">

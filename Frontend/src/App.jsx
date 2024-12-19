@@ -15,6 +15,9 @@ import Footer from "./components/Footer/Footer";
 import AboutCooksyPage from "./pages/AboutCooksyPage";
 import NewsletterPage from "./pages/NewsletterPage";
 import ScrollToTop from "./components/ScrollToTop";
+import ProfilePage from "./pages/ProfilePage";
+import ArticlesPage from "./pages/ArticlesPage";
+import CategoriesPage from "./pages/CategoriesPage";
 
 function App() {
 	return (
@@ -38,11 +41,13 @@ function App() {
 						element={<TermsAndConditions />}
 					/>
 					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+					<Route path="/profile" element={<ProfilePage />} />
+					<Route path="/articles" element={<ArticlesPage />} />
+					<Route path="/categories" element={<CategoriesPage />} />
 				</Routes>
 				<Footer />
 			</main>
 		</Router>
-		
 	);
 }
 

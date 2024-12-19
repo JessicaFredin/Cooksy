@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import HeadingWithLine from "../components/HeadingWithLine";
 import Button from "../components/Button";
 import NutritionInformation from "../components/NutritionInformation";
 import StepInstructions from "../components/StepInstructions";
 import SelectButton from "../components/SelectButton";
 import Ingredients from "../components/Ingredients";
+import SharingOptions from "../components/SharingOptions";
+import UploadImg from "../assets/images/UploadImg.png";
 
 function CreateRecipePage() {
 	const [ingredients, setIngredients] = useState([
 		{ volume: "", unit: "", name: "" },
 	]);
+
+	const [sharingOption, setSharingOption] = useState("public");
+
+	const handleSharingChange = (event) => {
+		setSharingOption(event.target.value);
+	};
+
 	return (
 		<div className="grid grid-cols-12 gap-x-4 py-12">
 			{/* Grid Background */}
@@ -36,7 +45,7 @@ function CreateRecipePage() {
 
 				<form className="grid gap-6">
 					{/* Recipe Title */}
-					<div className="space-y-5 lg:w-1/2">
+					<div className="space-y-10 lg:w-1/2">
 						<div>
 							<label className="block font-semibold mb-2">
 								Recipe Title
@@ -53,7 +62,7 @@ function CreateRecipePage() {
 							<label className="block font-semibold mb-2">
 								Upload Image
 							</label>
-							<div className="border-dashed border-2 rounded-lg p-6 flex justify-center items-center">
+							<div className="lg:h-4/5 rounded-lg">
 								<input
 									type="file"
 									className="hidden"
@@ -63,29 +72,12 @@ function CreateRecipePage() {
 									htmlFor="upload-image"
 									className="cursor-pointer text-gray-500"
 								>
-									<div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											className="h-12 w-12"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M3 16.5V20h3.5l10-10-3.5-3.5L3 16.5z"
-											/>
-										</svg>
+									<div>
+										<img src={UploadImg}/>
 									</div>
-									<span className="block mt-2">
-										Upload Image
-									</span>
 								</label>
 							</div>
 						</div>
-
 						{/* Recipe Description */}
 						<div className="relative">
 							<label className="block font-semibold mb-2">
@@ -102,7 +94,7 @@ function CreateRecipePage() {
 						</div>
 
 						{/* Serving Size and Cooking Time */}
-						<div className="grid grid-cols-2 gap-4">
+						<div className="w-1/2 grid grid-rows-2 gap-4">
 							<div>
 								<label className="block font-semibold mb-2">
 									Serving Size
@@ -128,11 +120,17 @@ function CreateRecipePage() {
 						</div>
 						{/* Ingredients Section */}
 						<div className="space-y-10">
-							<Ingredients ingredients={ingredients}/>
+							<Ingredients
+								ingredients={ingredients}
+								setIngredients={setIngredients}
+							/>
 						</div>
-                        {/* Nutrition Information */}
+						{/* Nutrition Information */}
 						<div className="space-y-4">
-							<NutritionInformation ingredients={ingredients} />
+							<NutritionInformation
+								ingredients={ingredients}
+								setIngredients={setIngredients}
+							/>
 						</div>
 
 						{/* Instructions */}
@@ -147,48 +145,26 @@ function CreateRecipePage() {
 								Add Category
 							</label>
 							<div className="grid grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] gap-4">
-								<SelectButton title="Low-calorie"/>
-								<SelectButton title="Low-sugar"/>
-								<SelectButton title="High-fiber"/>
-								<SelectButton title="Low-carb"/>
-								<SelectButton title="High protein"/>
-								<SelectButton title="American"/>
+								<SelectButton title="Low-calorie" />
+								<SelectButton title="Low-sugar" />
+								<SelectButton title="High-fiber" />
+								<SelectButton title="Low-carb" />
+								<SelectButton title="High protein" />
+								<SelectButton title="American" />
 							</div>
 						</div>
 
 						{/* Sharing Options */}
 						<div>
-							<label className="block font-semibold mb-2">
-								Sharing Options
-							</label>
-							<div className="flex space-x-4">
-								<label>
-									<input
-										type="radio"
-										name="sharing"
-										value="private"
-									/>
-									<span className="ml-2">Private</span>
-								</label>
-								<label>
-									<input
-										type="radio"
-										name="sharing"
-										value="public"
-									/>
-									<span className="ml-2">Public</span>
-								</label>
-							</div>
+							<SharingOptions
+								selectedOption={sharingOption}
+								onChange={handleSharingChange}
+							/>
 						</div>
 
 						{/* Submit Button */}
 						<div>
-							<button
-								type="submit"
-								className="w-full bg-pink-500 text-white py-2 rounded-lg"
-							>
-								Post Recipe
-							</button>
+							<Button size="mediumMoreWidth">Post Recipe</Button>
 						</div>
 					</div>
 				</form>
