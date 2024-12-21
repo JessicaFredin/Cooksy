@@ -18,7 +18,10 @@ import ScrollToTop from "./components/ScrollToTop";
 import ProfilePage from "./pages/ProfilePage";
 import ArticlesPage from "./pages/ArticlesPage";
 import CategoriesPage from "./pages/CategoriesPage";
-import UserProvider from "../contexts/UserContext";
+import UserProvider from "./contexts/UserContext";
+import RecipesPage from "./pages/RecipesPage";
+import RecipeDetailsPage from "./pages/RecipeDetailsPage";
+import BlogPage from "./pages/BlogPage";
 
 function App() {
 	return (
@@ -26,6 +29,9 @@ function App() {
 			<UserProvider>
 				<ScrollToTop />
 				<Navbar />
+				<div className="pt-20">
+					<RecipeDetailsPage></RecipeDetailsPage>
+				</div>
 				<main className="pt-16">
 					<Routes>
 						<Route path="/" element={<HomePage />} />
@@ -40,6 +46,7 @@ function App() {
 						/>
 						<Route path="/cookies" element={<Cookies />} />
 						<Route path="/about" element={<AboutCooksyPage />} />
+						<Route path="/recipes" element={<RecipesPage />} />
 						<Route
 							path="/newsletter"
 							element={<NewsletterPage />}
@@ -58,6 +65,7 @@ function App() {
 							path="/categories"
 							element={<CategoriesPage />}
 						/>
+						<Route path="/blog" element={<BlogPage />} />
 					</Routes>
 					<Footer />
 				</main>

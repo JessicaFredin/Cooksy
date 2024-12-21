@@ -10,7 +10,7 @@ import UploadImg from "../assets/images/UploadImg.png";
 
 function CreateRecipePage() {
 	const [ingredients, setIngredients] = useState([
-		{ volume: "", unit: "", name: "" },
+		{ volume: "", unit: "", name: "", id: null },
 	]);
 
 	const [sharingOption, setSharingOption] = useState("public");
@@ -73,7 +73,7 @@ function CreateRecipePage() {
 									className="cursor-pointer text-gray-500"
 								>
 									<div>
-										<img src={UploadImg}/>
+										<img src={UploadImg} />
 									</div>
 								</label>
 							</div>

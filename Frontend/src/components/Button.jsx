@@ -22,7 +22,7 @@ function Button({
 	};
 
 	const baseClass =
-		"bg-pink-500 text-white rounded-full flex items-center justify-center space-x-2 transition-all duration-300 ease-in-out hover:bg-pink-600 whitespace-nowrap z-50";
+		"bg-pink-500 text-white rounded-full flex items-center justify-center space-x-2 transition-all duration-300 ease-in-out hover:bg-pink-600 whitespace-nowrap z-30";
 
 	const handleClick = (e) => {
 		if (onClick) {

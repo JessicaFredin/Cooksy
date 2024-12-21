@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import axios from "axios";
 
 function NutritionInformation({ ingredients }) {
 	const [nutritionValues, setNutritionValues] = useState({
@@ -8,28 +9,51 @@ function NutritionInformation({ ingredients }) {
 		fat: 0,
 		energy: 0,
 	});
+	const [loading, setLoading] = useState(false);
 
-	// Mock Calculation Function
-	const calculateNutrition = () => {
+	const calculateNutrition = async (event) => {
+		event.preventDefault();
+		setLoading(true);
 		let protein = 0,
 			carbs = 0,
 			fat = 0,
 			energy = 0;
 
-		ingredients.forEach((ingredient) => {
-			// Replace this with real ingredient logic or API
-			if (ingredient.unit === "Gram") {
-				protein += 2; // Mock protein per gram
-				carbs += 3;
-				fat += 1;
-				energy += 20;
-			} else if (ingredient.unit === "Liter") {
-				protein += 5;
-				carbs += 4;
-				fat += 2;
-				energy += 50;
+		for (const ingredient of ingredients) {
+			if (!ingredient.volume || !ingredient.unit || !ingredient.name) {
+				alert("Please fill out all fields for each ingredient.");
+				setLoading(false);
+				return;
 			}
-		});
+
+			try {
+				const response = await axios.get(
+					`${
+						import.meta.env.VITE_APP_SPOONACULAR_BASE_URL
+					}/food/ingredients/${ingredient.id}/information`,
+					{
+						params: {
+							amount: ingredient.volume,
+							unit: ingredient.unit,
+							apiKey: import.meta.env
+								.VITE_APP_SPOONACULAR_API_KEY,
+						},
+					}
+				);
+
+				const nutrients = response.data.nutrition.nutrients || [];
+				protein +=
+					nutrients.find((n) => n.name === "Protein")?.amount || 0;
+				carbs +=
+					nutrients.find((n) => n.name === "Carbohydrates")?.amount ||
+					0;
+				fat += nutrients.find((n) => n.name === "Fat")?.amount || 0;
+				energy +=
+					nutrients.find((n) => n.name === "Calories")?.amount || 0;
+			} catch (error) {
+				console.error("Error fetching nutrition information:", error);
+			}
+		}
 
 		setNutritionValues({
 			protein,
@@ -37,6 +61,7 @@ function NutritionInformation({ ingredients }) {
 			fat,
 			energy,
 		});
+		setLoading(false);
 	};
 
 	return (
@@ -52,34 +77,39 @@ function NutritionInformation({ ingredients }) {
 				</button>
 			</div>
 
+			{/* Loading Message */}
+			{loading && (
+				<p className="text-center">Calculating nutrition values...</p>
+			)}
+
 			{/* Nutrition Display */}
 			<div className="grid grid-cols-6 gap-x-2 items-center">
 				<label className="col-span-1 font-medium">Protein</label>
 				<div className="col-span-4 border-b-2 border-black/30 py-1">
-					{nutritionValues.protein}{" "}
+					{nutritionValues.protein.toFixed(1)}
 				</div>
 				<span className="col-span-1 text-sm font-semibold">g</span>
 
 				<label className="col-span-1 font-medium">Carbs</label>
 				<div className="col-span-4 border-b-2 border-black/30 py-1">
-					{nutritionValues.carbs}
+					{nutritionValues.carbs.toFixed(1)}
 				</div>
 				<span className="col-span-1 text-sm font-semibold">g</span>
 
 				<label className="col-span-1 font-medium">Fat</label>
 				<div className="col-span-4 border-b-2 border-black/30 py-1">
-					{nutritionValues.fat}
+					{nutritionValues.fat.toFixed(1)}
 				</div>
 				<span className="col-span-1 text-sm font-semibold">g</span>
 
 				<label className="col-span-1 font-medium">Energy</label>
 				<div className="col-span-4 flex items-center gap-x-2">
 					<div className="w-1/2 border-b-2 border-black/30 py-1">
-						{nutritionValues.energy}
+						{(nutritionValues.energy * 4.18).toFixed(1)}
 					</div>
 					<span className="font-semibold">/</span>
 					<div className="w-1/2 border-b-2 border-black/30 py-1">
-						{nutritionValues.energy * 4.18}{" "}
+						{nutritionValues.energy.toFixed(1)}
 					</div>
 				</div>
 				<span className="col-span-1 text-sm font-semibold">
