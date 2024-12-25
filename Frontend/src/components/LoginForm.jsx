@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import TopCurve from "../assets/svg/TopCurve";
 import BottomCurve from "../assets/svg/BottomCurve";
 import Button from "./Button";
@@ -9,25 +10,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 function LoginForm({ setView }) {
+	const { login } = useAuth(); // Get the login function from AuthContext
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
 	const [error, setError] = useState("");
-		console.log("LoginForm rendered");
+	console.log("LoginForm rendered");
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post(
-				import.meta.env.VITE_APP_BACKEND_URL + "/auth/login",
-				formData,
-				{
-					withCredentials: true,
-				}
-			);
-			alert(response.data.message);
-			window.location.href = "/"; // Redirect to home after login
+			await login(formData);
+			alert("Login successful!");
+			window.location.href = "/"; // Redirect to home
 		} catch (err) {
 			setError("Invalid credentials");
 		}
@@ -81,7 +77,11 @@ function LoginForm({ setView }) {
 						onChange={handleChange}
 					/>
 					<div className="flex items-center justify-center">
-						<Button type="submit" className="w-[200px]" size="mediumMoreWidth">
+						<Button
+							type="submit"
+							className="w-[200px]"
+							size="mediumMoreWidth"
+						>
 							Log in
 						</Button>
 					</div>

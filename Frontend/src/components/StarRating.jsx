@@ -1,53 +1,65 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-// <StarRating totalStars={5} size="3rem" />
+const StarRating = ({
+	totalStars = 5,
+	size = "2rem",
+	staticRating = null, // Static rating for read-only mode
+	onRatingChange = null, // Callback for dynamic rating
+}) => {
+	const [hoveredStar, setHoveredStar] = useState(0); // Hovered star index
+	const [selectedRating, setSelectedRating] = useState(0); // Selected rating
 
-const StarRating = ({ totalStars = 5, size = "2rem" }) => {
-  const [hoveredStar, setHoveredStar] = useState(0); // Vilken stjärna som hovras
-  const [selectedRating, setSelectedRating] = useState(0); // Sparar valt betyg
+	const handleClick = (index) => {
+		if (onRatingChange) {
+			setSelectedRating(index);
+			onRatingChange(index); // Trigger the callback with the new rating
+		}
+	};
 
-  const handleClick = (index) => {
-    setSelectedRating(index);
-  };
+	const handleMouseOver = (index) => {
+		if (onRatingChange) setHoveredStar(index); // Only allow hover in interactive mode
+	};
 
-  const handleMouseOver = (index) => {
-    setHoveredStar(index);
-  };
+	const handleMouseLeave = () => {
+		if (onRatingChange) setHoveredStar(0); // Only reset hover in interactive mode
+	};
 
-  const handleMouseLeave = () => {
-    setHoveredStar(0);
-  };
+	// Determine if the component is in static mode
+	const isStatic = staticRating !== null;
 
-  return (
-    <div className="star-rating">
-      {[...Array(totalStars)].map((_, index) => {
-        const starIndex = index + 1; // Stjärnindex börjar från 1
-        return (
-          <span
-            key={starIndex}
-            className={
-              starIndex <= (hoveredStar || selectedRating)
-                ? "star filled"
-                : "star"
-            }
-            onClick={() => handleClick(starIndex)}
-            onMouseOver={() => handleMouseOver(starIndex)}
-            onMouseLeave={handleMouseLeave}
-            style={{
-              fontSize: size, // Anpassad storlek
-              cursor: "pointer",
-              color: starIndex <= (hoveredStar || selectedRating) ? "#A8D400" : "#d1d5db",
-              stroke: "#A8D400",
-              strokeWidth: "1px",
-            }}
-          >
-            &#9733; {/* Unicode-tecknet för en fylld stjärna */}
-          </span>
-        );
-      })}
-    </div>
-  );
+	return (
+		<div className="star-rating flex space-x-1">
+			{[...Array(totalStars)].map((_, index) => {
+				const starIndex = index + 1;
+				const isActive =
+					starIndex <=
+					(isStatic ? staticRating : hoveredStar || selectedRating);
+
+				return (
+					<span
+						key={starIndex}
+						className={isActive ? "star filled" : "star"}
+						onClick={() => !isStatic && handleClick(starIndex)}
+						onMouseOver={() =>
+							!isStatic && handleMouseOver(starIndex)
+						}
+						onMouseLeave={() => !isStatic && handleMouseLeave()}
+						style={{
+							fontSize: size, // Adjust size dynamically
+							cursor: isStatic ? "default" : "pointer",
+							color: isActive ? "#A8D400" : "#d1d5db", // Active or inactive color
+							stroke: "#A8D400", // Border color
+							strokeWidth: "1px",
+							transition: "color 0.3s ease, stroke 0.3s ease",
+						}}
+					>
+						&#9733; {/* Unicode for a star */}
+					</span>
+				);
+			})}
+		</div>
+	);
 };
 
 export default StarRating;

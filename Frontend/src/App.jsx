@@ -18,26 +18,29 @@ import ScrollToTop from "./components/ScrollToTop";
 import ProfilePage from "./pages/ProfilePage";
 import ArticlesPage from "./pages/ArticlesPage";
 import CategoriesPage from "./pages/CategoriesPage";
-import UserProvider from "./contexts/UserContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import RecipesPage from "./pages/RecipesPage";
 import RecipeDetailsPage from "./pages/RecipeDetailsPage";
 import BlogPage from "./pages/BlogPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 	return (
 		<Router>
-			<UserProvider>
+			<AuthProvider>
 				<ScrollToTop />
 				<Navbar />
-				<div className="pt-20">
-					<RecipeDetailsPage></RecipeDetailsPage>
-				</div>
+
 				<main className="pt-16">
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route
 							path="/add-recipe"
-							element={<CreateRecipePage />}
+							element={
+								<ProtectedRoute>
+									<CreateRecipePage />
+								</ProtectedRoute>
+							}
 						/>
 						<Route path="/contact" element={<Contact />} />
 						<Route
@@ -69,7 +72,7 @@ function App() {
 					</Routes>
 					<Footer />
 				</main>
-			</UserProvider>
+			</AuthProvider>
 		</Router>
 	);
 }

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function HeadingWithLine({ text }) {
 	return (
 		<div className="relative inline-block text-center">
-			<h1 className="text-3xl font-pacifico mb-6">{text}</h1>
+			<h1 className="text-3xl font-pacifico mb-6 whitespace-nowrap">{text}</h1>
 			<svg
 				className="absolute left-0 bottom-3 w-full"
 				xmlns="http://www.w3.org/2000/svg"

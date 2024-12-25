@@ -3,15 +3,12 @@ import session from "express-session";
 import bodyParser from "body-parser";
 import passport from "./config/passport.js";
 import cors from "cors";
-import path from "path"
-
+import path from "path";
 
 import { fileURLToPath } from "url";
-	// Emulate __dirname
-	const __filename = fileURLToPath(import.meta.url);
-	const __dirname = path.dirname(__filename);
-
-
+// Emulate __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const setupMiddlewares = (app) => {
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,10 +17,6 @@ const setupMiddlewares = (app) => {
 	// Serve the /uploads directory
 
 	app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-	
-
-
 
 	app.use(
 		cors({

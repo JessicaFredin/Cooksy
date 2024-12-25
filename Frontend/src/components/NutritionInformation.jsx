@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import axios from "axios";
 
-function NutritionInformation({ ingredients }) {
+function NutritionInformation({ ingredients, setNutrition }) {
 	const [nutritionValues, setNutritionValues] = useState({
 		protein: 0,
 		carbs: 0,
@@ -55,18 +54,20 @@ function NutritionInformation({ ingredients }) {
 			}
 		}
 
-		setNutritionValues({
+		const finalNutrition = {
 			protein,
 			carbs,
 			fat,
-			energy,
-		});
+			energy: energy, // Convert calories to kJ
+		};
+
+		setNutritionValues(finalNutrition);
+		setNutrition(finalNutrition); // Update parent state
 		setLoading(false);
 	};
 
 	return (
 		<div className="space-y-4">
-			{/* Title */}
 			<div className="flex items-center justify-between">
 				<h3 className="font-semibold text-lg">Nutrition Information</h3>
 				<button
@@ -77,12 +78,10 @@ function NutritionInformation({ ingredients }) {
 				</button>
 			</div>
 
-			{/* Loading Message */}
 			{loading && (
 				<p className="text-center">Calculating nutrition values...</p>
 			)}
 
-			{/* Nutrition Display */}
 			<div className="grid grid-cols-6 gap-x-2 items-center">
 				<label className="col-span-1 font-medium">Protein</label>
 				<div className="col-span-4 border-b-2 border-black/30 py-1">
@@ -115,14 +114,6 @@ function NutritionInformation({ ingredients }) {
 				<span className="col-span-1 text-sm font-semibold">
 					kJ/kcal
 				</span>
-			</div>
-
-			{/* Nutrition Substances */}
-			<div className="mt-4">
-				<label className="font-medium block mb-2">
-					Nutrition substances
-				</label>
-				<div className="border-t-2 border-black w-full h-24"></div>
 			</div>
 		</div>
 	);
