@@ -3,6 +3,7 @@ import HeadingWithLine from "../components/HeadingWithLine";
 import { MeatIcon } from "../assets/icons/MeatIcon";
 import { ChickenIcon } from "../assets/icons/ChickenIcon";
 import { FishIcon } from "../assets/icons/FishIcon";
+import { VegetableIcon } from "../assets/icons/VegetableIcon";
 import food1 from "../assets/images/food1.jpg";
 import profile1 from "../assets/images/profile1.jpg";
 
@@ -52,8 +53,8 @@ const RecipePage = () => {
 		{
 			id: 5,
 			name: "Chickpea and harissa stew with herby yoghurt",
-			icon: <ChickenIcon />,
-			category: "Chicken",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
 			time: "45 min",
 			rating: 3,
 			reviews: 125,
@@ -72,8 +73,8 @@ const RecipePage = () => {
 		{
 			id: 7,
 			name: "Steamed mussels in tomato cream sauce",
-			icon: <ChickenIcon />,
-			category: "Chicken",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
 			time: "75 min",
 			rating: 2,
 			reviews: 78,
@@ -92,8 +93,8 @@ const RecipePage = () => {
 		{
 			id: 9,
 			name: "Steamed mussels in tomato cream sauce",
-			icon: <ChickenIcon />,
-			category: "Chicken",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
 			time: "100 min",
 			rating: 4,
 			reviews: 545,
