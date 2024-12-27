@@ -24,12 +24,14 @@ import RecipeDetailsPage from "./pages/RecipeDetailsPage";
 import BlogPage from "./pages/BlogPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 function App() {
 	return (
 		<Router>
 			<AuthProvider>
 				<ScrollToTop />
 				<Navbar />
+			<RecipeDetailsPage></RecipeDetailsPage>
 
 				<main className="pt-16">
 					<Routes>
