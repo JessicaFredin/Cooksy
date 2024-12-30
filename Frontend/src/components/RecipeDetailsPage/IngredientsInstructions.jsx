@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Cloche from "../../assets/images/NewsletterCardImg.png"
+import DoneImage from "../../assets/images/CardImg.png"
 
 
 function IngredientsInstructions() {
@@ -146,7 +146,7 @@ function IngredientsInstructions() {
               ))}
             </ul>
             <div className="mt-6 flex justify-start">
-              <img src={Cloche} alt="Done!" className="w-12 h-10 lg:w-16 lg:h-14" />
+              <img src={DoneImage} alt="Done!" className="w-12 h-10 lg:w-16 lg:h-14" />
               <h5 className="text-xl font-semibold flex items-end">Done!</h5>
             </div>
           </div>

@@ -1,11 +1,10 @@
 import express from "express";
 import pool from "../config/db.js"; // Ensure this imports your database configuration
 import multer from "multer";
-import path from "path"
+import path from "path";
 import authenticateUser from "../middleware/authenticate.js";
 
 const router = express.Router();
-
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -17,7 +16,6 @@ const storage = multer.diskStorage({
 		cb(null, file.fieldname + "-" + uniqueSuffix + extension);
 	},
 });
-
 
 // Configure multer for image uploads
 const upload = multer({
@@ -36,9 +34,6 @@ const upload = multer({
 		}
 	},
 });
-
-
-
 
 // Get user profile data
 router.get("/", authenticateUser, async (req, res) => {
@@ -98,6 +93,8 @@ router.put(
 			const userId = req.user.id;
 			const profilePictureUrl = `/uploads/${req.file.filename}`;
 
+			// const profilePictureUrl = `/uploads/profile_pictures/${req.file.filename}`
+
 			await pool.query(
 				"UPDATE users SET profile_picture_url = $1 WHERE id = $2",
 				[profilePictureUrl, userId]
@@ -114,9 +111,6 @@ router.put(
 	}
 );
 
-
-
-
 // Update bio
 router.put("/bio", authenticateUser, async (req, res) => {
 	try {
@@ -131,15 +125,12 @@ router.put("/bio", authenticateUser, async (req, res) => {
 
 		// Respond with the updated bio
 		res.json({
-			bio: result.rows[0].bio
+			bio: result.rows[0].bio,
 		});
 	} catch (err) {
 		console.error("Error updating bio:", err);
 		res.status(500).send("Server error");
 	}
 });
-
-
-
 
 export default router;

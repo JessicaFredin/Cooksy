@@ -1,4 +1,4 @@
-import icon from "../../assets/images/NewsletterCardImg.png"
+import icon from "../../assets/images/CardImg.png"
 
 function RecipeShortInfoBox({titel}) {
 	return (

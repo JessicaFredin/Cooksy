@@ -1,6 +1,6 @@
 import HeadingWithLine from "../components/HeadingWithLine";
 import CategoriesCard from "../components/CategoriesCard";
-import NewsletterCardImg from "../assets/images/NewsletterCardImg.png"
+import NewsletterCardImg from "../assets/images/CardImg.png"
 
 function CategoriesPage() {
     return (

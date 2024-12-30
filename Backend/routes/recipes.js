@@ -1,8 +1,62 @@
 import express from "express";
 import pool from "../config/db.js"; // Ensure this imports your database configuration
 import authenticateUser from "../middleware/authenticate.js";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 
 const router = express.Router();
+
+
+
+
+// --------------------- GET Public Recipes (No Auth Required) ---------------------
+router.get("/", async (req, res) => {
+  try {
+    // We join categories & meal_types & users so we get everything in one query.
+    const result = await pool.query(`
+      SELECT
+        recipes.id,
+        recipes.user_id,
+        recipes.category_id,
+        categories.name AS category_name,
+        recipes.meal_type_id,
+        meal_types.name AS meal_type_name,
+        recipes.world_cuisine_id,
+        recipes.description,
+        recipes.title,
+        recipes.image_url,
+        recipes.serving_size,
+        recipes.cooking_time_minutes,
+        recipes.protein,
+        recipes.carbs,
+        recipes.fat,
+        recipes.energy_kj,
+        recipes.energy_kcal,
+        recipes.is_public,
+        users.first_name,
+        users.last_name,
+        users.profile_picture_url
+      FROM recipes
+      JOIN categories ON categories.id = recipes.category_id
+      JOIN meal_types ON meal_types.id = recipes.meal_type_id
+      JOIN users ON users.id = recipes.user_id
+      WHERE recipes.is_public = true
+      ORDER BY recipes.id ASC
+    `);
+
+    res.json(result.rows); // Array of recipe objects
+  } catch (err) {
+    console.error("Error fetching recipes:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
+
+
+
+
 
 // Route to get all categories
 router.get("/categories", authenticateUser, async (req, res) => {
@@ -36,11 +90,6 @@ router.get("/meal_types", authenticateUser, async (req, res) => {
 		res.status(500).send("Server error");
 	}
 });
-
-// Import multer, path, and fs at the top if not already included
-import multer from "multer";
-import path from "path";
-import fs from "fs";
 
 // Configure multer for recipe image uploads
 const recipeStorage = multer.diskStorage({

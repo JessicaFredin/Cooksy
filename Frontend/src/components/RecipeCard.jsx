@@ -127,8 +127,10 @@ import StarRating from "./StarRating"; // Import your StarRating component
 import { MeatIcon } from "../assets/icons/MeatIcon";
 import { TimeIcon } from "../assets/icons/TimeIcon";
 import { CommentIcon } from "../assets/icons/CommentIcon";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
-const RecipeCard = ({
+function RecipeCard({
+	id,
 	image,
 	dishName,
 	categoryName,
@@ -137,10 +139,13 @@ const RecipeCard = ({
 	authorImage,
 	reviews,
 	rating,
-	commentsCount: commentsCount,
-}) => {
+	commentsCount,
+}) {
 	return (
-		<div className="w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative">
+		<Link 
+			to={`/recipe/${id}`} // Navigate to the recipe details page with the recipe ID
+			className="w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative hover:shadow-xl transition-shadow duration-300"
+		>
 			{/* Image Section */}
 			<div className="relative h-48">
 				<img
@@ -148,10 +153,16 @@ const RecipeCard = ({
 					alt={dishName}
 					className="w-full h-full object-cover"
 				/>
-				<button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center">
+				<button
+					className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
+					onClick={(e) => e.stopPropagation()} // Prevents the button click from triggering the card click
+				>
 					<FontAwesomeIcon icon={faHeart} className="text-pink-500" />
 				</button>
-				<button className="absolute top-14 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center">
+				<button
+					className="absolute top-14 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
+					onClick={(e) => e.stopPropagation()} // Prevents the button click from triggering the card click
+				>
 					<FontAwesomeIcon icon={faPlus} className="text-pink-500" />
 				</button>
 
@@ -172,7 +183,6 @@ const RecipeCard = ({
 
 			{/* Content Section */}
 			<div className="p-4 flex flex-col flex-grow">
-				{/* <h3 className="text-lg text-gray-800">{dishName}</h3> */}
 				{/* Title Section */}
 				<div className="h-12 mb-8">
 					<h3 className="text-lg text-gray-800 line-clamp-2">
@@ -197,9 +207,7 @@ const RecipeCard = ({
 				{/* Rating and Favorites */}
 				<div className="flex justify-between items-center">
 					<div className="flex items-center space-x-1">
-						{/* <StarRating totalStars={5} rating={rating} /> */}
 						<StarRating totalStars={5} staticRating={rating} />
-
 						<span className="text-sm text-gray-600">
 							({reviews})
 						</span>
@@ -213,8 +221,8 @@ const RecipeCard = ({
 					</div>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
-};
+}
 
 export default RecipeCard;

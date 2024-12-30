@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ToggleSwitch = () => {
   const [isOn, setIsOn] = useState(false);
@@ -6,7 +6,7 @@ const ToggleSwitch = () => {
   return (
     <div
       className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer ${
-        isOn ? 'bg-pink-500' : 'bg-zinc-200'
+        isOn ? 'bg-pink-500' : 'bg-gray-200'
       }`}
       onClick={() => setIsOn(!isOn)}
     >

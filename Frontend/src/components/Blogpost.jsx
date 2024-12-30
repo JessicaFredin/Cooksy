@@ -41,7 +41,7 @@
 
 import React, { useState } from "react";
 /*import img from "../assets/images/peaches.jpg"*/
-import NewsletterCardImg from "../assets/images/NewsletterCardImg.png";
+import NewsletterCardImg from "../assets/images/CardImg.png";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NewsletterCardImg from "../assets/images/NewsletterCardImg.png";
+import NewsletterCardImg from "../assets/images/CardImg.png";
 
 function Newsletter() {
 	const [isActive, setIsActive] = useState(false);

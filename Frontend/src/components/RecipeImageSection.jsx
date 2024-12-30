@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-
-const RecipeImageSection = ({
+function RecipeImageSection({
 	imageUrl,
 	authorName,
 	authorImage,
 	isFavorited,
-}) => {
+}) {
 	return (
 		<div className="relative flex flex-col gap-3">
 			{/* Recipe Image */}
@@ -43,6 +42,6 @@ const RecipeImageSection = ({
 			</div>
 		</div>
 	);
-};
+}
 
 export default RecipeImageSection;
