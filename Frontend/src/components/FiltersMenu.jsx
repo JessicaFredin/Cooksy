@@ -54,7 +54,7 @@ const FiltersMenu = () => {
 
       {/* Dropdown-meny */}
       {isOpen && (
-        <div className="absolute mt-4 w-full max-w-md mx-auto bg-white p-4 shadow-lg rounded-md z-10">
+        <div className="absolute mt-4 w-96 bg-white p-4 shadow-lg rounded-md z-10">
           {categories.map((category, index) => (
             <DropdownCategory
               key={index}

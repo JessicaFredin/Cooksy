@@ -241,3 +241,137 @@ function RecipeCard({
 }
 
 export default RecipeCard;
+
+//Denna fungerar för popmealplan 
+
+// import React, { useState } from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHeart, faPlus } from "@fortawesome/free-solid-svg-icons";
+// import StarRating from "./StarRating";
+// import { MeatIcon } from "../assets/icons/MeatIcon";
+// import { TimeIcon } from "../assets/icons/TimeIcon";
+// import { CommentIcon } from "../assets/icons/CommentIcon";
+// import PopMealPlan from "./PopMealPlan";
+
+// const RecipeCard = ({
+//     id,
+//     image,
+//     dishName,
+//     categoryName,
+//     time,
+//     authorName,
+//     authorImage,
+//     reviews,
+//     rating,
+//     commentsCount,
+//     size = "default", // Ny prop för storlek
+// }) => {
+//     const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+//     const togglePopup = (e) => {
+//         e.stopPropagation();
+//         setIsPopupVisible((prevState) => !prevState);
+//     };
+
+//     // Drag and Drop Handlers
+//     const handleDragStart = (e) => {
+//         e.dataTransfer.setData(
+//             "recipeData",
+//             JSON.stringify({
+//                 id,
+//                 dishName,
+//                 image,
+//                 categoryName,
+//                 time,
+//                 authorName,
+//                 reviews,
+//                 rating,
+//             })
+//         );
+//     };
+
+//     // Dynamiska klasser beroende på storlek
+//     const cardClasses = size === "small" ? "w-full h-full p-2" : "w-72";
+//     const imageHeight = size === "small" ? "h-32" : "h-48";
+//     const textSize = size === "small" ? "text-sm" : "text-lg";
+
+//     return (
+//         <div
+//             className={`${cardClasses} bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative`}
+//             draggable
+//             onDragStart={handleDragStart}
+//         >
+//             {/* Image Section */}
+//             <div className={`relative ${imageHeight}`}>
+//                 <img
+//                     src={image}
+//                     alt={dishName}
+//                     className="w-full h-full object-cover"
+//                 />
+//                 <button
+//                     className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
+//                     onClick={(e) => e.stopPropagation()}
+//                 >
+//                     <FontAwesomeIcon icon={faHeart} className="text-pink-500" />
+//                 </button>
+//                 <button
+//                     className="absolute top-14 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
+//                     onClick={togglePopup}
+//                 >
+//                     <FontAwesomeIcon icon={faPlus} className="text-pink-500" />
+//                 </button>
+//             </div>
+
+//             {/* Content Section */}
+//             <div className="p-4 flex flex-col flex-grow">
+//                 <div className={`h-12 mb-8 ${textSize}`}>
+//                     <h3 className={`line-clamp-2 ${textSize} text-gray-800`}>
+//                         {dishName}
+//                     </h3>
+//                 </div>
+//                 <div className="flex justify-between items-center text-gray-600 mt-2">
+//                     <div className="flex items-center space-x-1">
+//                         <MeatIcon />
+//                         <span>{categoryName}</span>
+//                     </div>
+//                     <div className="flex items-center space-x-1">
+//                         <TimeIcon />
+//                         <span>{time}</span>
+//                     </div>
+//                 </div>
+//                 <div className="border-t border-gray-200 my-2"></div>
+//                 <div className="flex justify-between items-center">
+//                     <div className="flex items-center space-x-1">
+//                         <StarRating totalStars={5} staticRating={rating} />
+//                         <span className={`text-sm text-gray-600`}>
+//                             ({reviews})
+//                         </span>
+//                     </div>
+//                     <div className="flex items-center space-x-1">
+//                         <CommentIcon />
+//                         <span className={`text-sm text-gray-600`}>
+//                             {commentsCount}
+//                         </span>
+//                     </div>
+//                 </div>
+//             </div>
+
+//             {/* Popup */}
+//             {isPopupVisible && (
+//                 <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+//                     <div className="relative bg-white rounded-lg shadow-lg p-4 w-full max-w-5xl">
+//                         <PopMealPlan />
+//                         <button
+//                             className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center"
+//                             onClick={togglePopup}
+//                         >
+//                             &times;
+//                         </button>
+//                     </div>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default RecipeCard;

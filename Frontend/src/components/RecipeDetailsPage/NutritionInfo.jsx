@@ -10,7 +10,7 @@ function NutritionInfo(){
     
 
     return(
-        <div className="border-2 border-green-200 rounded-2xl p-4">
+        <div className="border-2 border-green-500 rounded-2xl p-4">
             {nutritionData.map((item, index) => (
                 <div key={index} className="mb-1">
                     <span className="text-sm font-semibold">{item.name}</span>{" "}

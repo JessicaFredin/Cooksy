@@ -42,6 +42,9 @@ function RecipeDetailsPage() {
 		fetchRecipe();
 	}, [id]);
 
+
+	
+
 	useEffect(() => {
 		const fetchRatings = async () => {
 			try {
@@ -129,10 +132,10 @@ function RecipeDetailsPage() {
 						recipe.image_url
 					}`}
 					title={recipe.title}
-					firstName={recipe.first_name}
-					lastName={recipe.last_name}
+					firstName={recipe.user_first_name}
+					lastName={recipe.user_last_name}
 					profilePicture={`${import.meta.env.VITE_APP_BACKEND_URL}${
-						recipe.profile_picture_url
+						recipe.user_profile_picture
 					}`}
 				/>
 			</div>
@@ -161,9 +164,15 @@ function RecipeDetailsPage() {
 			</div>
 			<div className="col-start-2 col-span-10">
 				<IngredientsInstructions
-					ingredients={recipe.ingredients}
-					instructions={recipe.instructions}
+					ingredients={recipe.ingredients || []}
+					instructions={recipe.instructions || []}
 				/>
+
+				{/* <IngredientsInstructions
+					instructions={recipe.instructions || []}
+					ingredients={recipe.ingredients || []}
+				/> */}
+
 				{/* 
 				<IngredientsInstructions
 					ingredients={recipe.ingredients.map((ingredient) => ({

@@ -24,7 +24,7 @@ function RecipeImage({imageUrl, title, firstName, lastName, profilePicture}) {
 			{/* Profile Information */}
 			<div className="absolute bottom-[-14px] right-4 flex items-center">
 				{/* Profile Name */}
-				<div className="bg-green-200 py-1 px-10 rounded-tl-xl text-lg font-medium">
+				<div className="bg-green-500 py-1 px-10 rounded-tl-xl text-lg font-medium">
 					<p>
 						{firstName} {lastName}
 					</p>
@@ -34,7 +34,7 @@ function RecipeImage({imageUrl, title, firstName, lastName, profilePicture}) {
 				<div className="w-16 h-16 flex-shrink-0">
 					<img
 						src={profilePicture || ""} // Add a fallback profile image
-						alt={`${firstName} ${lastName} Profile Picture`}
+						alt={`${firstName} ${lastName}`}
 						className="w-full h-full rounded-xl object-cover border-2 border-white shadow-lg"
 					/>
 				</div>

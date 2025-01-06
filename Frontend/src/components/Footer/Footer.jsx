@@ -22,6 +22,7 @@ const preferencesLinks = [
 	{ label: "Cookies", to: "/cookies" },
 	{ label: "Privacy Policy", to: "/privacy-policy" },
 	{ label: "Terms & Conditions", to: "/terms-and-conditions" },
+	{ label: "Faq", to: "/faq" },
 ];
 
 function Footer() {

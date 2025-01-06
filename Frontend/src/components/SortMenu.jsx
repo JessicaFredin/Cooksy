@@ -14,7 +14,7 @@ const SortMenu = () => {
   ];
 
   return (
-    <div className="relative inline-block mt-96">
+    <div className="relative inline-block">
       <button
         onClick={() => setOpen(!open)}
         className="bg-green-300 text-black rounded-full px-4 md:px-6 py-2 flex items-center space-x-2"
@@ -23,7 +23,7 @@ const SortMenu = () => {
         <span>▼</span>
       </button>
       {open && (
-        <ul className="absolute left-0 bg-white shadow-lg rounded-md w-40 md:w-52 mt-2">
+        <ul className="absolute left-0 bg-white w-full shadow-lg rounded-md mt-2 z-20">
           {options.map((option, index) => (
             <li
               key={index}

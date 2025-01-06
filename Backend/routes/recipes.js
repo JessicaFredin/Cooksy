@@ -7,14 +7,11 @@ import fs from "fs";
 
 const router = express.Router();
 
-
-
-
 // --------------------- GET Public Recipes (No Auth Required) ---------------------
 router.get("/", async (req, res) => {
-  try {
-    // We join categories & meal_types & users so we get everything in one query.
-    const result = await pool.query(`
+	try {
+		// We join categories & meal_types & users so we get everything in one query.
+		const result = await pool.query(`
       SELECT
         recipes.id,
         recipes.user_id,
@@ -45,67 +42,38 @@ router.get("/", async (req, res) => {
       ORDER BY recipes.id ASC
     `);
 
-    res.json(result.rows); // Array of recipe objects
-  } catch (err) {
-    console.error("Error fetching recipes:", err);
-    res.status(500).send("Server error");
-  }
+		res.json(result.rows); // Array of recipe objects
+	} catch (err) {
+		console.error("Error fetching recipes:", err);
+		res.status(500).send("Server error");
+	}
 });
-
 
 // router.get("/:id", async (req, res) => {
 // 	const { id } = req.params;
 
 // 	try {
 // 		const recipeQuery = `
-//             SELECT 
-//                 recipes.*, 
-//                 users.first_name, 
-//                 users.last_name, 
+//             SELECT
+//                 recipes.*,
+//                 users.first_name,
+//                 users.last_name,
 //                 users.profile_picture_url
 //             FROM recipes
 //             LEFT JOIN users ON recipes.user_id = users.id
 //             WHERE recipes.id = $1
 //         `;
 
-// 		const ingredientsQuery = `
-//             SELECT 
-//                 ri.amount, ri.unit, si.name 
-//             FROM recipes_ingredients ri
-//             LEFT JOIN spoonacular_ingredients si ON ri.spoonacular_ingredient_id = si.id
-//             WHERE ri.recipe_id = $1
-//         `;
-
-// 		const instructionsQuery = `
-//             SELECT 
-//                 instruction_text, instruction_order 
-//             FROM instructions
-//             WHERE recipe_id = $1
-//             ORDER BY instruction_order ASC
-//         `;
-
 // 		const recipeResult = await pool.query(recipeQuery, [id]);
-// 		const ingredientsResult = await pool.query(ingredientsQuery, [id]);
-// 		const instructionsResult = await pool.query(instructionsQuery, [id]);
 
 // 		if (!recipeResult.rows.length) {
 // 			return res.status(404).json({ error: "Recipe not found" });
 // 		}
 
 // 		const recipe = recipeResult.rows[0];
-// 		recipe.ingredients = ingredientsResult.rows.map((row) => ({
-// 			name: row.name,
-// 			amount: row.amount,
-// 			unit: row.unit,
-// 		}));
-// 		recipe.instructions = instructionsResult.rows.map((row) => ({
-// 			text: row.instruction_text,
-// 			order: row.instruction_order,
-// 		}));
-
 // 		res.json(recipe);
 // 	} catch (error) {
-// 		console.error("Error fetching recipe details:", error);
+// 		console.error("Error fetching recipe:", error.message); // Log detailed error
 // 		res.status(500).send("Server error");
 // 	}
 // });
@@ -113,35 +81,68 @@ router.get("/", async (req, res) => {
 
 
 
-router.get("/:id", async (req, res) => {
-	const { id } = req.params;
 
+
+router.get("/:id", async (req, res) => {
 	try {
+		const { id } = req.params;
+
+		// Fetch recipe details
 		const recipeQuery = `
             SELECT 
                 recipes.*, 
-                users.first_name, 
-                users.last_name, 
-                users.profile_picture_url
+                users.first_name AS user_first_name, 
+                users.last_name AS user_last_name, 
+                users.profile_picture_url AS user_profile_picture
             FROM recipes
             LEFT JOIN users ON recipes.user_id = users.id
             WHERE recipes.id = $1
         `;
-
 		const recipeResult = await pool.query(recipeQuery, [id]);
 
 		if (!recipeResult.rows.length) {
 			return res.status(404).json({ error: "Recipe not found" });
 		}
 
+		// Fetch ingredients
+		const ingredientsQuery = `
+            SELECT 
+				recipes_ingredients.spoonacular_ingredient_id,
+				recipes_ingredients.ingredient_name,
+                recipes_ingredients.amount, 
+                recipes_ingredients.unit
+            FROM recipes_ingredients
+            WHERE recipes_ingredients.recipe_id = $1
+        `;
+		const ingredientsResult = await pool.query(ingredientsQuery, [id]);
+
+		// Fetch instructions
+		const instructionsQuery = `
+            SELECT 
+                instruction_text AS text, 
+                instruction_order AS "order"
+            FROM instructions
+            WHERE recipe_id = $1
+            ORDER BY instruction_order ASC
+        `;
+		const instructionsResult = await pool.query(instructionsQuery, [id]);
+
+		// Combine all data into a single response
 		const recipe = recipeResult.rows[0];
+		recipe.ingredients = ingredientsResult.rows.map((ingredient) => ({
+			spoonacular_id: ingredient.spoonacular_ingredient_id,
+			ingredient_name: ingredient.ingredient_name,
+			amount: ingredient.amount,
+			unit: ingredient.unit,
+		}));
+		recipe.instructions = instructionsResult.rows;
+
 		res.json(recipe);
 	} catch (error) {
 		console.error("Error fetching recipe:", error.message); // Log detailed error
 		res.status(500).send("Server error");
 	}
 });
-
 
 router.get("/:id/ratings", async (req, res) => {
 	try {
@@ -164,7 +165,6 @@ router.get("/:id/ratings", async (req, res) => {
 		res.status(500).send("Server error");
 	}
 });
-
 
 router.post("/:id/rate", authenticateUser, async (req, res) => {
 	try {
@@ -203,46 +203,6 @@ router.post("/:id/rate", authenticateUser, async (req, res) => {
 		res.json(updatedResult.rows[0]);
 	} catch (err) {
 		console.error("Error adding/updating rating:", err);
-		res.status(500).send("Server error");
-	}
-});
-
-
-
-
-
-
-
-
-// Route to get all categories
-router.get("/categories", authenticateUser, async (req, res) => {
-	try {
-		const result = await pool.query("SELECT * FROM categories");
-		res.json(result.rows);
-	} catch (err) {
-		console.error("Error fetching categories:", err);
-		res.status(500).send("Server error");
-	}
-});
-
-// Route to get all world cuisines
-router.get("/world_cuisines", authenticateUser, async (req, res) => {
-	try {
-		const result = await pool.query("SELECT * FROM world_cuisines");
-		res.json(result.rows);
-	} catch (err) {
-		console.error("Error fetching world cuisines:", err);
-		res.status(500).send("Server error");
-	}
-});
-
-// Route to get all meal types
-router.get("/meal_types", authenticateUser, async (req, res) => {
-	try {
-		const result = await pool.query("SELECT * FROM meal_types");
-		res.json(result.rows);
-	} catch (err) {
-		console.error("Error fetching meal types:", err);
 		res.status(500).send("Server error");
 	}
 });
@@ -359,13 +319,14 @@ router.post(
 			if (ingredients && ingredients.length > 0) {
 				for (const ingredient of JSON.parse(ingredients)) {
 					await pool.query(
-						`INSERT INTO recipes_ingredients (recipe_id, spoonacular_ingredient_id, amount, unit)
-                        VALUES ($1, $2, $3, $4)`,
+						`INSERT INTO recipes_ingredients (recipe_id, spoonacular_ingredient_id, amount, unit, ingredient_name)
+                        VALUES ($1, $2, $3, $4, $5)`,
 						[
 							recipeId,
 							ingredient.id, // spoonacular_ingredient_id
 							ingredient.volume, // amount
 							ingredient.unit, // unit
+							ingredient.name, // name
 						]
 					);
 				}

@@ -46,13 +46,13 @@ function CreateRecipePage() {
 
 				const [categoriesRes, mealTypesRes, worldCuisinesRes] =
 					await Promise.all([
-						axios.get(`${baseURL}/recipes/categories`, {
+						axios.get(`${baseURL}/categories`, {
 							withCredentials: true,
 						}),
-						axios.get(`${baseURL}/recipes/meal_types`, {
+						axios.get(`${baseURL}/meal_types`, {
 							withCredentials: true,
 						}),
-						axios.get(`${baseURL}/recipes/world_cuisines`, {
+						axios.get(`${baseURL}/world_cuisines`, {
 							withCredentials: true,
 						}),
 					]);
