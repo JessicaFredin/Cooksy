@@ -88,9 +88,10 @@ function RecipeDetailsPage() {
 				`${import.meta.env.VITE_APP_BACKEND_URL}/recipes/${id}/rate`,
 				{ rating: newRating },
 				{
-					headers: {
-						Authorization: `Bearer ${user?.token}`, // Ensure the token is included
-					},
+					// headers: {
+					// 	Authorization: `Bearer ${user?.token}`, // Ensure the token is included
+					// },
+					withCredentials: true,
 				}
 			);
 			setAverageRating(response.data.average_rating);
@@ -163,7 +164,7 @@ function RecipeDetailsPage() {
 					ingredients={recipe.ingredients}
 					instructions={recipe.instructions}
 				/>
-{/* 
+				{/* 
 				<IngredientsInstructions
 					ingredients={recipe.ingredients.map((ingredient) => ({
 						...ingredient,
@@ -233,8 +234,6 @@ function RecipeDetailsPage() {
 							Log in to rate this recipe.
 						</p>
 					)}
-
-				
 				</div>
 			</div>
 		</div>
