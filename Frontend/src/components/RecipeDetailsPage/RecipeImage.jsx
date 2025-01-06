@@ -1,14 +1,13 @@
-import CardImg from "../../assets/images/CardImg.png";
+/* eslint-disable react/prop-types */
 import HeartFavourites from "../HeartFavourites";
-import ProfileImage from "../../assets/images/profile1.jpg";
 
-function RecipeImage() {
+function RecipeImage({imageUrl, title, firstName, lastName, profilePicture}) {
 	return (
 		<div className="relative rounded-lg">
 			{/* Huvudbilden */}
 			<img
-				src={CardImg}
-				alt="Meal"
+				src={imageUrl}
+				alt={title}
 				className="w-full h-auto rounded-lg"
 			/>
 
@@ -22,19 +21,23 @@ function RecipeImage() {
 				<HeartFavourites />
 			</div>
 
-			{/* Profilinformation */}
-			<div className="absolute bottom-[-17px] right-4 flex items-center">
-				{/* Profilnamn */}
+			{/* Profile Information */}
+			<div className="absolute bottom-[-14px] right-4 flex items-center">
+				{/* Profile Name */}
 				<div className="bg-green-200 py-1 px-10 rounded-tl-xl text-lg font-medium">
-					<p>Lisa Karlsson</p>
+					<p>
+						{firstName} {lastName}
+					</p>
 				</div>
 
-				{/* Profilbild */}
-				<img
-					src={ProfileImage}
-					alt="Profile Image"
-					className="w-20 h-18 rounded-xl"
-				/>
+				{/* Profile Picture */}
+				<div className="w-16 h-16 flex-shrink-0">
+					<img
+						src={profilePicture || ""} // Add a fallback profile image
+						alt={`${firstName} ${lastName} Profile Picture`}
+						className="w-full h-full rounded-xl object-cover border-2 border-white shadow-lg"
+					/>
+				</div>
 			</div>
 		</div>
 	);

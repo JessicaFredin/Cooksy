@@ -53,6 +53,162 @@ router.get("/", async (req, res) => {
 });
 
 
+// router.get("/:id", async (req, res) => {
+// 	const { id } = req.params;
+
+// 	try {
+// 		const recipeQuery = `
+//             SELECT 
+//                 recipes.*, 
+//                 users.first_name, 
+//                 users.last_name, 
+//                 users.profile_picture_url
+//             FROM recipes
+//             LEFT JOIN users ON recipes.user_id = users.id
+//             WHERE recipes.id = $1
+//         `;
+
+// 		const ingredientsQuery = `
+//             SELECT 
+//                 ri.amount, ri.unit, si.name 
+//             FROM recipes_ingredients ri
+//             LEFT JOIN spoonacular_ingredients si ON ri.spoonacular_ingredient_id = si.id
+//             WHERE ri.recipe_id = $1
+//         `;
+
+// 		const instructionsQuery = `
+//             SELECT 
+//                 instruction_text, instruction_order 
+//             FROM instructions
+//             WHERE recipe_id = $1
+//             ORDER BY instruction_order ASC
+//         `;
+
+// 		const recipeResult = await pool.query(recipeQuery, [id]);
+// 		const ingredientsResult = await pool.query(ingredientsQuery, [id]);
+// 		const instructionsResult = await pool.query(instructionsQuery, [id]);
+
+// 		if (!recipeResult.rows.length) {
+// 			return res.status(404).json({ error: "Recipe not found" });
+// 		}
+
+// 		const recipe = recipeResult.rows[0];
+// 		recipe.ingredients = ingredientsResult.rows.map((row) => ({
+// 			name: row.name,
+// 			amount: row.amount,
+// 			unit: row.unit,
+// 		}));
+// 		recipe.instructions = instructionsResult.rows.map((row) => ({
+// 			text: row.instruction_text,
+// 			order: row.instruction_order,
+// 		}));
+
+// 		res.json(recipe);
+// 	} catch (error) {
+// 		console.error("Error fetching recipe details:", error);
+// 		res.status(500).send("Server error");
+// 	}
+// });
+
+
+
+
+router.get("/:id", async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		const recipeQuery = `
+            SELECT 
+                recipes.*, 
+                users.first_name, 
+                users.last_name, 
+                users.profile_picture_url
+            FROM recipes
+            LEFT JOIN users ON recipes.user_id = users.id
+            WHERE recipes.id = $1
+        `;
+
+		const recipeResult = await pool.query(recipeQuery, [id]);
+
+		if (!recipeResult.rows.length) {
+			return res.status(404).json({ error: "Recipe not found" });
+		}
+
+		const recipe = recipeResult.rows[0];
+		res.json(recipe);
+	} catch (error) {
+		console.error("Error fetching recipe:", error.message); // Log detailed error
+		res.status(500).send("Server error");
+	}
+});
+
+
+router.get("/:id/ratings", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const result = await pool.query(
+			`
+			SELECT 
+				COALESCE(AVG(rating), 0) AS average_rating, 
+				COUNT(rating) AS review_count
+			FROM ratings
+			WHERE recipe_id = $1
+		`,
+			[id]
+		);
+
+		res.json(result.rows[0]);
+	} catch (err) {
+		console.error("Error fetching ratings:", err);
+		res.status(500).send("Server error");
+	}
+});
+
+
+router.post("/:id/rate", authenticateUser, async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { rating } = req.body;
+		const userId = req.user.id;
+
+		if (rating < 1 || rating > 5) {
+			return res
+				.status(400)
+				.json({ error: "Rating must be between 1 and 5." });
+		}
+
+		await pool.query(
+			`
+			INSERT INTO ratings (user_id, recipe_id, rating)
+			VALUES ($1, $2, $3)
+			ON CONFLICT (user_id, recipe_id)
+			DO UPDATE SET rating = $3
+		`,
+			[userId, id, rating]
+		);
+
+		// Return the updated average rating and review count
+		const updatedResult = await pool.query(
+			`
+			SELECT 
+				COALESCE(AVG(rating), 0) AS average_rating, 
+				COUNT(rating) AS review_count
+			FROM ratings
+			WHERE recipe_id = $1
+		`,
+			[id]
+		);
+
+		res.json(updatedResult.rows[0]);
+	} catch (err) {
+		console.error("Error adding/updating rating:", err);
+		res.status(500).send("Server error");
+	}
+});
+
+
+
 
 
 

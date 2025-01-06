@@ -125,9 +125,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPlus } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating"; // Import your StarRating component
 import { MeatIcon } from "../assets/icons/MeatIcon";
+import { ChickenIcon } from "../assets/icons/ChickenIcon";
+import { FishIcon } from "../assets/icons/FishIcon";
+import { VegetableIcon } from "../assets/icons/VegetableIcon";
+import { SeafoodIcon } from "../assets/icons/SeafoodIcon";
 import { TimeIcon } from "../assets/icons/TimeIcon";
 import { CommentIcon } from "../assets/icons/CommentIcon";
 import { Link } from "react-router-dom"; // Import Link for navigation
+
+const categoryIconMap = {
+	Meat: MeatIcon,
+	Poultry: ChickenIcon,
+	Fish: FishIcon,
+	Vegetable: VegetableIcon,
+	Seafood: SeafoodIcon
+};
 
 function RecipeCard({
 	id,
@@ -141,8 +153,11 @@ function RecipeCard({
 	rating,
 	commentsCount,
 }) {
+	
+	const CategoryIcon = categoryIconMap[categoryName] || MeatIcon;
+
 	return (
-		<Link 
+		<Link
 			to={`/recipe/${id}`} // Navigate to the recipe details page with the recipe ID
 			className="w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative hover:shadow-xl transition-shadow duration-300"
 		>
@@ -192,7 +207,7 @@ function RecipeCard({
 				{/* Category and Time */}
 				<div className="flex justify-between items-center text-gray-600 mt-2">
 					<div className="flex items-center space-x-1">
-						<MeatIcon />
+						<CategoryIcon /> {/* Dynamically render the icon */}
 						<span>{categoryName}</span>
 					</div>
 					<div className="flex items-center space-x-1">

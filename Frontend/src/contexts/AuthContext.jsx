@@ -9,6 +9,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState(null);
+	const [token, setToken] = useState(null); // Explicitly store the token
 
 	// Function to check if user is logged in
 	const checkAuthStatus = async () => {
@@ -21,10 +22,12 @@ export const AuthProvider = ({ children }) => {
 			);
 			setIsLoggedIn(true);
 			setUser(response.data);
+			setToken(response.data.token); // Token must come from backend here
 		} catch (error) {
 			setIsLoggedIn(false);
 			setUser(null);
-			console.log(error);
+			setToken(null);
+			console.error("Error checking auth status:", error);
 		}
 	};
 
@@ -43,6 +46,7 @@ export const AuthProvider = ({ children }) => {
 			);
 			setIsLoggedIn(true);
 			setUser(response.data);
+			setToken(response.data.token); // Save the token explicitly
 		} catch (error) {
 			throw new Error("Login failed", error);
 		}
@@ -58,14 +62,24 @@ export const AuthProvider = ({ children }) => {
 			);
 			setIsLoggedIn(false);
 			setUser(null);
+				setToken(null);
 		} catch (error) {
 			console.error("Logout failed", error);
 		}
 	};
 
 	return (
-		<AuthContext.Provider
-			value={{ isLoggedIn, user, login, logout, checkAuthStatus }}
+	
+
+			<AuthContext.Provider
+			value={{
+				isLoggedIn,
+				user,
+				token, // Expose the token
+				login,
+				logout,
+				checkAuthStatus,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

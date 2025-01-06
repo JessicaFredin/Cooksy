@@ -55,7 +55,14 @@ function App() {
 								path="/about"
 								element={<AboutCooksyPage />}
 							/>
+
 							<Route path="/recipes" element={<RecipesPage />} />
+
+							<Route
+								path="/recipe/:id"
+								element={<RecipeDetailsPage />}
+							/>
+
 							<Route
 								path="/newsletter"
 								element={<NewsletterPage />}

@@ -218,7 +218,6 @@ import { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import HeadingWithLine from "../components/HeadingWithLine";
 import axios from "axios";
-import profile1 from "../assets/images/profile1.jpg";
 
 const RecipePage = () => {
 	const [recipes, setRecipes] = useState([]);
@@ -272,9 +271,9 @@ const RecipePage = () => {
 						authorImage={`${import.meta.env.VITE_APP_BACKEND_URL}${
 							recipe.profile_picture_url
 						}`}
-						rating={0} // If you want a default or dynamic rating
-						reviews={0} // Or fetch from DB if you have them
-						commentsCount={0} // Or fetch from DB if you have them
+						rating={2} // If you want a default or dynamic rating
+						reviews={25} // Or fetch from DB if you have them
+						commentsCount={10} // Or fetch from DB if you have them
 					/>
 				))}
 			</div>

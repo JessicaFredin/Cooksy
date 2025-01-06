@@ -238,20 +238,7 @@ function Navbar() {
 		<>
 			{/* Desktop Navbar */}
 			<nav className="hidden md:grid grid-cols-12 items-center gap-4 py-4 bg-white/10 backdrop-blur-sm shadow-lg fixed w-full top-0 left-0 z-50">
-				<div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-					<div className="bg-purple-300"></div>
-				</div>
+			
 
 				{/* Links */}
 				<div className="col-start-2 col-span-3 flex justify-center items-center">
