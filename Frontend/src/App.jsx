@@ -34,6 +34,7 @@ function App() {
 					<ScrollToTop />
 					<Navbar />
 
+					
 					<main className="pt-16">
 						<Routes>
 							<Route path="/" element={<HomePage />} />

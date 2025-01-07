@@ -122,7 +122,9 @@
 
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faPlus } from "@fortawesome/free-solid-svg-icons";
+import HeartFavourites from "./HeartFavourites";
+import AddToMealPlanner from "./AddToMealPlanner";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating"; // Import your StarRating component
 import { MeatIcon } from "../assets/icons/MeatIcon";
 import { ChickenIcon } from "../assets/icons/ChickenIcon";
@@ -169,16 +171,16 @@ function RecipeCard({
 					className="w-full h-full object-cover"
 				/>
 				<button
-					className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
+					className="absolute top-2 right-2 bg-[#FF4D65] p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
 					onClick={(e) => e.stopPropagation()} // Prevents the button click from triggering the card click
 				>
-					<FontAwesomeIcon icon={faHeart} className="text-pink-500" />
+					<HeartFavourites/>
 				</button>
 				<button
 					className="absolute top-14 right-2 bg-white p-2 rounded-full shadow-md w-8 h-8 flex items-center justify-center"
 					onClick={(e) => e.stopPropagation()} // Prevents the button click from triggering the card click
 				>
-					<FontAwesomeIcon icon={faPlus} className="text-pink-500" />
+					<AddToMealPlanner/>
 				</button>
 
 				{/* Author Section */}

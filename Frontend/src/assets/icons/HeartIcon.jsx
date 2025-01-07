@@ -11,12 +11,12 @@ export function HeartIcon({ size = 20, initialStroke = "#E12F6B" }) {
 
 	// Determine fill and stroke colors dynamically
 	const fillColor = isClicked
-		? "#FF4D65" // Fill color when clicked
-		: isHovered
-		? "#FF4D65" // Fill color on hover
+		? "#E12F6B" // Fill color when clicked
+		: isHovered 
+		? "#E12F6B" // Fill color on hover
 		: "none"; // Default fill color
 
-	const strokeColor = isHovered || isClicked ? "#FF4D65" : initialStroke;
+	const strokeColor = isHovered || isClicked ? "#E12F6B" : initialStroke;
 
 	return (
 		<svg

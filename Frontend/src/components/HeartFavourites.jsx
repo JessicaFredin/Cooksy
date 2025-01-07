@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { HeartIcon } from "../assets/svg/HeartIcon";
+import { HeartIcon } from "../assets/icons/HeartIcon";
 
 const HeartFavorites = ({ size = "small" }) => {
 	const [isClicked, setIsClicked] = useState(false);
@@ -20,8 +20,8 @@ const HeartFavorites = ({ size = "small" }) => {
 			onClick={() => setIsClicked((prev) => !prev)}
 		>
 			<HeartIcon
-				stroke={isClicked ? "#FF4D65" : "#E12F6B"}
-				fill={isClicked ? "#FF4D65" : "none"}
+				stroke={isClicked ? "#E12F6B" : "#E12F6B"}
+				fill={isClicked ? "#E12F6B" : "none"}
 			/>
 		</div>
 	);

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 
-const AddToMealPlanner = ({ size = "desktop" }) => {
+const AddToMealPlanner = ({ size = "small" }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-  const handleClick = () => setIsClicked(!isClicked);
+  // Samma storleksklasser som i HeartFavorites
+  const sizeClasses = {
+    small: "w-8 h-8",
+    medium: "w-10 h-10 rounded-full",
+    large: "w-12 h-12 rounded-full",
+  };
 
-  // Storlek på cirkeln och ikonen
-  const sizeClasses =
-    size === "desktop" ? "w-12 h-12" : "w-8 h-8"; // Desktop: större, Mobil: mindre
-  const iconSize =
-    size === "desktop" ? "w-6 h-6" : "w-4 h-4"; // Desktop: större ikon, Mobil: mindre ikon
+  const circleSize = sizeClasses[size] || sizeClasses.small;
+  const iconSize = size === "large" ? "w-6 h-6" : size === "medium" ? "w-5 h-5" : "w-4 h-4";
 
   // Färg och ikon baserat på tillstånd
   const bgColor = isClicked
@@ -41,10 +41,10 @@ const AddToMealPlanner = ({ size = "desktop" }) => {
 
   return (
     <div
-      className={`flex items-center justify-center rounded-full cursor-pointer ${sizeClasses} ${bgColor} transition-colors duration-200`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+      className={`flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ${circleSize} ${bgColor}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsClicked(!isClicked)}
     >
       {icon}
     </div>

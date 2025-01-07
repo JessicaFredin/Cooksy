@@ -14,7 +14,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 function RecipeDetailsPage() {
 	const { id } = useParams();
-	const { isLoggedIn, user } = useAuth(); // Use AuthContext
+	const { isLoggedIn } = useAuth(); // Use AuthContext
 	const [userRating, setUserRating] = useState(null); // Store the user's rating
 	const [hoveredStar, setHoveredStar] = useState(0);
 	const [recipe, setRecipe] = useState(null);
@@ -141,7 +141,13 @@ function RecipeDetailsPage() {
 			</div>
 
 			<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
-				<RecipeShortInfoBox id={id} />
+				
+
+				<RecipeShortInfoBox
+					category={recipe.category} // e.g., "Poultry"
+					cookingTime={recipe.cooking_time} // e.g., "30"
+					ingredientsCount={recipe.ingredients.length} // e.g., 12
+				/>
 			</div>
 
 			<p className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-4 lg:row-start-4 lg:row-span-1 lg:text-lg">
