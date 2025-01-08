@@ -9,8 +9,6 @@ function AuthContainer() {
 	const [view, setView] = useState("Prompt"); // "SignUp", "LogIn" eller "VerifyEmail"
 	const [email, setEmail] = useState("");
 
-	console.log("Current view in AuthContainer:", view);
-
 	return (
 		<div>
 			{view === "Prompt" && <Prompt setView={setView} />}

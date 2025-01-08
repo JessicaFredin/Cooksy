@@ -11,7 +11,7 @@ const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 	};
 
 	return (
-		<div className="flex items-center space-x-3">
+		<div className="flex items-center space-x-3 z-10 relative right-4 ">
 			{/* Checkbox */}
 			<div
 				className={`w-7 h-7 flex items-center justify-center border-2 rounded-md ${
@@ -22,9 +22,7 @@ const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 				onClick={handleCheckboxChange}
 				style={{ cursor: "pointer" }}
 			>
-				{isChecked && (
-				    <CheckIcon />
-				)}
+				{isChecked && <CheckIcon />}
 			</div>
 
 			{/* Labels */}

@@ -11,6 +11,9 @@ import RecipeImage from "../components/RecipeDetailsPage/RecipeImage";
 import { useParams } from "react-router-dom";
 // import { useRatings } from "../contexts/RecipesContext";
 import { useAuth } from "../contexts/AuthContext";
+import { usePopup } from "../contexts/PopupContext";
+import LoginForm from "../components/LoginForm";
+import CommentSection from "../components/CommentSection";
 
 function RecipeDetailsPage() {
 	const { id } = useParams();
@@ -23,6 +26,7 @@ function RecipeDetailsPage() {
 	const [portionMultiplier, setPortionMultiplier] = useState(2);
 	const [averageRating, setAverageRating] = useState(0);
 	const [reviewCount, setReviewCount] = useState(0);
+	const { openPopup } = usePopup();
 
 	useEffect(() => {
 		const fetchRecipe = async () => {
@@ -31,6 +35,7 @@ function RecipeDetailsPage() {
 					`${import.meta.env.VITE_APP_BACKEND_URL}/recipes/${id}`
 				);
 				setRecipe(response.data);
+				setUserRating(response.data.user_rating || 0); // Set user's rating
 			} catch (error) {
 				console.error("Error fetching recipe details:", error);
 				setError("Failed to load recipe details.");
@@ -41,9 +46,6 @@ function RecipeDetailsPage() {
 
 		fetchRecipe();
 	}, [id]);
-
-
-	
 
 	useEffect(() => {
 		const fetchRatings = async () => {
@@ -74,6 +76,7 @@ function RecipeDetailsPage() {
 	if (error) {
 		return <p className="text-red-500">{error}</p>;
 	}
+	console.log(recipe);
 
 	const handlePortionChange = (newPortion) => {
 		setPortionMultiplier(newPortion / recipe.serving_size);
@@ -107,9 +110,10 @@ function RecipeDetailsPage() {
 	};
 
 	return (
-		<div className="grid grid-cols-12 gap-6 md:gap-y-4 mt-20">
-			<div className="flex items-center col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-1  md:self-start lg:row-span-1">
-				{/* <StarRating
+		<div>
+			<div className="grid grid-cols-12 gap-6 md:gap-y-4 mt-20">
+				<div className="flex items-center col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-1  md:self-start lg:row-span-1">
+					{/* <StarRating
 					totalStars={5}
 					staticRating={4}
 					// staticRating={ratings[id] || 0}
@@ -117,69 +121,69 @@ function RecipeDetailsPage() {
 				/>
 				<h5 className="mt-1 ml-2">(84)</h5> */}
 
-				{/* Static Star Rating Display */}
-				<StarRating totalStars={5} staticRating={averageRating} />
-				<h5 className="mt-1 ml-2">({reviewCount} reviews)</h5>
-			</div>
+					{/* Static Star Rating Display */}
+					<StarRating totalStars={5} staticRating={averageRating} />
+					<h5 className="mt-1 ml-2">({reviewCount} reviews)</h5>
+				</div>
 
-			<h1 className="text-4xl font-bold col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-2 lg:row-span-1 lg:text-5xl">
-				{recipe.title}
-			</h1>
+				<h1 className="text-4xl font-bold col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-2 lg:row-span-1 lg:text-5xl">
+					{recipe.title}
+				</h1>
 
-			<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-1 md:row-span-3 lg:row-start-1 lg:row-span-5">
-				<RecipeImage
-					imageUrl={`${import.meta.env.VITE_APP_BACKEND_URL}${
-						recipe.image_url
-					}`}
-					title={recipe.title}
-					firstName={recipe.user_first_name}
-					lastName={recipe.user_last_name}
-					profilePicture={`${import.meta.env.VITE_APP_BACKEND_URL}${
-						recipe.user_profile_picture
-					}`}
-				/>
-			</div>
+				<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-1 md:row-span-3 lg:row-start-1 lg:row-span-5">
+					<RecipeImage
+						imageUrl={`${import.meta.env.VITE_APP_BACKEND_URL}${
+							recipe.image_url
+						}`}
+						title={recipe.title}
+						firstName={recipe.user_first_name}
+						lastName={recipe.user_last_name}
+						profilePicture={`${
+							import.meta.env.VITE_APP_BACKEND_URL
+						}${recipe.user_profile_picture}`}
+					/>
+				</div>
 
-			<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
-				
+				<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
+					<RecipeShortInfoBox
+						category={recipe.category_name} // e.g., "Poultry"
+						cookingTime={recipe.cooking_time_minutes} // e.g., "30"
+						ingredientsCount={recipe.ingredients.length} // e.g., 12
+					/>
+				</div>
 
-				<RecipeShortInfoBox
-					category={recipe.category} // e.g., "Poultry"
-					cookingTime={recipe.cooking_time} // e.g., "30"
-					ingredientsCount={recipe.ingredients.length} // e.g., 12
-				/>
-			</div>
+				<p className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-4 lg:row-start-4 lg:row-span-1 lg:text-lg">
+					{recipe.description}
+				</p>
 
-			<p className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-4 lg:row-start-4 lg:row-span-1 lg:text-lg">
-				{recipe.description}
-			</p>
+				<div className="col-start-2 col-span-6 md:col-start-2 md:col-span-4 md:row-start-5 lg:row-start-5 lg:col-start-2 lg:col-span-2 grid grid-cols-2">
+					<Warning title="Lactose" isPresent={recipe.lactose} />
+					<Warning title="Gluten" isPresent={recipe.gluten} />
+				</div>
 
-			<div className="col-start-2 col-span-6 md:col-start-2 md:col-span-4 md:row-start-5 lg:row-start-5 lg:col-start-2 lg:col-span-2 grid grid-cols-2">
-				<Warning title="Lactose" isPresent={recipe.lactose} />
-				<Warning title="Gluten" isPresent={recipe.gluten} />
-			</div>
+				<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-4 md:row-span-3 lg:row-start-6  lg:row-span-1">
+					<NutritionInfo id={id} />
+				</div>
 
-			<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-4 md:row-span-3 lg:row-start-6  lg:row-span-1">
-				<NutritionInfo id={id} />
-			</div>
-			<div className="col-start-2 col-span-10 md:row-start-7">
-				<PortionBar
-					currentPortion={recipe.serving_size * portionMultiplier}
-					onPortionChange={handlePortionChange}
-				/>
-			</div>
-			<div className="col-start-2 col-span-10">
-				<IngredientsInstructions
-					ingredients={recipe.ingredients || []}
-					instructions={recipe.instructions || []}
-				/>
+				<div className="col-start-2 col-span-10 md:row-start-7">
+					<PortionBar
+						currentPortion={recipe.serving_size * portionMultiplier}
+						onPortionChange={handlePortionChange}
+					/>
+				</div>
 
-				{/* <IngredientsInstructions
+				<div className="col-start-2 col-span-10">
+					<IngredientsInstructions
+						ingredients={recipe.ingredients || []}
+						instructions={recipe.instructions || []}
+					/>
+
+					{/* <IngredientsInstructions
 					instructions={recipe.instructions || []}
 					ingredients={recipe.ingredients || []}
 				/> */}
 
-				{/* 
+					{/* 
 				<IngredientsInstructions
 					ingredients={recipe.ingredients.map((ingredient) => ({
 						...ingredient,
@@ -187,24 +191,23 @@ function RecipeDetailsPage() {
 					}))}
 					instructions={recipe.instructions}
 				/> */}
-			</div>
-			<div className="col-start-2 col-span-10">
-				<NutritionalValueDropdown
-					protein={recipe.protein}
-					carbs={recipe.carbs}
-					fat={recipe.fat}
-					energyKJ={recipe.energy_kj}
-					energyKCAL={recipe.energy_kcal}
-				/>
-			</div>
+				</div>
 
-			<div className="col-start-2 col-span-10 grid ">
-				{" "}
-				<NutritionalValueDropdown id={id} />
-				<div className=" md:col-start-2 mt-10 md:mt-0 flex flex-col items-center">
-					<h3 className="font-bold text-2xl">Rate this recipe</h3>
+				<div className="col-start-2 col-span-10">
+					<NutritionalValueDropdown
+						protein={recipe.protein}
+						carbs={recipe.carbs}
+						fat={recipe.fat}
+						energyKJ={recipe.energy_kj}
+						energyKCAL={recipe.energy_kcal}
+					/>
+				</div>
 
-					{/* <StarRating
+				<div className="col-start-2 col-span-10 grid ">
+					<div className=" md:col-start-2 mt-10 md:mt-0 flex flex-col items-center">
+						<h3 className="font-bold text-2xl">Rate this recipe</h3>
+
+						{/* <StarRating
 						totalStars={5}
 						onRatingChange={handleRatingChange} // Pass the callback
 					/>
@@ -220,37 +223,53 @@ function RecipeDetailsPage() {
 						</p>
 					)} */}
 
-					{/* <StarRating
+						{/* <StarRating
 						totalStars={5}
 						onRatingChange={handleRatingChange} // Pass the callback
 						onHoverChange={setHoveredStar} // Track hover changes
 					/> */}
 
-					{isLoggedIn ? (
-						<div className="mt-4">
-							<StarRating
-								totalStars={5}
-								onRatingChange={handleRatingChange}
-								onHoverChange={setHoveredStar}
-							/>
-							<p className="my-1 text-gray-600">
-								{{
-									0: "",
-									1: "Very bad!",
-									2: "Bad",
-									3: "Good",
-									4: "Very good",
-									5: "Excellent!",
-								}[hoveredStar || userRating] || ""}
+						{isLoggedIn ? (
+							<div className="mt-4">
+								<StarRating
+									totalStars={5}
+									onRatingChange={handleRatingChange}
+									onHoverChange={setHoveredStar}
+								/>
+
+								<p className="my-1 text-gray-600">
+									{{
+										0: "",
+										1: "Very bad!",
+										2: "Bad",
+										3: "Good",
+										4: "Very good",
+										5: "Excellent!",
+									}[hoveredStar || userRating] || ""}
+								</p>
+							</div>
+						) : (
+							<p className="text-gray-500 mt-4">
+								<a
+									href="#"
+									className="text-blue-500 underline cursor-pointer"
+									onClick={() => openPopup(<LoginForm />)} // Pass "login" or similar to indicate the login form
+								>
+									Log in to rate this recipe.
+								</a>
 							</p>
-						</div>
-					) : (
-						<p className="text-gray-500 mt-4">
-							Log in to rate this recipe.
-						</p>
-					)}
+						)}
+					</div>
 				</div>
 			</div>
+
+			<div className="py-5">
+				<div className="bg-gray-200 flex justify-center w-full h-[70px]">
+					Ad
+				</div>
+			</div>
+			
+			<CommentSection />
 		</div>
 	);
 }

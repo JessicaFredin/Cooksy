@@ -106,21 +106,27 @@ function IngredientsInstructions({ ingredients, instructions }) {
 						</h5>
 					</div>
 					<ul className="space-y-4">
-						{instructions.map((instruction, index) => (
-							<li key={index}>
-								<CustomCheckbox
-									labelUnit=""
-									labelIngredient={instruction.text}
-									checked={completedInstructions.includes(
-										index
-									)}
-									onChange={() =>
-										toggleCompletion("instructions", index)
-									}
-								/>
-							</li>
-						))}
+						<div className="border-l-4 border-dotted border-gray-200 space-y-10 relative ms-3">
+							{instructions.map((instruction, index) => (
+								<li key={index}>
+									<CustomCheckbox
+										labelUnit=""
+										labelIngredient={instruction.text}
+										checked={completedInstructions.includes(
+											index
+										)}
+										onChange={() =>
+											toggleCompletion(
+												"instructions",
+												index
+											)
+										}
+									/>
+								</li>
+							))}
+						</div>
 					</ul>
+
 					<div className="mt-6 flex items-center">
 						<DoneIcon />
 						<h5 className="text-xl ms-2 font-semibold">Done!</h5>

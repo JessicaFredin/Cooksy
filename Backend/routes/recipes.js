@@ -78,25 +78,24 @@ router.get("/", async (req, res) => {
 // 	}
 // });
 
-
-
-
-
-
 router.get("/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 
 		// Fetch recipe details
 		const recipeQuery = `
-            SELECT 
-                recipes.*, 
-                users.first_name AS user_first_name, 
-                users.last_name AS user_last_name, 
-                users.profile_picture_url AS user_profile_picture
-            FROM recipes
-            LEFT JOIN users ON recipes.user_id = users.id
-            WHERE recipes.id = $1
+            SELECT
+			  recipes.*,
+			  users.first_name AS user_first_name,
+			  users.last_name AS user_last_name,
+			  users.profile_picture_url AS user_profile_picture,
+			  categories.name AS category_name
+			FROM recipes
+			LEFT JOIN users 
+			  ON recipes.user_id = users.id
+			LEFT JOIN categories
+			  ON recipes.category_id = categories.id
+			WHERE recipes.id = $1
         `;
 		const recipeResult = await pool.query(recipeQuery, [id]);
 

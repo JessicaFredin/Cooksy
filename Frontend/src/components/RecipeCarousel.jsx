@@ -9,7 +9,7 @@ import {
 	faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-const RecipeCarousel = ({ recipes }) => {
+function RecipeCarousel({ recipes }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const recipesPerPage = 4;
@@ -41,12 +41,12 @@ const RecipeCarousel = ({ recipes }) => {
 			{/* Navigation Buttons */}
 			<button
 				onClick={prevPage}
-				className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
+				className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
 				disabled={currentIndex === 0}
 			>
 				<FontAwesomeIcon icon={faChevronLeft} />
-            </button>
-            
+			</button>
+
 			<div className="col-start-2 col-span-10 flex items-center gap-4 overflow-hidden">
 				{currentRecipes.map((recipe, index) => (
 					<div key={index} className="w-full sm:w-1/4 flex-shrink-0">
@@ -66,14 +66,14 @@ const RecipeCarousel = ({ recipes }) => {
 			</div>
 			<button
 				onClick={nextPage}
-				className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
+				className="absolute right-16 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
 				disabled={currentIndex === totalPages - 1}
 			>
 				<FontAwesomeIcon icon={faChevronRight} />
 			</button>
 
 			{/* Pagination Dots */}
-			<div className="col-start-2 col-span-10 flex justify-center mt-4 space-x-2">
+			<div className="col-start-2 col-span-10 flex justify-center mt-8 space-x-2">
 				{Array.from({ length: totalPages }).map((_, index) => (
 					<button
 						key={index}
@@ -88,6 +88,6 @@ const RecipeCarousel = ({ recipes }) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default RecipeCarousel;

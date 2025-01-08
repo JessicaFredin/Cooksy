@@ -2,7 +2,6 @@ import { useState } from "react";
 import SettingsSidebar from "../components/SettingsSidebar";
 import AccountSettings from "../components/AccountSettings";
 import NotificationsSettings from "../components/NotificationsSettings";
-import FAQSettings from "../components/FAQSettings";
 import HeadingWithLine from "../components/HeadingWithLine";
 
 function SettingsPage() {
@@ -14,8 +13,6 @@ function SettingsPage() {
 				return <AccountSettings />;
 			case "Notifications":
 				return <NotificationsSettings />;
-			case "FAQ":
-				return <FAQSettings />;
 			default:
 				return <AccountSettings />;
 		}
