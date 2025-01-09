@@ -90,7 +90,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import CommentReply from "./CommentReply";
-import CommentInput from "./CommentInput";
 import { ThumbsUpIcon } from "../assets/icons/ThumbsUpIcon";
 import { ThumbsDownIcon } from "../assets/icons/ThumbsDownIcon";
 
