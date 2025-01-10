@@ -30,7 +30,7 @@ const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 				<span
 					className={`font-bold text-lg ${
 						isChecked
-							? "line-through text-gray-400"
+							? "line-through text-gray-200"
 							: "text-gray-800"
 					}`}
 				>
@@ -39,7 +39,7 @@ const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 				<span
 					className={`text-lg ${
 						isChecked
-							? "line-through text-gray-400"
+							? "line-through text-gray-200"
 							: "text-gray-800"
 					}`}
 				>

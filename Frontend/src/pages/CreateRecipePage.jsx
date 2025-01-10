@@ -10,6 +10,7 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function CreateRecipePage() {
+	// State för att hantera receptdata och formulärfält
 	const [ingredients, setIngredients] = useState([
 		{ volume: "", unit: "", name: "", id: null },
 	]);
@@ -33,15 +34,17 @@ function CreateRecipePage() {
 	const [imageFile, setImageFile] = useState(null);
 	const [previewImage, setPreviewImage] = useState(null);
 	const [sharingOption, setSharingOption] = useState("public");
-
+    
+    // Funktion för att hantera delningsalternativ
 	const handleSharingChange = (event) => {
 		setSharingOption(event.target.value);
 	};
 
-	// Fetch initial categories, meal types, and world cuisines from the API on load
+	// Hämtar initiala kategorier, måltidstyper och världskök från API:et vid sidladdning
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				// Hämtar data parallellt för att minska laddningstiden
 				const baseURL = import.meta.env.VITE_APP_BACKEND_URL;
 
 				const [categoriesRes, mealTypesRes, worldCuisinesRes] =
@@ -56,7 +59,7 @@ function CreateRecipePage() {
 							withCredentials: true,
 						}),
 					]);
-
+                // Sätter hämtad data i state
 				setCategories(categoriesRes.data);
 				setMealTypes(mealTypesRes.data);
 				setWorldCuisines(worldCuisinesRes.data);
@@ -68,11 +71,11 @@ function CreateRecipePage() {
 		fetchData();
 	}, []);
 
-	// Handle form submission
+	// Funktion för att hantera formulärinlämning
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		// Validate the form
+		// Validerar formulärfält innan submission
 		if (
 			!title ||
 			!description ||
@@ -95,7 +98,7 @@ function CreateRecipePage() {
 			const baseURL = import.meta.env.VITE_APP_BACKEND_URL;
 			const formData = new FormData();
 
-			// Append form fields
+			// Lägger till alla formulärfält i FormData för att kunna skicka filuppladdningar
 			formData.append("title", title);
 			formData.append("description", description);
 			formData.append("serving_size", servingSize);
@@ -109,7 +112,7 @@ function CreateRecipePage() {
 			formData.append("instructions", JSON.stringify(instructions));
 			formData.append("sharing_option", sharingOption);
 
-			// Send data to backend
+			// Skickar uppdaterat recept till backend
 			const response = await axios.post(
 				`${baseURL}/recipes/add`,
 				formData,
@@ -122,7 +125,7 @@ function CreateRecipePage() {
 			);
 
 			alert("Recipe added successfully!");
-			console.log(response.data); // Log the response for debugging
+			console.log(response.data); //Logga svar för felsökning
 		} catch (error) {
 			console.error("Error submitting recipe:", error);
 			alert("There was an error adding the recipe. Please try again.");
@@ -137,7 +140,7 @@ function CreateRecipePage() {
 				</div>
 
 				<form onSubmit={handleSubmit} className="grid gap-6">
-					{/* Recipe Title */}
+					{/* Formulär för tilläggning av recept*/}
 					<div className="space-y-10 lg:w-1/2">
 						<div>
 							<label className="block font-semibold mb-2">
@@ -152,7 +155,7 @@ function CreateRecipePage() {
 							/>
 						</div>
 
-						{/* Upload Image */}
+						{/* Ladda upp bild */}
 						<div>
 							<label className="block font-semibold mb-2">
 								Upload Image
@@ -213,7 +216,7 @@ function CreateRecipePage() {
 							</div>
 						</div>
 
-						{/* Recipe Description */}
+						{/* Recept beskrivning */}
 						<div className="relative">
 							<label className="block font-semibold mb-2">
 								Describe your recipe
@@ -230,7 +233,7 @@ function CreateRecipePage() {
 							</span>
 						</div>
 
-						{/* Serving Size and Cooking Time */}
+						{/* Poritonstorlek och tid*/}
 						<div className="w-1/2 grid grid-rows-2 gap-4">
 							<div>
 								<label className="block font-semibold mb-2">
@@ -263,28 +266,28 @@ function CreateRecipePage() {
 								/>
 							</div>
 						</div>
-						{/* Ingredients Section */}
+						{/* Ingredienser sektion */}
 						<div className="space-y-10">
 							<Ingredients
 								ingredients={ingredients}
 								setIngredients={setIngredients}
 							/>
 						</div>
-						{/* Nutrition Information */}
+						{/* Näringsinformation */}
 						<div className="space-y-4">
 							<NutritionInformation
 								ingredients={ingredients}
-								setNutrition={setNutrition} // Correctly pass this prop
+								setNutrition={setNutrition} 
 							/>
 						</div>
-						{/* Instructions */}
+						{/* Instuktioner */}
 						<div className="space-y-10">
 							<StepInstructions
 								instructions={instructions}
 								setInstructions={setInstructions}
 							/>
 						</div>
-						{/* Category Dropdown */}
+						{/* Kategori dropdown */}
 						<div className="space-y-4">
 							<label className="block font-semibold mb-2">
 								Category
@@ -310,7 +313,7 @@ function CreateRecipePage() {
 							</select>
 						</div>
 
-						{/* Meal Type Dropdown */}
+						{/* Måltidstyp dropdown */}
 						<div className="space-y-4">
 							<label className="block font-semibold mb-2">
 								Meal Type
@@ -335,8 +338,6 @@ function CreateRecipePage() {
 								))}
 							</select>
 						</div>
-
-						{/* World Cuisine Dropdown */}
 						<div className="space-y-4">
 							<label className="block font-semibold mb-2">
 								World Cuisine
@@ -361,14 +362,14 @@ function CreateRecipePage() {
 								))}
 							</select>
 						</div>
-						{/* Sharing Options */}
+						{/* Delnings alternativ */}
 						<div>
 							<SharingOptions
 								selectedOption={sharingOption}
 								onChange={handleSharingChange}
 							/>
 						</div>
-						{/* Submit Button */}
+						{/* Submit-knapp */}
 						<div>
 							<Button size="mediumMoreWidth" type="submit">
 								Post Recipe

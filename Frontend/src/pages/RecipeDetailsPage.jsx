@@ -14,6 +14,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { usePopup } from "../contexts/PopupContext";
 import LoginForm from "../components/LoginForm";
 import CommentSection from "../components/CommentSection";
+import RecipeSwoosh from "../assets/svg/RecipeSwoosh";
 
 function RecipeDetailsPage() {
 	const { id } = useParams();
@@ -35,7 +36,11 @@ function RecipeDetailsPage() {
 					`${import.meta.env.VITE_APP_BACKEND_URL}/recipes/${id}`
 				);
 				setRecipe(response.data);
-				setUserRating(response.data.user_rating || 0); // Set user's rating
+
+				// Once we have the recipe, set portionMultiplier = its serving_size
+				if (response.data.serving_size) {
+					setPortionMultiplier(response.data.serving_size);
+				}
 			} catch (error) {
 				console.error("Error fetching recipe details:", error);
 				setError("Failed to load recipe details.");
@@ -45,6 +50,29 @@ function RecipeDetailsPage() {
 		};
 
 		fetchRecipe();
+	}, [id]);
+
+	useEffect(() => {
+		const fetchUserRating = async () => {
+			try {
+				const response = await axios.get(
+					`${
+						import.meta.env.VITE_APP_BACKEND_URL
+					}/recipes/${id}/userRating`,
+					{
+						withCredentials: true,
+					}
+				);
+
+				setUserRating(response.data.user_rating);
+				console.log(response.data.user_rating);
+			} catch (error) {
+				console.error("Error fetching user rating:", error);
+				setError("Failed to load user rating.");
+			}
+		};
+
+		fetchUserRating();
 	}, [id]);
 
 	useEffect(() => {
@@ -76,10 +104,9 @@ function RecipeDetailsPage() {
 	if (error) {
 		return <p className="text-red-500">{error}</p>;
 	}
-	console.log(recipe);
 
 	const handlePortionChange = (newPortion) => {
-		setPortionMultiplier(newPortion / recipe.serving_size);
+		setPortionMultiplier(newPortion);
 	};
 
 	// const handleRatingChange = (newRating) => {
@@ -110,7 +137,12 @@ function RecipeDetailsPage() {
 	};
 
 	return (
-		<div>
+		<div className="relative">
+			{/* Swoosh Background */}
+			<div className="absolute -top-[400px] -right-[150px] w-full h-auto z-0 overflow-hidden">
+				<RecipeSwoosh />
+			</div>
+
 			<div className="grid grid-cols-12 gap-6 md:gap-y-4 mt-20">
 				<div className="flex items-center col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-1  md:self-start lg:row-span-1">
 					{/* <StarRating
@@ -167,7 +199,7 @@ function RecipeDetailsPage() {
 
 				<div className="col-start-2 col-span-10 md:row-start-7">
 					<PortionBar
-						currentPortion={recipe.serving_size * portionMultiplier}
+						currentPortion={recipe.serving_size}
 						onPortionChange={handlePortionChange}
 					/>
 				</div>
@@ -176,6 +208,8 @@ function RecipeDetailsPage() {
 					<IngredientsInstructions
 						ingredients={recipe.ingredients || []}
 						instructions={recipe.instructions || []}
+						servingSize={recipe.serving_size}
+						portionMultiplier={portionMultiplier}
 					/>
 
 					{/* <IngredientsInstructions
@@ -196,10 +230,10 @@ function RecipeDetailsPage() {
 				<div className="col-start-2 col-span-10">
 					<NutritionalValueDropdown
 						protein={recipe.protein}
-						carbs={recipe.carbs}
+						carbs={recipe.Carbs}
 						fat={recipe.fat}
-						energyKJ={recipe.energy_kj}
-						energyKCAL={recipe.energy_kcal}
+						energyKJ={recipe.energyKJ}
+						energyKCAL={recipe.energyKCAL}
 					/>
 				</div>
 
@@ -230,14 +264,17 @@ function RecipeDetailsPage() {
 					/> */}
 
 						{isLoggedIn ? (
-							<div className="mt-4">
-								<StarRating
-									totalStars={5}
-									onRatingChange={handleRatingChange}
-									onHoverChange={setHoveredStar}
-								/>
+							<div className="mt-4 flex flex-col items-center">
+								{userRating && (
+									<StarRating
+										totalStars={5}
+										onRatingChange={handleRatingChange}
+										onHoverChange={setHoveredStar}
+										initialRating={userRating}
+									/>
+								)}
 
-								<p className="my-1 text-gray-600">
+								<p className="mt-2 text-gray-600 text-center">
 									{{
 										0: "",
 										1: "Very bad!",
@@ -253,7 +290,7 @@ function RecipeDetailsPage() {
 								<a
 									href="#"
 									className="text-blue-500 underline cursor-pointer"
-									onClick={() => openPopup(<LoginForm />)} // Pass "login" or similar to indicate the login form
+									onClick={() => openPopup(<LoginForm />)}
 								>
 									Log in to rate this recipe.
 								</a>
@@ -268,7 +305,7 @@ function RecipeDetailsPage() {
 					Ad
 				</div>
 			</div>
-			
+
 			<CommentSection />
 		</div>
 	);

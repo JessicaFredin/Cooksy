@@ -25,6 +25,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import SettingsPage from "./pages/SettingsPage";
 import { RecipesProvider } from "./contexts/RecipesContext";
 import { PopupProvider } from "./contexts/PopupContext";
+import NotificationsPage from "./pages/NotificationsPage";
 
 
 function App() {
@@ -101,6 +102,10 @@ function App() {
 									path="/recipe/:id"
 									element={<RecipeDetailsPage />}
 								/>
+								<Route 
+							    path="/notifications" 
+								element={<NotificationsPage />} 
+							    />
 							</Routes>
 							<Footer />
 						</main>

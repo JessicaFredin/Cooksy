@@ -64,9 +64,6 @@
 
 // export default StarRating;
 
-
-
-
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
@@ -76,10 +73,11 @@ const StarRating = ({
 	staticRating = null, // Static rating for read-only mode
 	onRatingChange = null, // Callback for dynamic rating
 	hoverDescriptions = null, // Optional descriptions for hover states
+	initialRating = 0,
 }) => {
 	const [hoveredStar, setHoveredStar] = useState(0); // Hovered star index
-	const [selectedRating, setSelectedRating] = useState(0); // Selected rating
-
+	const [selectedRating, setSelectedRating] = useState(initialRating); // Selected rating
+	console.log(initialRating);
 	useEffect(() => {
 		// Initialize the selected rating from the staticRating if provided
 		if (staticRating !== null) {
@@ -113,7 +111,9 @@ const StarRating = ({
 					const starIndex = index + 1;
 					const isActive =
 						starIndex <=
-						(isStatic ? staticRating : hoveredStar || selectedRating);
+						(isStatic
+							? staticRating
+							: hoveredStar || selectedRating);
 
 					return (
 						<span

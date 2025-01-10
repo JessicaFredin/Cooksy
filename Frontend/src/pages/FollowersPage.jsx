@@ -26,7 +26,7 @@ const FollowersPage = () => {
 			following: true,
 		},
 		{
-			name: "First/last name",
+			name: "Jonna Johansson",
 			recipes: 20,
 			followers: 120,
 			following: true,
@@ -68,23 +68,19 @@ const FollowersPage = () => {
 	return (
 		<div className="grid grid-cols-12 py-8">
 			{" "}
-			{/* Minskat vertikalt utrymme */}
 			{/* Rubrik */}
 			<div className="col-start-2 mb-4">
 				{" "}
-				{/* Mindre marginal under rubriken */}
 				<HeadingWithLine text="Followers" />
 			</div>
 			{/* Sorteringsmeny */}
 			<div className="col-start-2 col-span-10 flex justify-end mb-6">
 				{" "}
-				{/* Mindre marginal */}
 				<SortMenu />
 			</div>
-			{/* Profilkort */}
+			{/* Renderar Profilkort */}
 			<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 				{" "}
-				{/* Justerat gap */}
 				{profiles.map((profile, index) => (
 					<div key={index} className="flex justify-center">
 						<ProfileCard

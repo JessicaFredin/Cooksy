@@ -10,6 +10,7 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function EditRecipePage({ recipeId }) {
+    // State för att hantera receptdata och formulärfält
     const [ingredients, setIngredients] = useState([]);
     const [nutrition, setNutrition] = useState({
         protein: 0,
@@ -31,17 +32,17 @@ function EditRecipePage({ recipeId }) {
     const [imageFile, setImageFile] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [sharingOption, setSharingOption] = useState("public");
-
+     // Funktion för att hantera delningsalternativ
     const handleSharingChange = (event) => {
         setSharingOption(event.target.value);
     };
 
-    // Fetch initial categories, meal types, world cuisines, and recipe data on load
+    //Hämtar initial data för kategorier, måltidstyper, världskök och recept
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const baseURL = import.meta.env.VITE_APP_BACKEND_URL;
-
+                //Hämtar data parallellt för att minska laddningstiden
                 const [categoriesRes, mealTypesRes, worldCuisinesRes, recipeRes] =
                     await Promise.all([
                         axios.get(`${baseURL}/recipes/categories`, {
@@ -57,12 +58,12 @@ function EditRecipePage({ recipeId }) {
                             withCredentials: true,
                         }),
                     ]);
-
+                // Sätter hämtad data i state
                 setCategories(categoriesRes.data);
                 setMealTypes(mealTypesRes.data);
                 setWorldCuisines(worldCuisinesRes.data);
 
-                // Set recipe data
+                // Sätter data för aktuellt recept
                 const recipeData = recipeRes.data;
                 setTitle(recipeData.title);
                 setDescription(recipeData.description);
@@ -84,11 +85,11 @@ function EditRecipePage({ recipeId }) {
         fetchData();
     }, [recipeId]);
 
-    // Handle form submission
+    // Funktion för att hantera formulärinlämning
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate the form
+        // Validerar formulärfält innan submission
         if (
             !title ||
             !description ||
@@ -109,7 +110,7 @@ function EditRecipePage({ recipeId }) {
             const baseURL = import.meta.env.VITE_APP_BACKEND_URL;
             const formData = new FormData();
 
-            // Append form fields
+            // Lägger till alla formulärfält i FormData för att kunna skicka filuppladdningar
             formData.append("title", title);
             formData.append("description", description);
             formData.append("serving_size", servingSize);
@@ -123,7 +124,7 @@ function EditRecipePage({ recipeId }) {
             formData.append("instructions", JSON.stringify(instructions));
             formData.append("sharing_option", sharingOption);
 
-            // Send data to backend
+            // Skickar uppdaterat recept till backend
             const response = await axios.put(
                 `${baseURL}/recipes/update/${recipeId}`,
                 formData,
@@ -136,7 +137,7 @@ function EditRecipePage({ recipeId }) {
             );
 
             alert("Recipe updated successfully!");
-            console.log(response.data); // Log the response for debugging
+            console.log(response.data); // Loggar svaret för felsökning
         } catch (error) {
             console.error("Error updating recipe:", error);
             alert("There was an error updating the recipe. Please try again.");
@@ -149,9 +150,9 @@ function EditRecipePage({ recipeId }) {
                 <div>
                     <HeadingWithLine text="Edit Recipe" />
                 </div>
-
+                {/* Formulär för tilläggning av recept*/}
                 <form onSubmit={handleSubmit} className="grid gap-6">
-                    {/* Recipe Title */}
+                    {/* Recept titel */}
                     <div className="space-y-10 lg:w-1/2">
                         <div>
                             <label className="block font-semibold mb-2">
@@ -166,7 +167,7 @@ function EditRecipePage({ recipeId }) {
                             />
                         </div>
 
-                        {/* Upload Image */}
+                        {/* Ladda upp bild */}
                         <div>
                             <label className="block font-semibold mb-2">
                                 Upload Image

@@ -8,9 +8,9 @@ export default {
 				whiteFull: "#ffffff",
 				black: "#333333",
 				gray: {
-					100: "#eee",
+					100: "#eeeeee",
 					200: "#D9D9D9",
-					300: "rgba(51, 51, 51, 30)",
+					300: "#555555",
 					400: "rgba(51, 51, 51, 40)",
 					500: "#B8B8B8",
 					600: "rgba(51, 51, 51, 60)",

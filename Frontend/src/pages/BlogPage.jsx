@@ -9,14 +9,14 @@ const blogData = {
 const BlogPage = () => {
   return (
     <div className="relative grid grid-cols-12 gap-6 px-4 py-8">
-      {/* Main Content */}
+      {/* Huvudinnehåll */}
       <div className="col-span-12 md:col-start-2 md:col-span-10">
-        {/* Heading Section */}
+        {/* Rubrik */}
         <div className="mb-8">
           <HeadingWithLine text="Peaches: A Nutritional Powerhouse" />
         </div>
 
-        {/* Image and First Paragraph */}
+        {/* Bild och första paragraf */}
         <div className="grid grid-cols-12 gap-6 items-start mb-8">
           <div className="col-span-12 md:col-span-6 order-2 md:order-1">
             <p className="text-gray-700 mb-4">
@@ -48,7 +48,7 @@ const BlogPage = () => {
           </div>
         </div>
 
-        {/* Additional Content */}
+        {/* Övrigt innehåll */}
         <div className="col-span-12">
           <h2 className="text-2xl font-semibold mb-2">
             Immune Health and Skin Benefits

@@ -165,6 +165,27 @@ router.get("/:id/ratings", async (req, res) => {
 	}
 });
 
+router.get("/:id/userRating", authenticateUser, async (req, res) => {
+	try {
+		const { id } = req.params;
+		const userId = req.user.id;
+		const result = await pool.query(
+			`
+			SELECT 
+				rating as user_rating
+			FROM ratings
+			WHERE recipe_id = $1 AND user_id = $2
+		`,
+			[id, userId]
+		);
+
+		res.json(result.rows[0]);
+	} catch (err) {
+		console.error("Error fetching ratings:", err);
+		res.status(500).send("Server error");
+	}
+});
+
 router.post("/:id/rate", authenticateUser, async (req, res) => {
 	try {
 		const { id } = req.params;
