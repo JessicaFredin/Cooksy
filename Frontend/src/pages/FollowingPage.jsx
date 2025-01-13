@@ -4,7 +4,7 @@ import SortMenu from "../components/SortMenu";
 import ProfileCard from "../components/ProfileCard";
 
 const Following = () => {
-	//Mock-data för profilkort.
+	//Statiskt data för profilkort.
 	const profiles = [
 		{ name: "Liv Thatcher", recipes: 20, followers: 120, following: true },
 		{

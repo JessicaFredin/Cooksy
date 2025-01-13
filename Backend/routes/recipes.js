@@ -7,47 +7,187 @@ import fs from "fs";
 
 const router = express.Router();
 
+// // --------------------- GET Public Recipes (No Auth Required) ---------------------
+// router.get("/", async (req, res) => {
+// 	try {
+// 		// We join categories & meal_types & users so we get everything in one query.
+// 		const result = await pool.query(`
+//       SELECT
+//         recipes.id,
+//         recipes.user_id,
+//         recipes.category_id,
+//         categories.name AS category_name,
+//         recipes.meal_type_id,
+//         meal_types.name AS meal_type_name,
+//         recipes.world_cuisine_id,
+//         recipes.description,
+//         recipes.title,
+//         recipes.image_url,
+//         recipes.serving_size,
+//         recipes.cooking_time_minutes,
+//         recipes.protein,
+//         recipes.carbs,
+//         recipes.fat,
+//         recipes.energy_kj,
+//         recipes.energy_kcal,
+//         recipes.is_public,
+//         users.first_name,
+//         users.last_name,
+//         users.profile_picture_url
+//       FROM recipes
+//       JOIN categories ON categories.id = recipes.category_id
+//       JOIN meal_types ON meal_types.id = recipes.meal_type_id
+//       JOIN users ON users.id = recipes.user_id
+//       WHERE recipes.is_public = true
+//       ORDER BY recipes.id ASC
+//     `);
+
+// 		res.json(result.rows); // Array of recipe objects
+// 	} catch (err) {
+// 		console.error("Error fetching recipes:", err);
+// 		res.status(500).send("Server error");
+// 	}
+// });
+
 // --------------------- GET Public Recipes (No Auth Required) ---------------------
 router.get("/", async (req, res) => {
 	try {
-		// We join categories & meal_types & users so we get everything in one query.
+		// Modified query to include average rating and review count
 		const result = await pool.query(`
-      SELECT
-        recipes.id,
-        recipes.user_id,
-        recipes.category_id,
-        categories.name AS category_name,
-        recipes.meal_type_id,
-        meal_types.name AS meal_type_name,
-        recipes.world_cuisine_id,
-        recipes.description,
-        recipes.title,
-        recipes.image_url,
-        recipes.serving_size,
-        recipes.cooking_time_minutes,
-        recipes.protein,
-        recipes.carbs,
-        recipes.fat,
-        recipes.energy_kj,
-        recipes.energy_kcal,
-        recipes.is_public,
-        users.first_name,
-        users.last_name,
-        users.profile_picture_url
-      FROM recipes
-      JOIN categories ON categories.id = recipes.category_id
-      JOIN meal_types ON meal_types.id = recipes.meal_type_id
-      JOIN users ON users.id = recipes.user_id
-      WHERE recipes.is_public = true
-      ORDER BY recipes.id ASC
+    SELECT
+  recipes.id,
+  recipes.user_id,
+  recipes.category_id,
+  categories.name AS category_name,
+  recipes.meal_type_id,
+  meal_types.name AS meal_type_name,
+  recipes.world_cuisine_id,
+  recipes.description,
+  recipes.title,
+  recipes.image_url,
+  recipes.serving_size,
+  recipes.cooking_time_minutes,
+  recipes.protein,
+  recipes.carbs,
+  recipes.fat,
+  recipes.energy_kj,
+  recipes.energy_kcal,
+  recipes.is_public,
+  users.first_name,
+  users.last_name,
+  users.profile_picture_url,
+  
+  -- Dynamic average rating
+  COALESCE(AVG(ratings.rating), 0) AS average_rating,
+  
+  -- Count distinct users who left a rating (number of reviews)
+  COUNT(DISTINCT ratings.user_id) AS review_count,
+
+  -- Count both comments and replies for accurate comment count
+  COUNT(DISTINCT comments.id) + COUNT(DISTINCT replies.id) AS total_comments
+
+FROM recipes
+JOIN categories ON categories.id = recipes.category_id
+JOIN meal_types ON meal_types.id = recipes.meal_type_id
+JOIN users ON users.id = recipes.user_id
+
+-- Include ratings for reviews
+LEFT JOIN ratings ON ratings.recipe_id = recipes.id
+
+-- Include comments and replies
+LEFT JOIN comments ON comments.recipe_id = recipes.id
+LEFT JOIN replies ON replies.comment_id = comments.id
+
+WHERE recipes.is_public = true
+
+GROUP BY 
+  recipes.id, 
+  categories.name, 
+  meal_types.name, 
+  users.first_name, 
+  users.last_name, 
+  users.profile_picture_url
+
+ORDER BY recipes.id ASC;
+
+
     `);
 
-		res.json(result.rows); // Array of recipe objects
+		res.json(result.rows); // Array of recipe objects with ratings
 	} catch (err) {
 		console.error("Error fetching recipes:", err);
 		res.status(500).send("Server error");
 	}
 });
+
+
+// --------------------- GET User's Own Recipes (Auth Required) ---------------------
+router.get("/my-recipes", authenticateUser, async (req, res) => {
+	try {
+		const userId = req.user.id;
+
+		const result = await pool.query(`
+			SELECT
+				recipes.id,
+				recipes.title,
+				recipes.description,
+				recipes.image_url,
+				recipes.cooking_time_minutes,
+				categories.name AS category_name,
+				meal_types.name AS meal_type_name,
+				COALESCE(AVG(ratings.rating), 0) AS average_rating,
+				COUNT(DISTINCT ratings.user_id) AS review_count,
+				COUNT(DISTINCT comments.id) + COUNT(DISTINCT replies.id) AS total_comments
+			FROM recipes
+			LEFT JOIN categories ON categories.id = recipes.category_id
+			LEFT JOIN meal_types ON meal_types.id = recipes.meal_type_id
+			LEFT JOIN ratings ON ratings.recipe_id = recipes.id
+			LEFT JOIN comments ON comments.recipe_id = recipes.id
+			LEFT JOIN replies ON replies.comment_id = comments.id
+			WHERE recipes.user_id = $1
+			GROUP BY recipes.id, categories.name, meal_types.name
+			ORDER BY recipes.id DESC
+		`, [userId]);
+
+		res.json(result.rows);
+	} catch (err) {
+		console.error("Error fetching user's recipes:", err);
+		res.status(500).send("Server error");
+	}
+});
+
+
+// --------------------- DELETE Recipe by ID (Only Owner Can Delete) ---------------------
+router.delete("/:id", authenticateUser, async (req, res) => {
+	try {
+		const { id } = req.params;
+		const userId = req.user.id;
+
+		// Verify the recipe belongs to the authenticated user
+		const recipe = await pool.query(
+			"SELECT * FROM recipes WHERE id = $1 AND user_id = $2",
+			[id, userId]
+		);
+
+		if (recipe.rows.length === 0) {
+			return res.status(403).json({ error: "Not authorized to delete this recipe." });
+		}
+
+		// Delete related comments, replies, and ratings first to avoid foreign key constraint errors
+		await pool.query("DELETE FROM replies WHERE comment_id IN (SELECT id FROM comments WHERE recipe_id = $1)", [id]);
+		await pool.query("DELETE FROM comments WHERE recipe_id = $1", [id]);
+		await pool.query("DELETE FROM ratings WHERE recipe_id = $1", [id]);
+
+		// Delete the recipe itself
+		await pool.query("DELETE FROM recipes WHERE id = $1", [id]);
+
+		res.status(200).json({ message: "Recipe deleted successfully." });
+	} catch (err) {
+		console.error("Error deleting recipe:", err);
+		res.status(500).send("Server error");
+	}
+});
+
 
 // router.get("/:id", async (req, res) => {
 // 	const { id } = req.params;

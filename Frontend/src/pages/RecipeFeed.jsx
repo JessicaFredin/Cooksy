@@ -2,7 +2,7 @@ import HeadingWithLine from "../components/HeadingWithLine";
 import RecipeFeedCard from "../components/RecipeFeedCard";
 
 const RecipeFeed = () => {
-	// Dummy data för att visa korten
+	// Statisk data för receptkorten
 	const recipes = [
 		{ id: 1, name: "Recipe name" },
 		{ id: 2, name: "Cheeseburger pasta skillet (one pot)" },
@@ -17,7 +17,7 @@ const RecipeFeed = () => {
 
 	return (
 		<div className="container mx-auto py-8 px-4 grid grid-cols-12 gap-6">
-			{/* Page Title */}
+			{/* Titel */}
 			<div className="col-start-2 col-span-3">
 				<HeadingWithLine text="Recipe Feed" />
 			</div>

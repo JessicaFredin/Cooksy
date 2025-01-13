@@ -10,6 +10,7 @@ import Food1 from "../assets/images/food1.jpg";
 import { useLocation } from 'react-router-dom';
 
 const MySavedRecipesFolderPage = () => {
+    // Array med receptobjekt som innehåller information om varje recept
     const recipes = [
                 {
                     id: 1,
@@ -73,13 +74,14 @@ const MySavedRecipesFolderPage = () => {
                 }
       ]
 
-
+// Hämtar data om mappen från sidans tillstånd via useLocation
 const location = useLocation();
     const { folder } = location.state || {};
-
+    // Om ingen mappdata hittas, visa ett meddelande
     if (!folder) return <div>Folder not found!</div>;
 
     return(
+        // Huvudlayout för sidan, använder ett grid-system för responsiv design
         <div className="grid-layouten grid grid-cols-12 gap-x-4 py-32">
             <div className="col-start-2 col-span-3">
 			<HeadingWithLine className="col-start-2" text="My saved recipes"/>
@@ -90,10 +92,13 @@ const location = useLocation();
                     </div>
                     <FiltersMenu/>
             </div>
+            {/* Visar mappnamn och färg */}
             <div className={`bg-${folder.color} col-start-2 col-span-10 grid grid-cols-2 rounded-lg p-3 text-lg md:text-2xl px-8 mb-4 font-pacifico` }>
                     <h3>{folder.name}</h3>
                 </div>
+            {/* Grid-layout för att visa receptkorten */}
             <div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">  
+              {/* Itererar över recept-arrayen för att generera kort */}
               {recipes.map((recipe, index) => (
                     <div key={index} className="flex justify-center">
                        <RecipeCard

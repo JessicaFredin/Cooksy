@@ -9,13 +9,13 @@ import NutritionInfo from "../components/RecipeDetailsPage/NutritionInfo";
 import PortionBar from "../components/RecipeDetailsPage/PortionBar";
 import RecipeImage from "../components/RecipeDetailsPage/RecipeImage";
 import { useParams } from "react-router-dom";
-// import { useRatings } from "../contexts/RecipesContext";
 import { useAuth } from "../contexts/AuthContext";
 import { usePopup } from "../contexts/PopupContext";
 import LoginForm from "../components/LoginForm";
 import CommentSection from "../components/CommentSection";
 import RecipeSwoosh from "../assets/svg/RecipeSwoosh";
 
+// Receptdetaljsida
 function RecipeDetailsPage() {
 	const { id } = useParams();
 	const { isLoggedIn } = useAuth(); // Use AuthContext
@@ -28,7 +28,7 @@ function RecipeDetailsPage() {
 	const [averageRating, setAverageRating] = useState(0);
 	const [reviewCount, setReviewCount] = useState(0);
 	const { openPopup } = usePopup();
-
+	// Hämtar receptdetaljer
 	useEffect(() => {
 		const fetchRecipe = async () => {
 			try {
@@ -51,7 +51,7 @@ function RecipeDetailsPage() {
 
 		fetchRecipe();
 	}, [id]);
-
+	// Hämtar medelbetyg och antal recensioner
 	useEffect(() => {
 		const fetchUserRating = async () => {
 			try {
@@ -92,7 +92,7 @@ function RecipeDetailsPage() {
 
 		fetchRatings();
 	}, [id]);
-
+    // Visa laddningsindikator, felmeddelande eller innehåll
 	if (loading) {
 		return <p>Loading recipe details...</p>;
 	}
@@ -104,26 +104,18 @@ function RecipeDetailsPage() {
 	if (error) {
 		return <p className="text-red-500">{error}</p>;
 	}
-
+	// Hanterar ändring av portioner
 	const handlePortionChange = (newPortion) => {
 		setPortionMultiplier(newPortion);
 	};
 
-	// const handleRatingChange = (newRating) => {
-	// 	setUserRating(newRating);
-	// 	console.log("User selected rating:", newRating);
-	// 	// You can send this value to the backend or update a global state
-	// };
-
+	// Hanterar ändring av betyg
 	const handleRatingChange = async (newRating) => {
 		try {
 			const response = await axios.post(
 				`${import.meta.env.VITE_APP_BACKEND_URL}/recipes/${id}/rate`,
 				{ rating: newRating },
 				{
-					// headers: {
-					// 	Authorization: `Bearer ${user?.token}`, // Ensure the token is included
-					// },
 					withCredentials: true,
 				}
 			);
@@ -144,20 +136,12 @@ function RecipeDetailsPage() {
 			</div>
 
 			<div className="grid grid-cols-12 gap-6 md:gap-y-4 mt-20">
+				{/* Medelbetyg och recensioner */}
 				<div className="flex items-center col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-1  md:self-start lg:row-span-1">
-					{/* <StarRating
-					totalStars={5}
-					staticRating={4}
-					// staticRating={ratings[id] || 0}
-					// onChange={handleRatingChange} // Pass this function to capture changes
-				/>
-				<h5 className="mt-1 ml-2">(84)</h5> */}
-
-					{/* Static Star Rating Display */}
 					<StarRating totalStars={5} staticRating={averageRating} />
 					<h5 className="mt-1 ml-2">({reviewCount} reviews)</h5>
 				</div>
-
+                {/* Recepttitel */}
 				<h1 className="text-4xl font-bold col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-2 lg:row-span-1 lg:text-5xl">
 					{recipe.title}
 				</h1>
@@ -175,7 +159,7 @@ function RecipeDetailsPage() {
 						}${recipe.user_profile_picture}`}
 					/>
 				</div>
-
+                {/* Kort info om receptet */}
 				<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
 					<RecipeShortInfoBox
 						category={recipe.category_name} // e.g., "Poultry"
@@ -187,23 +171,23 @@ function RecipeDetailsPage() {
 				<p className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-4 lg:row-start-4 lg:row-span-1 lg:text-lg">
 					{recipe.description}
 				</p>
-
+                {/* Allergivarningar */}
 				<div className="col-start-2 col-span-6 md:col-start-2 md:col-span-4 md:row-start-5 lg:row-start-5 lg:col-start-2 lg:col-span-2 grid grid-cols-2">
 					<Warning title="Lactose" isPresent={recipe.lactose} />
 					<Warning title="Gluten" isPresent={recipe.gluten} />
 				</div>
-
+                {/* Näringsinformation */}
 				<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-4 md:row-span-3 lg:row-start-6  lg:row-span-1">
 					<NutritionInfo id={id} />
 				</div>
-
+                {/* Ändra portioner */}
 				<div className="col-start-2 col-span-10 md:row-start-7">
 					<PortionBar
 						currentPortion={recipe.serving_size}
 						onPortionChange={handlePortionChange}
 					/>
 				</div>
-
+                {/* Ingredienser och instruktioner */}
 				<div className="col-start-2 col-span-10">
 					<IngredientsInstructions
 						ingredients={recipe.ingredients || []}
@@ -211,22 +195,8 @@ function RecipeDetailsPage() {
 						servingSize={recipe.serving_size}
 						portionMultiplier={portionMultiplier}
 					/>
-
-					{/* <IngredientsInstructions
-					instructions={recipe.instructions || []}
-					ingredients={recipe.ingredients || []}
-				/> */}
-
-					{/* 
-				<IngredientsInstructions
-					ingredients={recipe.ingredients.map((ingredient) => ({
-						...ingredient,
-						amount: ingredient.amount * portionMultiplier,
-					}))}
-					instructions={recipe.instructions}
-				/> */}
 				</div>
-
+                {/* Näringsvärden dropdown */}
 				<div className="col-start-2 col-span-10">
 					<NutritionalValueDropdown
 						protein={recipe.protein}
@@ -236,33 +206,11 @@ function RecipeDetailsPage() {
 						energyKCAL={recipe.energyKCAL}
 					/>
 				</div>
-
+                {/* Betygsättning */}
 				<div className="col-start-2 col-span-10 grid ">
 					<div className=" md:col-start-2 mt-10 md:mt-0 flex flex-col items-center">
 						<h3 className="font-bold text-2xl">Rate this recipe</h3>
-
-						{/* <StarRating
-						totalStars={5}
-						onRatingChange={handleRatingChange} // Pass the callback
-					/>
-					{userRating > 0 && (
-						<p className="mt-1 text-gray-600">
-							{{
-								1: "Very bad!",
-								2: "Bad",
-								3: "Good",
-								4: "Very good",
-								5: "Excellent",
-							}[userRating] || ""}
-						</p>
-					)} */}
-
-						{/* <StarRating
-						totalStars={5}
-						onRatingChange={handleRatingChange} // Pass the callback
-						onHoverChange={setHoveredStar} // Track hover changes
-					/> */}
-
+                        
 						{isLoggedIn ? (
 							<div className="mt-4 flex flex-col items-center">
 								{userRating && (
@@ -305,7 +253,7 @@ function RecipeDetailsPage() {
 					Ad
 				</div>
 			</div>
-
+            {/* Kommentarsektion */}
 			<CommentSection />
 		</div>
 	);

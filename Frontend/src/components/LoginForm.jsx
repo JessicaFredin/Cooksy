@@ -22,7 +22,6 @@ function LoginForm({ setView }) {
 		e.preventDefault();
 		try {
 			await login(formData);
-			alert("Login successful!");
 			window.location.href = "/"; // Redirect to home
 		} catch (err) {
 			setError("Invalid credentials");

@@ -14,9 +14,11 @@ import ProfileCard from "../components/ProfileCard"
 import NoResultImg from "../assets/images/NoResult.png"
 
 const SearchPage = () => {
+   // Håller reda på vilken flik som är aktiv: "recipes", "profiles" eller "articles"
   const [activeTab, setActiveTab] = useState("recipes");
+  // Sökterm som används för att visa antalet resultat
   const searchResults="protein"
-  // Data för varje sektion
+  // Receptdata för att simulera receptresultat
   const recipes = [
             {
                 id: 1,
@@ -79,7 +81,9 @@ const SearchPage = () => {
                 comments: 19,
             }
   ]
+  // i nuläget Tom array för att simulera profildata
   const profiles = []
+  //Array for artikeldata - för att simulera artiklar
   const profiles1 = [
     { name: "Alice", id: "1"},
     { name: "Bob", id: "2"},
@@ -90,20 +94,24 @@ const SearchPage = () => {
   ];
 
 
-  // Render-logik för varje tab
+  // Funktion för att rendera innehåll baserat på aktiv flik
   const renderContent = () => {
+    // Om den aktiva fliken är "recipes"
     if (activeTab === "recipes") {
       return (
         <div className="col-start-2 col-span-10">
   {recipes.length === 0 ? (
+    // Om det inte finns några recept i `recipes`-arrayen visa meddealndet nedan
     <div className="flex flex-col justify-center items-center">
     <h3 className="text-center font-medium md:text-3xl font-pacifico m-16">No recipe found</h3>
+    {/* Bild som visas om inga resultat finns */}
     <img
     className="md:w-2/3"
       src={NoResulteImg}
     />
     </div>
   ) : (
+    // Om recept finns, rendera dem i ett grid-layout
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
       {recipes.map((recipe, index) => (
         <div key={index} className="flex justify-center">
@@ -124,12 +132,15 @@ const SearchPage = () => {
   )}
 </div>
       );
+      // Om den aktiva fliken är "profiles"
     } else if (activeTab === "profiles") {
       return (
         <div className="col-start-2 col-span-10">
   {profiles.length === 0 ? (
+    // Om det inte finns några profiler i `profiles`-arrayen - visa meddelandet nedan
     <div className="flex flex-col justify-center items-center">
-    <h3 className="text-center font-medium md:text-3xl font-pacifico m-16">No recipe found</h3>
+    <h3 className="text-center font-medium md:text-3xl font-pacifico m-16">No profile found</h3>
+    {/* Bild som visas om inga resultat finns */}
     <img
     className="md:w-2/3"
       src={NoResulteImg}
@@ -140,7 +151,7 @@ const SearchPage = () => {
           {profiles.map((profile) => (
             <div key={profile.index} className="flex justify-center">
             <ProfileCard
-            name={profile.name}
+            name={profile.name} {/* Renderar profilkort */}
             />
             </div>
           ))}
@@ -148,13 +159,15 @@ const SearchPage = () => {
          )}
 </div>
       );
-
+    // Om den aktiva fliken är "articles"
     } else if (activeTab === "articles") {
       return (
         <div className="col-start-2 col-span-10">
   {profiles.length === 0 ? (
+    // Om det inte finns några artiklar - visa meddelandet nedan
     <div className="flex flex-col justify-center items-center">
-    <h3 className="text-center font-medium md:text-3xl font-pacifico m-16">No recipe found</h3>
+    <h3 className="text-center font-medium md:text-3xl font-pacifico m-16">No articles found</h3>
+    {/* Bild som visas om inga resultat finns */}
     <img
     className="md:w-2/3"
       src={NoResulteImg}
@@ -165,7 +178,7 @@ const SearchPage = () => {
     {profiles.map((profile) => (
       <div key={profile.index}>
       <Blogpost
-      titel={profile.name}
+      titel={profile.name} {/* Renderar inlägg */}
       />
       </div>
     ))}
@@ -179,6 +192,7 @@ const SearchPage = () => {
   return (
     <div className="grid grid-cols-12 gap-x-4 mt-32">
       <div className="col-start-2 col-span-10">
+        {/* Rubrik med antal sökresultat */}
         <HeadingWithLine text={`(1085) results for “${searchResults}”`} />
       </div>
       {/* Sekundär navigation */}
@@ -199,11 +213,12 @@ const SearchPage = () => {
         isActive={activeTab === "articles"}
       />
       </div>
+      {/* Sorterings- och filtreringsmenyer */}
       <div className="col-start-2 col-span-10 flex items-center justify-between mt-12 mb-8 " >
         <FiltersMenu/>
         <SortMenu/>
       </div>
-      {/* Innehållet */}
+      {/* Renderar innehållet baserat på aktiv flik */}
       <div className="col-start-2 col-span-10">{renderContent()}</div>
     </div>
   );

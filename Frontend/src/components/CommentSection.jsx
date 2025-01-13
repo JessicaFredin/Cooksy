@@ -1,77 +1,79 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
+import { useParams } from "react-router-dom";
 
 function CommentSection() {
-	const [comments, setComments] = useState([
-		{
-			id: 1,
-			author: "Jessica Fredin",
-			text: "So delicious! I will definitely make it again!",
-			date: "2024-09-07",
-			likes: 0,
-			dislikes: 0,
-			replies: [
-				{
-					id: 2,
-					author: "Lisa Karlsson",
-					text: "Thank you! And I am glad you liked it.",
-					date: "2024-09-08",
-				},
-				{
-					id: 3,
-					author: "Maja Lamafreli",
-					text: "I also loved it a lot! I will share it with all my friends and family.",
-					date: "2024-10-24",
-				},
-			],
-		},
-		{
-			id: 4,
-			author: "Andrea Popse",
-			text: "I loved it! Great recipe!",
-			date: "2024-11-02",
-			likes: 0,
-			dislikes: 0,
-			replies: [],
-		},
-	]);
+	const { id: recipeId } = useParams();
+	const [comments, setComments] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-	const addComment = (text) => {
-		const newComment = {
-			id: comments.length + 1,
-			author: "Anonymous",
-			text,
-			date: new Date().toISOString().split("T")[0],
-			likes: 0,
-			dislikes: 0,
-			replies: [],
-		};
-		setComments([...comments, newComment]);
+	const fetchComments = async () => {
+		try {
+			const response = await axios.get(
+				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}`
+			);
+			setComments(response.data);
+		} catch (err) {
+			console.error("Error fetching comments:", err);
+			setError("Failed to load comments.");
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	const addReply = (commentId, replyText) => {
-		setComments((prevComments) =>
-			prevComments.map((comment) =>
-				comment.id === commentId
-					? {
-							...comment,
-							replies: [
-								...comment.replies,
-								{
-									id: comment.replies.length + 1,
-									author: "Anonymous",
-									text: replyText,
-									date: new Date()
-										.toISOString()
-										.split("T")[0],
-								},
-							],
-					  }
-					: comment
-			)
-		);
+	useEffect(() => {
+		fetchComments();
+	}, [recipeId]);
+
+	const addComment = async (text) => {
+		try {
+			await axios.post(
+				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}`,
+				{ content: text },
+				{ withCredentials: true }
+			);
+
+			// Re fetch comments
+			fetchComments();
+		} catch (err) {
+			console.error("Error adding comment:", err);
+			alert("You need to be logged in to comment.");
+		}
 	};
+
+	// Centralized Reply Handler
+	const addReply = async (commentId, replyText) => {
+		try {
+			const response = await axios.post(
+				`${
+					import.meta.env.VITE_APP_BACKEND_URL
+				}/comments/${commentId}/replies`,
+				{ content: replyText },
+				{ withCredentials: true }
+			);
+
+			// Update comments state with the new reply
+			setComments((prevComments) =>
+				prevComments.map((comment) =>
+					comment.comment_id === commentId
+						? {
+								...comment,
+								replies: [...comment.replies, response.data],
+						  }
+						: comment
+				)
+			);
+		} catch (err) {
+			console.error("Error adding reply:", err);
+			alert("You need to be logged in to reply.");
+		}
+	};
+
+	if (loading) return <p>Loading comments...</p>;
+	if (error) return <p className="text-red-500">{error}</p>;
 
 	return (
 		<div className="grid grid-cols-12">
@@ -84,17 +86,19 @@ function CommentSection() {
 					onSubmit={addComment}
 					buttonText="Send"
 				/>
-			
+
 				<div className="mt-6">
-					{comments.map((comment) => (
-						<Comment
-							key={comment.id}
-							comment={comment}
-							onReply={(replyText) =>
-								addReply(comment.id, replyText)
-							}
-						/>
-					))}
+					{comments.length === 0 ? (
+						<p>No comments yet. Be the first to comment!</p>
+					) : (
+						comments.map((comment) => (
+							<Comment
+								key={comment.comment_id}
+								comment={comment}
+								onReply={addReply} // Pass the addReply function
+							/>
+						))
+					)}
 				</div>
 			</div>
 		</div>

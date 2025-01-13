@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Icon } from "@iconify/react"
-
+//Tar emot prop med defaultvärden
 function CloseButton({ size = "md", color = "#333", onClick }) {
+	  // Storlekar som kan användas för knappen
 	const sizes = {
 		sm: "w-4 h-4",
 		md: "w-6 h-6",

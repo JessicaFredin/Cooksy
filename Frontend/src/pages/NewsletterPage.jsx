@@ -19,7 +19,7 @@ function NewsletterPage() {
 		setIsSubmitted(true);
 	};
 
-	//Används för att återställa allt innehåll då bekräftelsemeddelandet stängs
+	//Återställer allt innehåll då bekräftelsemeddelandet stängs
 	const handleCloseSuccessMessage = () => {
 		setIsSubmitted(false);
 	};

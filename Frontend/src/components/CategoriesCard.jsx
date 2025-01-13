@@ -1,10 +1,10 @@
 import { useState } from "react";
-
+//Tar emot img och title som prop
 function CategoriesCard({img, title}) {
 
     return (
         <div className="group relative overflow-hidden rounded-lg h-[550px]">
-      {/* Bilden */}
+      {/* Bild */}
       <img
         src={img}
         alt="Low-Sugar"

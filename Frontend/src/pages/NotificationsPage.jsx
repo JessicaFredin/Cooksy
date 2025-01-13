@@ -4,6 +4,7 @@ import HeadingWithLine from "../components/HeadingWithLine";
 import profile1 from "../assets/images/profile1.jpg"
 
 function NotificationsPage() {
+    // Array med notifikationer, varje objekt representerar en individuell notifikation
     const notificationsArray = [
         {
             avatar: profile1,
@@ -45,11 +46,15 @@ function NotificationsPage() {
 
 
     return (
+        // Grid-layout för att göra innehåll responsivt
         <div className="mt-20 grid grid-cols-12 gap-6">
             <div className="col-start-2 col-span-1o">
+                {/* Rubrik för sidan */}
                 <HeadingWithLine text="Notifications" />
             </div>
+            {/* Undersektion för nya notifikationer */}
             <h3 className="text-2xl col-start-2 col-span-10 font-pacifico">New</h3>
+            {/* Visar den första notifikationen om arrayen inte är tom */}
             {notificationsArray.length > 0 && (
                 <NotificationBox
                     avatar={notificationsArray[0].avatar}
@@ -61,8 +66,9 @@ function NotificationsPage() {
                     min={notificationsArray[0].min}
                 />
             )}
-
+            {/* Undersektion för alla notifikationer */}
             <h3 className="text-2xl col-start-2 col-span-10 font-pacifico">All notifications</h3>
+            {/* Renderar övriga notifikationer (förutom den första) */}
             {notificationsArray.slice(1).map((notification) => (
                 <NotificationBox
                     key={notification.text} // Replace with unique key
