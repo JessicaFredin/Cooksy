@@ -30,6 +30,7 @@ import { SearchProvider } from "./contexts/SearchContext";
 import NotificationsPage from "./pages/NotificationsPage";
 import FAQ from "./components/Footer/FAQ";
 import SearchPage from "./pages/SearchPage";
+import TopContributorPage from "./pages/TopContributorPage"
 
 function App() {
 	return (
@@ -125,6 +126,12 @@ function App() {
 									<Route
 										path="/meal-planner"
 										element={<MealPlanner />}
+									/>
+
+
+									<Route
+										path="/top-contributor-page"
+										element={<TopContributorPage />}
 									/>
 								</Routes>
 								<Footer />

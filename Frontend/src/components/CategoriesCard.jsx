@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 //Tar emot img och title som prop
 function CategoriesCard({img, title}) {
 
@@ -7,7 +7,7 @@ function CategoriesCard({img, title}) {
       {/* Bild */}
       <img
         src={img}
-        alt="Low-Sugar"
+        alt={title}
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
       {/* Text overlay */}

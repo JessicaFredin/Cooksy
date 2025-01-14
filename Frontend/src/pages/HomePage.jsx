@@ -18,6 +18,8 @@ import Button from "../components/Button";
 import ProfileCard from "../components/ProfileCard";
 import { useSearch } from "../contexts/SearchContext";
 
+import { Link } from "react-router-dom";
+
 function HomePage() {
 	const { handleSearch } = useSearch(); // 🔥 Get search function from context
 	const recipes = [
@@ -269,6 +271,12 @@ function HomePage() {
 						</div>
 					))}
 				</div>
+
+				<div className="col-start-2 col-span-10 py-10 flex justify-end">
+          <Link to="/top-contributor-page">
+            <Button>See all Top Contributors</Button>
+          </Link>
+        </div>
 
 				<div className="col-start-2 col-span-10 py-10">
 					<HeadingWithLine text="Food and Health: Research & Findings" />

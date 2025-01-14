@@ -18,7 +18,7 @@ router.get("/:query", async (req, res) => {
 		// Search Recipes with title, description, and category
 		const recipesResult = await pool.query(
 			`
-			SELECT 
+            SELECT
 				r.id, 
 				r.title, 
 				r.description, 

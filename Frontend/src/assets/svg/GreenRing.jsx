@@ -30,7 +30,7 @@ const GreenRing = ({ text, isActive, onClick }) => {
           fill="none"
         />
       </svg>
-
+      
       <div className="relative z-8 ">{text}</div>
     </button>
   );
