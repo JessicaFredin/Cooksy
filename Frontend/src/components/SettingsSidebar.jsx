@@ -30,10 +30,12 @@
 
 /* eslint-disable react/prop-types */
 function SettingsSidebar({ selectedSection, setSelectedSection }) {
+	// Lista över tillgängliga sektioner i sidomenyn
 	const sections = ["Account Settings", "Notifications", "FAQ"];
 
 	return (
 		<div className="bg-whiteFull shadow-md rounded-lg border border-green-100 p-0">
+			{/* Lista med navigeringsalternativ */}
 			<ul className="space-y-4">
 				{sections.map((section) => (
 					<li
@@ -45,7 +47,7 @@ function SettingsSidebar({ selectedSection, setSelectedSection }) {
 						}`}
 						onClick={() => setSelectedSection(section)}
 					>
-						{section}
+						{section} {/* Visar sektionens namn */}
 					</li>
 				))}
 			</ul>

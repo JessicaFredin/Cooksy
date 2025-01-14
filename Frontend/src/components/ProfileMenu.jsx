@@ -102,28 +102,29 @@ import {
 	faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
 
+//Renderar en meny för användarens profilfunktioner, t.ex. länkar till inställningar, notifikationer och möjligheten att logga ut. Menyn hanterar även stängning vid klick utanför menyn.
 function ProfileMenu({ isOpen, onClose, onLogOut }) {
 	const menuRef = useRef(null);
 
-	// Close menu when clicking outside
+	// Hanterar klick utanför menyn
 	useEffect(() => {
 		const handleOutsideClick = (event) => {
 			if (menuRef.current && !menuRef.current.contains(event.target)) {
-				onClose(); // Call the onClose function to close the menu
+				onClose(); // Stäng menyn om klick utanför
 			}
 		};
 
-		// Attach the event listener when the menu is open
+		// Lägg till eventlyssnare när menyn är öppen
 		if (isOpen) {
 			document.addEventListener("mousedown", handleOutsideClick);
 		}
 
 		return () => {
-			// Clean up the event listener when the menu is closed
+			// Rensa eventlistener när menyn stängs
 			document.removeEventListener("mousedown", handleOutsideClick);
 		};
 	}, [isOpen, onClose]);
-
+    // Returnerar inget om menyn inte är öppen
 	if (!isOpen) return null;
 
 	return (
@@ -132,6 +133,7 @@ function ProfileMenu({ isOpen, onClose, onLogOut }) {
 			className="absolute right-0 top-[50px] mt-2 w-64 bg-white shadow-lg rounded-lg z-[9999]"
 		>
 			<ul>
+				{/* Länkar och funktioner i menyn */}
 				<li className="px-4 py-2 flex items-center hover:bg-green-100 cursor-pointer">
 					<span className="mr-3 text-gray-800">
 						<FontAwesomeIcon icon={faUser} />

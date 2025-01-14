@@ -7,14 +7,14 @@ function RecipeImageSection({
 }) {
 	return (
 		<div className="relative flex flex-col gap-3">
-			{/* Recipe Image */}
+			{/* Receptbild */}
 			<div className="relative w-full max-w-md rounded-lg ">
 				<img
 					src={imageUrl}
 					alt="Recipe"
 					className="w-full h-auto object-cover"
 				/>
-				{/* Favorite and Add Buttons */}
+				{/* Favoritknapp */}
 				<button
 					className={`absolute top-2 right-14 w-9 h-9 flex items-center justify-center bg-white rounded-full shadow-md ${
 						isFavorited ? "text-red-500" : "text-gray-400"
@@ -26,7 +26,7 @@ function RecipeImageSection({
 					<i className="fas fa-plus"></i>
 				</button>
 
-				{/* Author Info Overlay */}
+				{/* Skaparens information, namn och bild */}
 				<div className="absolute bottom-0 right-0 w-1/2 bg-green-300 flex items-center px-4 py-2 rounded-tl-lg">
 					<p className="text-sm font-semibold text-gray-800">
 						{authorName}

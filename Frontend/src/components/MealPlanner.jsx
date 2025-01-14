@@ -64,8 +64,7 @@ const MealPlanner = () => {
                         className="border-2 border-[#A8D400] rounded-md p-4 grid lg:grid-cols-4 sm:grid-cols-1 gap-4"
                     >
                         {/* Dagens namn */}
-                        <h3 className="text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center
-    bg-[#EAF2C8] lg:bg-transparent">
+                        <h3 className="text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center bg-[#EAF2C8] lg:bg-transparent">
                             {day}
                         </h3>
 

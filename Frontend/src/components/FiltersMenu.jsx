@@ -5,9 +5,9 @@ import { faTimes, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FilterIcon } from "../assets/icons/FilterIcon";
 
 function FiltersMenu() {
-	const [isOpen, setIsOpen] = useState(false); // Controls visibility
-	const [isVisible, setIsVisible] = useState(false); // Controls animation
-
+	const [isOpen, setIsOpen] = useState(false); // Anger om menyn är öppen eller inte.
+	const [isVisible, setIsVisible] = useState(false); // Styr om menyn ska animeras in/ut
+    // Data för filtreringskategorier och deras alternativ
 	const categories = [
 		{
 			title: "Calories (per portion)",
@@ -87,16 +87,16 @@ function FiltersMenu() {
 		},
 	];
 
-	// Handle opening the filter
+	// Funtion för att öppna menyn
 	const openMenu = () => {
-		setIsOpen(true);
-		setTimeout(() => setIsVisible(true), 10); // Delay to trigger slide-in
+		setIsOpen(true); //isOpen till true för att visa menun
+		setTimeout(() => setIsVisible(true), 10); // isVisible till true med en liten fördröjning för att trigga animeringen
 	};
 
-	// Handle closing the filter
+	//Hanterar stängning av menyn
 	const closeMenu = () => {
-		setIsVisible(false); // Trigger slide-out
-		setTimeout(() => setIsOpen(false), 300); // Wait for animation before unmounting
+		setIsVisible(false); // isVisible till false för att starta slide-out-animationen
+		setTimeout(() => setIsOpen(false), 300); // Väntar på animationen
 	};
 
 	return (
@@ -105,7 +105,7 @@ function FiltersMenu() {
 				isOpen ? "h-screen overflow-hidden" : "h-auto overflow-auto"
 			}
 		>
-			{/* Button to toggle dropdown */}
+			{/* Knapp för att öppna filtret */}
 			<button
 				onClick={openMenu}
 				className="px-8 py-2 bg-pink-500 text-white font-semibold rounded-full shadow-md flex items-center"
@@ -116,22 +116,22 @@ function FiltersMenu() {
 				</span>
 			</button>
 
-			{/* Overlay and Sliding Dropdown */}
+			{/* Om filtret är öppet visas menyn */}
 			{isOpen && (
 				<>
-					{/* Overlay */}
+					{/* Overlay för mörk bakgrund */}
 					<div
 						onClick={closeMenu}
 						className="fixed inset-0 bg-black bg-opacity-50 z-10"
 					></div>
 
-					{/* Sliding Dropdown Menu */}
+					{/* Sidomenyn */}
 					<div
 						className={`fixed top-0 left-0 w-1/4 h-screen bg-white shadow-lg z-50 overflow-y-auto transform transition-transform duration-300 ${
 							isVisible ? "translate-x-0" : "-translate-x-full"
 						}`}
 					>
-						{/* Header */}
+						{/* Menyns header */}
 						<div className="w-full flex justify-between items-center px-6 py-4 bg-white shadow-md sticky top-0 z-20">
 							<h2 className="text-2xl font-semibold text-gray-800">
 								Filter
@@ -141,7 +141,7 @@ function FiltersMenu() {
 							</button>
 						</div>
 
-						{/* Categories */}
+						{/* Renderar kategorier och deras alternativ */}
 						<div className="p-4">
 							{categories.map((category, index) => (
 								<DropdownCategory
@@ -152,7 +152,7 @@ function FiltersMenu() {
 								/>
 							))}
 
-							{/* Apply Button */}
+							{/* Apply-knapp för att tillämpa filtren */}
 							<div className="mt-6">
 								<button className="w-full px-6 py-3 bg-pink-500 text-white font-semibold rounded-full flex items-center justify-center gap-2">
 									85 recipes found

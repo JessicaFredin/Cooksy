@@ -5,38 +5,40 @@ import CommentInput from "./CommentInput";
 import { useParams } from "react-router-dom";
 
 function CommentSection() {
+	// Hämta recipeId från URL-parametrarna
 	const { id: recipeId } = useParams();
+	// State-hantering för kommentarer, laddningsstatus och felhantering
 	const [comments, setComments] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-
+    // Funktion för att hämta kommentarer från backend
 	const fetchComments = async () => {
 		try {
 			const response = await axios.get(
-				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}`
+				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}` // Dynamisk endpoint baserad på recipeId
 			);
-			setComments(response.data);
+			setComments(response.data); // Uppdaterar kommentarerna i state
 		} catch (err) {
 			console.error("Error fetching comments:", err);
-			setError("Failed to load comments.");
+			setError("Failed to load comments."); // Visa felmeddelande om något går fel
 		} finally {
 			setLoading(false);
 		}
 	};
-
+    // Kör när komponenten mountas eller när recipeId ändras
 	useEffect(() => {
 		fetchComments();
 	}, [recipeId]);
-
+    // Funktion för att lägga till en ny kommentar
 	const addComment = async (text) => {
 		try {
 			await axios.post(
 				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}`,
-				{ content: text },
-				{ withCredentials: true }
+				{ content: text }, // Skicka innehållet i kommentaren
+				{ withCredentials: true } // Skicka med användarens autentisering
 			);
 
-			// Re fetch comments
+			// Hämtar kommentarer igen för att uppdatera listan
 			fetchComments();
 		} catch (err) {
 			console.error("Error adding comment:", err);
@@ -44,7 +46,7 @@ function CommentSection() {
 		}
 	};
 
-	// Centralized Reply Handler
+	// Funtion för att hantera avsar på en specifik kommentar
 	const addReply = async (commentId, replyText) => {
 		try {
 			const response = await axios.post(
@@ -55,7 +57,7 @@ function CommentSection() {
 				{ withCredentials: true }
 			);
 
-			// Update comments state with the new reply
+			// Uppdatera state med det nya svaret
 			setComments((prevComments) =>
 				prevComments.map((comment) =>
 					comment.comment_id === commentId
@@ -71,31 +73,36 @@ function CommentSection() {
 			alert("You need to be logged in to reply.");
 		}
 	};
-
+    // Visa laddningsmeddelande tills data är hämtad
 	if (loading) return <p>Loading comments...</p>;
+	// Visa felmeddelande om något går fel
 	if (error) return <p className="text-red-500">{error}</p>;
 
 	return (
 		<div className="grid grid-cols-12">
 			<div className="col-start-2 col-span-9 p-4">
+				{/* Titel*/}
 				<h2 className="text-2xl font-bold">
 					What’s Cooking in the Comments?
 				</h2>
+				{/* Inputfält för att skriva en ny kommentar */}
 				<CommentInput
 					placeholder="Write a comment..."
 					onSubmit={addComment}
 					buttonText="Send"
 				/>
-
+                {/* Lista över kommentarer */}
 				<div className="mt-6">
 					{comments.length === 0 ? (
+						// Visa meddelande om inga kommentarer finns
 						<p>No comments yet. Be the first to comment!</p>
 					) : (
+						// Mappa över kommentarer och rendera varje kommentar
 						comments.map((comment) => (
 							<Comment
-								key={comment.comment_id}
-								comment={comment}
-								onReply={addReply} // Pass the addReply function
+								key={comment.comment_id} // Unik nyckel för varje kommentar
+								comment={comment} // Skicka kommentaren som en prop
+								onReply={addReply} // Passera addReply-funktionen för hantering av svar
 							/>
 						))
 					)}

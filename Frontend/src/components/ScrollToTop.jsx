@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 const ScrollToTop = () => {
 	const { pathname } = useLocation(); // Använder useLocation för att få tillgång till den aktuella sidans pathname
 
-	// useEffect-hooken körs varje gång pathname ändras(vid navigering till en ny sida)
+	// useEffect-hooken körs varje gång path-name ändras(vid navigering till en ny sida)
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, [pathname]);

@@ -26,7 +26,7 @@ import SettingsPage from "./pages/SettingsPage";
 import { RecipesProvider } from "./contexts/RecipesContext";
 import { PopupProvider } from "./contexts/PopupContext";
 import NotificationsPage from "./pages/NotificationsPage";
-
+import FAQ from "./components/Footer/FAQ";
 
 function App() {
 	return (
@@ -93,6 +93,10 @@ function App() {
 									path="/categories"
 									element={<CategoriesPage />}
 								/>
+								<Route
+									path="/faq"
+									element={<FAQ />}
+								/>
 								<Route path="/blog" element={<BlogPage />} />
 								<Route
 									path="/settings"
@@ -102,10 +106,10 @@ function App() {
 									path="/recipe/:id"
 									element={<RecipeDetailsPage />}
 								/>
-								<Route 
-							    path="/notifications" 
-								element={<NotificationsPage />} 
-							    />
+								<Route
+									path="/notifications"
+									element={<NotificationsPage />}
+								/>
 							</Routes>
 							<Footer />
 						</main>

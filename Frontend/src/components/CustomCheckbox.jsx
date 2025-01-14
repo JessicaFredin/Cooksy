@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { CheckIcon } from "../assets/icons/CheckIcon";
-
+//Tar emot props labelUnit, labelIngredient, checked, onchange
 const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
+	// Lokal state för att hantera om checkboxen är markerad
 	const [isChecked, setIsChecked] = useState(checked || false);
-
+    {/*handleCheckboxChange - Hanterar klick på checkboxen,  Uppdaterar isChecked state, Kör onChange callback med den nya statusen (true/false).
+   */}
 	const handleCheckboxChange = () => {
-		setIsChecked(!isChecked);
-		if (onChange) onChange(!isChecked);
+		setIsChecked(!isChecked); // Byter status på checkboxen
+		if (onChange) onChange(!isChecked); // Om onChange är definierad, kör den med den nya statusen
 	};
 
 	return (
@@ -27,11 +29,12 @@ const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 
 			{/* Labels */}
 			<div className="flex items-center space-x-2">
+				{/* Enhetsetikett */}
 				<span
 					className={`font-bold text-lg ${
 						isChecked
-							? "line-through text-gray-200"
-							: "text-gray-800"
+							? "line-through text-gray-200" // Markerad, Stryks över och gråas ut
+							: "text-gray-800" // Ej markerad, Standard svart text
 					}`}
 				>
 					{labelUnit}

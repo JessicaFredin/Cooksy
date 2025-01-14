@@ -10,26 +10,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 function LoginForm({ setView }) {
-	const { login } = useAuth(); // Get the login function from AuthContext
+	const { login } = useAuth(); // Hämtar login-funktionen från AuthContext
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
-	});
+	}); // Tillstånd för formulärets indata (email och lösenord)
 	const [error, setError] = useState("");
 	console.log("LoginForm rendered");
-
+    // Hanterar inloggningsförsök
 	const handleLogin = async (e) => {
-		e.preventDefault();
+		e.preventDefault(); // Förhindrar sidladdning vid formulärinskick
 		try {
-			await login(formData);
-			window.location.href = "/"; // Redirect to home
+			await login(formData); // Anropar login-funktionen med användarens indata
+			window.location.href = "/"; // Vid lyckad inloggning omdirigeras användaren till startsidan
 		} catch (err) {
-			setError("Invalid credentials");
+			setError("Invalid credentials"); // Sätter ett felmeddelande om inloggning misslyckas
 		}
 	};
-
+    //Hanterar ändringar i formuläret
 	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setFormData({ ...formData, [e.target.name]: e.target.value }); // Uppdaterar indatafält baserat på användarens inmatning
 	};
 
 	return (
@@ -39,7 +39,7 @@ function LoginForm({ setView }) {
 				<TopCurve />
 			</div>
 
-			{/* Bottom Curve */}
+			{/* Bottom Curve - endast dekoration */}
 			<div className="absolute bottom-[0px] left-[0px]">
 				<BottomCurve />
 			</div>
@@ -53,11 +53,11 @@ function LoginForm({ setView }) {
 					</div>
 				</div>
 
-				{/* Login Form */}
+				{/* Inloggningsformulär */}
 				<form
 					onSubmit={handleLogin}
 					className="space-y-4 mb-6 w-[400px] text-left z-50"
-				>
+				>   {/* Felmeddelande */}
 					{error && <p className="text-red-500">{error}</p>}
 					<input
 						type="email"
@@ -67,6 +67,7 @@ function LoginForm({ setView }) {
 						value={formData.email}
 						onChange={handleChange}
 					/>
+					{/* Lösenordsfält */}
 					<input
 						type="password"
 						name="password"
@@ -75,6 +76,7 @@ function LoginForm({ setView }) {
 						value={formData.password}
 						onChange={handleChange}
 					/>
+					{/* Inloggningsknapp */}
 					<div className="flex items-center justify-center">
 						<Button
 							type="submit"
@@ -85,7 +87,7 @@ function LoginForm({ setView }) {
 						</Button>
 					</div>
 				</form>
-
+                {/* Länk till registrering */}
 				<div className="text-center text-black z-50">
 					Don&apos;t have an account?{" "}
 					<span
@@ -104,7 +106,7 @@ function LoginForm({ setView }) {
 					<div className="border-t border-gray-300 w-11"></div>
 				</div>
 
-				{/* Social Media Buttons */}
+				{/* Social Media knappar */}
 				<div className="flex justify-center space-x-4 mt-4 mb-6">
 					<div className="flex items-center justify-center bg-blue-100 text-blue-500 rounded-full w-12 h-12 shadow hover:shadow-md cursor-pointer z-50">
 						<FontAwesomeIcon

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // import React, { useState } from "react";
 // /*import img from "../assets/images/peaches.jpg"*/
 // import NewsletterCardImg from "../assets/images/NewsletterCardImg.png"
@@ -38,7 +39,6 @@
 // };
 
 // export default Blogpost;
-import React, { useState } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
@@ -52,7 +52,7 @@ const Blogpost = ({ image, title, description, id }) => {
         <img
           className="w-full h-56 object-cover md:w-4/5 lg:w-3/5"
           src={image} 
-          alt="Peaches"
+          alt="Apricot"
         />
         {/* Innehållssektion */}
         <div className="p-4 md:p-6 md:w-full flex flex-col justify-between">

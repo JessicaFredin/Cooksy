@@ -39,31 +39,33 @@ const Comment = ({ comment, onReply }) => {
 				}
 			} else if (voteType === -1) {
 				if (response.data.message === "Vote removed") {
-					// Prevent negative values
+					// Förhindrar negativa värden
 					setDislikes(Math.max(dislikes - 1, 0));
 				} else {
 					setDislikes(dislikes + 1); // Set dislike to 1
-					setLikes(likes - 1); // Reset like
+					setLikes(likes - 1); // Minskar likes om det fanns en tidigare like
 				}
 			}
 		} catch (err) {
-			console.error("Error handling vote:", err);
+			console.error("Error handling vote:", err); // Loggar eventuella fel
 		} finally {
 			setIsVoting(false); // Allow voting again
 		}
 	};
 
-	// Use the centralized onReply function
+	// Hanterar att skicka ett svar på kommentaren.
 	const handleReplySubmit = () => {
-		if (replyText.trim() === "") return;
-		onReply(comment.comment_id, replyText.trim());
-		setReplyText("");
-		setIsReplying(false);
+		if (replyText.trim() === "") return; // Om texten är tom, gör ingenting
+		onReply(comment.comment_id, replyText.trim()); // Anropar `onReply`-funktionen med kommentar-ID och text
+		setReplyText(""); // Rensar textrutan
+		setIsReplying(false); // Avslutar svarsläget
 	};
 
 	return (
 		<div className="mb-6">
+			{/* Kommentarens huvuddel */}
 			<div className="flex items-start space-x-4">
+				{/* Profilbild */}
 				<div className="flex-shrink-0">
 					<img
 						src={
@@ -76,10 +78,11 @@ const Comment = ({ comment, onReply }) => {
 						className="w-10 h-10 rounded-full"
 					/>
 				</div>
-
+                {/* Kommentarens innehåll */}
 				<div className="flex-1">
 					<div className="flex justify-between items-start">
 						<p className="font-bold">
+							{/* Header med användarens namn och datum */}
 							{comment.user_first_name} {comment.user_last_name}
 						</p>
 						<p className="text-sm text-gray-400">
@@ -95,20 +98,20 @@ const Comment = ({ comment, onReply }) => {
 								.replace(" ", ", ")}
 						</p>
 					</div>
-
+                    {/* Kommentarens text */}
 					<p>{comment.comment_content}</p>
-
+                    {/* Reaktionsknappar */}
 					<div className="flex items-center space-x-4 mt-3">
-						{/* Thumbs Up Button */}
+						{/* Tummen upp */}
 						<button
 							onClick={() => handleVote(1)}
 							className="flex items-center space-x-2 bg-gray-200 p-1 rounded-xl hover:bg-gray-500 transition"
-						>
+						>   
 							<ThumbsUpIcon className="w-5 h-5 text-gray-700" />
 							<span className="text-gray-700">{likes}</span>
 						</button>
 
-						{/* Thumbs Down Button */}
+						{/* Tummen ner */}
 						<button
 							onClick={() => handleVote(-1)}
 							className="flex items-center space-x-2 bg-gray-200 p-1 rounded-xl hover:bg-gray-500 transition"
@@ -116,8 +119,7 @@ const Comment = ({ comment, onReply }) => {
 							<ThumbsDownIcon className="w-5 h-5 text-gray-700" />
 							<span className="text-gray-700">{dislikes}</span>
 						</button>
-
-						{/* Reply Button */}
+						{/* Svara-knapp */}
 						<button
 							className="bg-green-100 hover:bg-green-300 text-black rounded-full px-6 py-1"
 							onClick={() => setIsReplying(!isReplying)}
@@ -125,8 +127,7 @@ const Comment = ({ comment, onReply }) => {
 							Reply
 						</button>
 					</div>
-
-					{/* Replies Section */}
+					{/* Svar och input för svar */}
 					<div className="mt-4 pl-6 border-l-2 border-green-300">
 						{comment.replies.length > 0 &&
 							comment.replies.map((reply) => (
@@ -137,7 +138,7 @@ const Comment = ({ comment, onReply }) => {
 							))}
 					</div>
 
-					{/* Reply Input */}
+					{/* Svara-textfält */}
 					{isReplying && (
 						<div className="flex items-center mt-4 space-x-2">
 							<textarea

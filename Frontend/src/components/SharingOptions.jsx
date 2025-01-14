@@ -3,9 +3,8 @@ const SharingOptions = ({ selectedOption, onChange }) => {
 	return (
 		<div className="space-y-4">
 			<label className="block font-bold text-lg">Sharing options</label>
-
-			{/* Public Option */}
 			<label className="flex items-start space-x-3">
+				{/* Radioknapp för "Public" */}
 				<input
 					type="radio"
 					name="sharing"
@@ -20,7 +19,7 @@ const SharingOptions = ({ selectedOption, onChange }) => {
 				</div>
 			</label>
 
-			{/* Private Option */}
+			{/* Radioknapp för privat */}
 			<label className="flex items-start space-x-3">
 				<input
 					type="radio"

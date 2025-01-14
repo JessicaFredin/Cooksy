@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const RegisterForm = () => {
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState({ // State för att lagra användarens inmatning
 		first_name: "",
 		last_name: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 	});
+	// State för att lagra eventuella felmeddelanden
 	const [error, setError] = useState("");
-
+    //Hanterar formulärinlämning, skickar användarens data till servern via API-anrop för att registrera en ny användare.
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
@@ -19,18 +20,22 @@ const RegisterForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			// Skickar en POST-förfrågan till servern med användarens data
 			const response = await axios.post("/auth/register", formData, {
 				withCredentials: true,
 			});
 			alert(response.data.message);
 		} catch (err) {
+			// Sätt felmeddelande i state om registreringen misslyckas
 			setError(err.response.data.message || "Registration failed");
 		}
 	};
 
 	return (
+		// Formulär för användarregistrering
 		<form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
 			<h1 className="text-2xl mb-4">Register</h1>
+			{/* Visar felmeddelande om det finns fel */}
 			{error && <p className="text-red-500">{error}</p>}
 			<input
 				type="text"
@@ -77,6 +82,7 @@ const RegisterForm = () => {
 				required
 				className="w-full p-2 border rounded mb-4"
 			/>
+			{/* Knapp för registrering */}
 			<button
 				type="submit"
 				className="w-full p-2 bg-blue-500 text-white rounded"

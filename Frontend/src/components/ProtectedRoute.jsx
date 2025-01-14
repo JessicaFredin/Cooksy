@@ -4,14 +4,15 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const ProtectedRoute = ({ children }) => {
+	// Hämtar inloggningsstatus från AuthContext
 	const { isLoggedIn } = useAuth();
 
 	if (!isLoggedIn) {
-		// Redirect to the login page if the user is not logged in
+		// // Om användaren inte är inloggad, omdirigera dem till startsidan
 		return <Navigate to="/" />;
 	}
 
-	// Render the children if the user is logged in
+	// Om användaren är inloggad, rendera det skickade innehållet (children)
 	return children;
 };
 

@@ -11,7 +11,7 @@ function CategoriesPage() {
                 <HeadingWithLine className="text-xl" text="Categories" />
             </div>
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine text="Health & Nutrition" />
+                <h2>Health & Nutrition"</h2>
             </div>
             {/* Renderar 5 kategorikort med bild och titel */} 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -23,7 +23,7 @@ function CategoriesPage() {
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="World Cuisines" />
+            <h2>World cuisines</h2>
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -34,7 +34,7 @@ function CategoriesPage() {
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="Dietary Preferences" />
+                <h2>Dietary Preferences</h2>
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">
@@ -44,7 +44,7 @@ function CategoriesPage() {
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="Themes" />
+                <h2>Themes</h2>
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">

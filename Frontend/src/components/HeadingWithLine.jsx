@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 
 function HeadingWithLine({ text }) {
   return (
+    // Wrapper för att centrera rubriken och placera den dekorativa linjen
     <div className="relative inline-block text-center">
       <h1 className="text-3xl font-pacifico mb-6 whitespace-nowrap">{text}</h1>
-      {/* Adjusted the SVG to appear directly below the heading */}
+      {/* SVG-element för att visa en dekorativ linje under rubriken */}
       <svg
         className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +24,9 @@ function HeadingWithLine({ text }) {
   );
 }
 
-// Prop type validation
+// Validerar att prop text är en sträng och krävs för att komponenten ska fungera korrekt
 HeadingWithLine.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired, // Kräver att text skickas in som en sträng
 };
 
 export default HeadingWithLine;

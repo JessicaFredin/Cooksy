@@ -1,5 +1,6 @@
-import React from "react";
-import HeadingWithLine from "../components/HeadingWithLine";
+
+
+import HeadingWithLine from "../HeadingWithLine";
 
 const FAQ = () => {
 	return (

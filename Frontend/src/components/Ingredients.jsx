@@ -4,23 +4,23 @@ import Button from "./Button";
 import axios from "axios";
 
 function Ingredients({ ingredients, setIngredients }) {
-	const [searchResults, setSearchResults] = useState([]);
-	const [searchQuery, setSearchQuery] = useState("");
-	const [activeDropdownIndex, setActiveDropdownIndex] = useState(null);
-	const [availableUnits, setAvailableUnits] = useState({});
+	const [searchResults, setSearchResults] = useState([]); // API-svar för ingrediensförslag
+	const [searchQuery, setSearchQuery] = useState(""); // Håller söksträngen som användaren skriver
+	const [activeDropdownIndex, setActiveDropdownIndex] = useState(null); // Spårar aktiv dropdown
+	const [availableUnits, setAvailableUnits] = useState({}); // Lagrar möjliga måttenheter för ingredienser
 
-	// Debounce mechanism for API calls
+	// Debounce mekanism för API-anrop för ingrediensförslag
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
 			if (searchQuery) {
-				fetchIngredientSuggestions(searchQuery);
+				fetchIngredientSuggestions(searchQuery); // Hämtar API-data efter 1 sekunds fördröjning
 			}
 		}, 1000);
 
-		return () => clearTimeout(delayDebounceFn);
+		return () => clearTimeout(delayDebounceFn);  // Rensar timeout om searchQuery ändras
 	}, [searchQuery]);
 
-	// Fetch ingredient suggestions from the API
+	//Hämtar ingrediensförslag från API
 	const fetchIngredientSuggestions = async (query) => {
 		try {
 			const response = await axios.get(
@@ -32,7 +32,7 @@ function Ingredients({ ingredients, setIngredients }) {
 						apiKey: import.meta.env.VITE_APP_SPOONACULAR_API_KEY,
 						metaInformation: true,
 						query,
-						number: 10,
+						number: 10, // Begränsar antalet förslag
 					},
 				}
 			);
@@ -42,7 +42,7 @@ function Ingredients({ ingredients, setIngredients }) {
 		}
 	};
 
-	// Fetch ingredient information for available units
+	// Hämtar information om ingrediens och dess möjliga måttenheter
 	const fetchIngredientInformation = async (ingredientId, index) => {
 		try {
 			const response = await axios.get(
@@ -62,7 +62,7 @@ function Ingredients({ ingredients, setIngredients }) {
 		}
 	};
 
-	// Add a new ingredient
+	//Lägger till en ny ingrediens
 	const addIngredient = () => {
 		setIngredients([
 			...ingredients,
@@ -70,7 +70,7 @@ function Ingredients({ ingredients, setIngredients }) {
 		]);
 	};
 
-	// Remove an ingredient
+	//Tar bort en ingrediens
 	const removeIngredient = (index) => {
 		const updatedIngredients = ingredients.filter((_, i) => i !== index);
 		setIngredients(updatedIngredients);
@@ -81,22 +81,22 @@ function Ingredients({ ingredients, setIngredients }) {
 		});
 	};
 
-	// Handle changes in input fields dynamically
+	// Hanterar ändringar i inputfält dynamiskt
 	const handleIngredientChange = (index, field, value) => {
 		const updatedIngredients = [...ingredients];
 		updatedIngredients[index][field] = value;
 		setIngredients(updatedIngredients);
 	};
 
-	// Handle selecting an ingredient from the dropdown
+	// Väljer en ingrediens från dropdownen
 	const handleSelectIngredient = (index, selectedIngredient) => {
 		const updatedIngredients = [...ingredients];
 		updatedIngredients[index].name = selectedIngredient.name;
 		updatedIngredients[index].id = selectedIngredient.id;
 		setIngredients(updatedIngredients);
-		setActiveDropdownIndex(null); // Close the dropdown
+		setActiveDropdownIndex(null); // stänger dropdown
 
-		// Fetch available units for the selected ingredient
+		// Hämtar tillgängliga enheter för den valda ingrediensen.
 		fetchIngredientInformation(selectedIngredient.id, index);
 	};
 
@@ -108,7 +108,7 @@ function Ingredients({ ingredients, setIngredients }) {
 					className="grid grid-cols-12 gap-4 mb-2 items-center relative"
 					key={index}
 				>
-					{/* Volume Input */}
+					{/* Volym Input */}
 					<input
 						type="text"
 						placeholder="Volume"
@@ -123,7 +123,7 @@ function Ingredients({ ingredients, setIngredients }) {
 						className="col-span-3 border rounded-lg p-2 placeholder:text-black/30"
 					/>
 
-					{/* Unit Dropdown */}
+					{/* Dropdown för enhet */}
 					<select
 						value={ingredient.unit}
 						onChange={(e) =>
@@ -148,7 +148,7 @@ function Ingredients({ ingredients, setIngredients }) {
 						)}
 					</select>
 
-					{/* Name Input */}
+					{/* Input för namn */}
 					<div className="col-span-5 relative">
 						<input
 							type="text"
@@ -166,7 +166,7 @@ function Ingredients({ ingredients, setIngredients }) {
 							className="border rounded-lg p-2 w-full placeholder:text-black/30"
 						/>
 
-						{/* Suggestions Dropdown */}
+						{/* Dropdown för förslag */}
 						{activeDropdownIndex === index &&
 							searchResults.length > 0 && (
 								<ul className="absolute top-full left-0 right-0 bg-white border rounded-lg shadow-md max-h-40 overflow-y-auto z-10">
@@ -188,11 +188,11 @@ function Ingredients({ ingredients, setIngredients }) {
 							)}
 					</div>
 
-					{/* Remove Ingredient Button */}
+					{/* Ta bort ingrediens-knapp */}
 					{ingredients.length > 1 && (
 						<Button
 							onClick={(e) => {
-								e.preventDefault(); // Prevent form submission
+								e.preventDefault(); // Förhindrar form-submission
 								removeIngredient(index);
 							}}
 							className="ml-2 !bg-transparent hover:text-black"
@@ -203,11 +203,11 @@ function Ingredients({ ingredients, setIngredients }) {
 				</div>
 			))}
 
-			{/* Add Ingredient Button */}
+			{/* Lägg till ingredienser - knapp*/}
 			<Button
 				size="medium"
 				onClick={(e) => {
-					e.preventDefault(); // Prevent form submission
+					e.preventDefault(); // Förhindrar form-submission
 					addIngredient();
 				}}
 				className="bg-whiteFull !text-pink-500 border w-full rounded-lg font-semibold hover:!bg-gray-100"

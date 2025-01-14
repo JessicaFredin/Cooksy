@@ -112,12 +112,14 @@
 
 // export default ProfileAvatar;
 
+// Funktion för att skapa initialer från förnamn och efternamn
 function ProfileAvatar({ user, onClick }) {
 	const getInitials = (firstName, lastName) => {
+		 // Tar första bokstaven i förnamn och efternamn och sätter ihop dem som initialer
 		const initials = `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
-		return initials.toUpperCase();
+		return initials.toUpperCase(); //initialer till versaler
 	};
-
+    // Funktion för att generera en bakgrundsfärg baserat på användarens namn
 	const generateColor = (name) => {
 		const colors = [
 			"bg-red-500",
@@ -130,7 +132,8 @@ function ProfileAvatar({ user, onClick }) {
 	};
 
 	const avatarColor = generateColor(user?.first_name || "U");
-
+	
+    // Returnerar en profilbild om en profilbilds-URL finns, annars en avatar med initialer
 	return user?.profile_picture_url ? (
 		<img
 			src={import.meta.env.VITE_APP_BACKEND_URL + user.profile_picture_url} // Correct property

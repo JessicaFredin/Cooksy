@@ -13,101 +13,111 @@ import { VegetableIcon } from "../assets/icons/VegetableIcon";
 // import profile1 from "../assets/images/profile1.jpg";
 // import RecipeCard from "../components/RecipeCard";
 import RecipeCarousel from "../components/RecipeCarousel";
+import Swoosh from "../assets/svg/Swoosh";
+import Button from "../components/Button";
+import ProfileCard from "../components/ProfileCard";
 
 function HomePage() {
 	const recipes = [
-			{
-				id: 1,
-				name: "Shishkebab med baba ganoush",
-				icon: <MeatIcon />,
-				category: "Meat",
-				time: "90 min",
-				rating: 2,
-				reviews: 25,
-				comments: 5,
-			},
-			{
-				id: 2,
-				name: "Cheeseburger pasta skillet (one pot)",
-				icon: <MeatIcon />,
-				category: "Meat",
-				time: "30 min",
-				rating: 5,
-				reviews: 36,
-				comments: 10,
-			},
-			{
-				id: 3,
-				name: "Smashed burger med extra ost",
-				icon: <ChickenIcon />,
-				category: "Chicken",
-				time: "60 min",
-				rating: 4,
-				reviews: 55,
-				comments: 7,
-			},
-			{
-				id: 4,
-				name: "Sushi",
-				icon: <FishIcon />,
-				category: "Fish",
-				time: "80 min",
-				rating: 1,
-				reviews: 15,
-				comments: 8,
-			},
-			{
-				id: 5,
-				name: "Chickpea and harissa stew with herby yoghurt",
-				icon: <VegetableIcon />,
-				category: "Vegetable",
-				time: "45 min",
-				rating: 3,
-				reviews: 125,
-				comments: 6,
-			},
-			{
-				id: 6,
-				name: "Shrimp salad",
-				icon: <FishIcon />,
-				category: "Fish",
-				time: "120 min",
-				rating: 3,
-				reviews: 37,
-				comments: 19,
-			},
-			{
-				id: 7,
-				name: "Steamed mussels in tomato cream sauce",
-				icon: <VegetableIcon />,
-				category: "Vegetable",
-				time: "75 min",
-				rating: 2,
-				reviews: 78,
-				comments: 35,
-			},
-			{
-				id: 8,
-				name: "Chicken and asparagus",
-				icon: <ChickenIcon />,
-				category: "Chicken",
-				time: "90 min",
-				rating: 3,
-				reviews: 356,
-				comments: 77,
-			},
-			{
-				id: 9,
-				name: "Steamed mussels in tomato cream sauce",
-				icon: <VegetableIcon />,
-				category: "Vegetable",
-				time: "100 min",
-				rating: 4,
-				reviews: 545,
-				comments: 89,
-			},
-		];
-	
+		{
+			id: 1,
+			name: "Shishkebab med baba ganoush",
+			icon: <MeatIcon />,
+			category: "Meat",
+			time: "90 min",
+			rating: 2,
+			reviews: 25,
+			comments: 5,
+		},
+		{
+			id: 2,
+			name: "Cheeseburger pasta skillet (one pot)",
+			icon: <MeatIcon />,
+			category: "Meat",
+			time: "30 min",
+			rating: 5,
+			reviews: 36,
+			comments: 10,
+		},
+		{
+			id: 3,
+			name: "Smashed burger med extra ost",
+			icon: <ChickenIcon />,
+			category: "Chicken",
+			time: "60 min",
+			rating: 4,
+			reviews: 55,
+			comments: 7,
+		},
+		{
+			id: 4,
+			name: "Sushi",
+			icon: <FishIcon />,
+			category: "Fish",
+			time: "80 min",
+			rating: 1,
+			reviews: 15,
+			comments: 8,
+		},
+		{
+			id: 5,
+			name: "Chickpea and harissa stew with herby yoghurt",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
+			time: "45 min",
+			rating: 3,
+			reviews: 125,
+			comments: 6,
+		},
+		{
+			id: 6,
+			name: "Shrimp salad",
+			icon: <FishIcon />,
+			category: "Fish",
+			time: "120 min",
+			rating: 3,
+			reviews: 37,
+			comments: 19,
+		},
+		{
+			id: 7,
+			name: "Steamed mussels in tomato cream sauce",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
+			time: "75 min",
+			rating: 2,
+			reviews: 78,
+			comments: 35,
+		},
+		{
+			id: 8,
+			name: "Chicken and asparagus",
+			icon: <ChickenIcon />,
+			category: "Chicken",
+			time: "90 min",
+			rating: 3,
+			reviews: 356,
+			comments: 77,
+		},
+		{
+			id: 9,
+			name: "Steamed mussels in tomato cream sauce",
+			icon: <VegetableIcon />,
+			category: "Vegetable",
+			time: "100 min",
+			rating: 4,
+			reviews: 545,
+			comments: 89,
+		},
+	];
+
+	const profiles = [
+		{ name: "Liv Thatcher", recipes: 20, followers: 120, following: true },
+		{ name: "Emma Andersson", recipes: 20, followers: 120, following: true },
+		{ name: "Sofia Martinez", recipes: 20, followers: 120, following: true },
+		{ name: "Isabella Sjöqvist", recipes: 20, followers: 120, following: true, }
+	]
+
 	return (
 		<div className="overflow-hidden">
 			{/* Grid Background */}
@@ -212,6 +222,36 @@ function HomePage() {
 					<MainIngredient />
 					<MainIngredient />
 				</div>
+				<div className="col-start-0 col-span-12 relative">
+					{/* Swoosh Background */}
+					<Swoosh className="w-full h-auto" />
+					{/* Text Content */}
+					<div className="absolute inset-0 grid grid-cols-12 items-center justify-center">
+						<div className="col-start-2 col-span-10 flex flex-col items-center justify-center">
+							<h2 className="text-2xl md:text-3xl lg:text-4xl font-medium my-10 md:my-16 font-pacifico">
+								Share and publish your own recipes
+							</h2>
+							<Button>Add recipe</Button>
+						</div>
+					</div>
+				</div>
+				<div className="col-start-2 col-span-10 py-10">
+					<HeadingWithLine text="Top Contributors" />
+				</div>
+				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
+					{/* Justerat gap */}
+					{profiles.map((profile, index) => (
+						<div key={index} className="flex justify-center">
+							<ProfileCard
+								name={profile.name}
+								recipes={profile.recipes}
+								followers={profile.followers}
+								following={profile.following}
+							/>
+						</div>
+					))}
+				</div>
+
 				<div className="col-start-2 col-span-10 py-10">
 					<HeadingWithLine text="Food and Health: Research & Findings" />
 				</div>

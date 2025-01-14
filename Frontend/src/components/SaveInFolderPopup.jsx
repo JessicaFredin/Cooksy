@@ -3,13 +3,16 @@ import CloseButton from "./CloseButton";
 import Button from "./Button";
 
 const SaveInFolderPopup = () => {
+  // State för att lagra mappar och deras egenskaper
   const [folders, setFolders] = useState([{ name: "All recipes", color: "#ffffff" },{ name: "American recipes", color: "#506FEC" }]);
-  const [isAddingFolder, setIsAddingFolder] = useState(false);
-  const [newFolderName, setNewFolderName] = useState("");
+  // State för att kontrollera om "Add folder"-vyn visas
+  const [isAddingFolder, setIsAddingFolder] = useState(false);   // State för den nya mappens namn och färg
+  const [newFolderName, setNewFolderName] = useState("");   
   const [newFolderColor, setNewFolderColor] = useState("#F56868"); // Default färg
-  const [activeFolder, setActiveFolder] = useState("All recipes");
-  const [isPopupOpen, setIsPopupOpen] = useState(true);
+  const [activeFolder, setActiveFolder] = useState("All recipes"); // State för att spåra vilken mapp som är aktiv
+  const [isPopupOpen, setIsPopupOpen] = useState(true); // State för att styra om popupen är öppen eller stängd
 
+  //* Lägger till en ny mapp baserat på användarens inmatning och återgår till mappvyn.
   const handleAddFolder = () => {
     if (newFolderName.trim() !== "") {
       setFolders([...folders, { name: newFolderName, color: newFolderColor }]);
@@ -19,7 +22,7 @@ const SaveInFolderPopup = () => {
       setNewFolderColor("#FFBF00");
     }
   };
-
+ // Om popupen inte är öppen, rendera ingenting
   if (!isPopupOpen) return null; 
 
   return (

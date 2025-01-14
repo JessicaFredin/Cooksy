@@ -1,4 +1,4 @@
-
+//Tar emot titel och color som props
 const RecipeFolder = ({titel,color}) => {
     return(
         <div className={`h-96 bg-${color} w-full  rounded-lg shadow-lg flex justify-center items-center font-pacifico text-xl md:text-2xl lg:text-3xl px-4 text-center cursor-pointer`}>

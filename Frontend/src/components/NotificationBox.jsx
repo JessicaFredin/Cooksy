@@ -6,12 +6,13 @@ import StarRating from "./StarRating";
 const NotificationBox = ({
     avatar,
     name,
-    repliedTo,
-    text,
+    repliedTo, // Indikerar om detta är ett svar och vem det är riktat till
+    text, // Meddelandetexten i notifikationen.
     stars,
     color = "green",
-    min,
+    min, //Tidsstämpel i minuter som visar hur länge sedan notifikationen skapades
 }) => {
+    // Bestämmer kantfärgen baserat på prop color
     const borderColor = color === "green" ? "border-green-500" : "border-pink-500";
 
     return (
@@ -25,10 +26,12 @@ const NotificationBox = ({
                 />
             )}
 
-            {/* Content */}
+            {/* Innehåll */}
             <div className="flex-1">
                 <p className="text-sm font-bold">
+                    {/* Visar användarens namn */}
                     {name}
+                    {/* Om det är ett svar, visa texten Replied to */}
                     {repliedTo && (
                         <span className="text-gray-500"> - Replied to: {repliedTo}</span>
                     )}
@@ -40,10 +43,11 @@ const NotificationBox = ({
                     /></div>}
             </div>
 
-            {/* Timestamp and Delete */}
+            {/* Timestamp och Delete knapp */}
             <div className="flex flex-col items-end justify-between h-full ">
                 <span className="text-gray-400 text-sm">{min}m ago</span>
-                <FontAwesomeIcon icon={faTrashAlt} className={`ml-4 text-sm text-pink-300`} onClick={() => alert("Delete notification")} />
+                 {/* Papperskorgsikon för att ta bort notifikationen  + klickhantering som visas som alert*/}
+                <FontAwesomeIcon icon={faTrashAlt} className={`ml-4 text-sm text-pink-300`} onClick={() => alert("Delete notification")} /> 
             </div>
         </div>
     );

@@ -66,7 +66,7 @@ const RecipeCarousel = ({ recipes }) => {
 				<FontAwesomeIcon icon={faChevronLeft} />
 			</button>
 
-			<div className="col-start-2 col-span-10 flex items-center gap-4 overflow-hidden">
+			<div className="col-start-2 col-span-10 flex items-center gap-2 overflow-hidden">
 				{currentRecipes.map((recipe, index) => (
 					<div
 						key={index}

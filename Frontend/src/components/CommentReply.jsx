@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
+{/* `Propen reply innehåller information om en enskild kommentarssvar, inklusive profilbildens URL, användarens namn, innehåll och tidsstämpel */}
 function CommentReply({ reply }) {
 	return (
 		<div className="mb-4">
+			{/* Wrapper för hela svarskomponenten */}
 			<div className="flex items-start space-x-4">
-				{/* Profile Picture */}
+				{/* Profilbild */}
 				<div className="flex-shrink-0">
 					<img
 						src={
@@ -18,12 +20,13 @@ function CommentReply({ reply }) {
 				</div>
 
 				<div className="flex-1">
-					{/* Author and Date */}
+					{/* Författarens namn och tidsstämpel */}
 					<div className="flex justify-between items-center">
 						<p className="font-bold">
 							{reply.first_name} {reply.last_name}
 						</p>
 						<p className="text-sm text-gray-400">
+							{/* Formaterar tidsstämpeln från reply.created_at */}
 							{new Date(reply.created_at)
 								.toLocaleString("sv-SE", {
 									year: "numeric",
@@ -37,8 +40,9 @@ function CommentReply({ reply }) {
 						</p>
 					</div>
 
-					{/* ✅ Display Only the Reply Content */}
+					{/* Svarsinnehåll, bara innehållet i svaret */}
 					<p className="mt-1">{reply.content}</p>
+
 				</div>
 			</div>
 		</div>

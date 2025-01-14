@@ -307,6 +307,258 @@
 
 // export default ProfilePage;
 
+// // import { useState, useEffect } from "react";
+// // import axios from "axios";
+// // import Button from "../components/Button";
+// // import { CameraIcon } from "../assets/icons/Cameraicon";
+// // import RecipeCard from "../components/RecipeCard";
+// // import FiltersMenu from "../components/FiltersMenu";
+// // import SortMenu from "../components/SortMenu";
+
+// // function ProfilePage() {
+// // 	const [profile, setProfile] = useState(null);
+// // 	const [recipes, setRecipes] = useState([]);
+// // 	const [isEditingBio, setIsEditingBio] = useState(false);
+// // 	const [bio, setBio] = useState("");
+// // 	const [isLoading, setIsLoading] = useState(true);
+// // 	const [bioLength, setBioLength] = useState(0);
+// // 	const [isOverLimit, setIsOverLimit] = useState(false);
+
+// // 	// Fetch user profile and their own recipes
+// // 	useEffect(() => {
+// // 		const fetchProfileAndRecipes = async () => {
+// // 			try {
+// // 				// Fetch profile
+// // 				const profileRes = await axios.get(
+// // 					`${import.meta.env.VITE_APP_BACKEND_URL}/profile`,
+// // 					{ withCredentials: true }
+// // 				);
+// // 				setProfile(profileRes.data);
+// // 				setBio(profileRes.data.bio || "");
+// // 				setBioLength(
+// // 					profileRes.data.bio ? profileRes.data.bio.length : 0
+// // 				);
+
+// // 				// Fetch user's own recipes
+// // 				const recipesRes = await axios.get(
+// // 					`${
+// // 						import.meta.env.VITE_APP_BACKEND_URL
+// // 					}/recipes/my-recipes`,
+// // 					{ withCredentials: true }
+// // 				);
+// // 				setRecipes(recipesRes.data);
+// // 				setIsLoading(false);
+// // 			} catch (err) {
+// // 				console.error("Error fetching profile or recipes:", err);
+// // 			}
+// // 		};
+
+// // 		fetchProfileAndRecipes();
+// // 	}, []);
+
+// // 	// Save updated bio
+// // 	const handleBioSave = () => {
+// // 		if (bioLength > 1000) return;
+
+// // 		axios
+// // 			.put(
+// // 				`${import.meta.env.VITE_APP_BACKEND_URL}/profile/bio`,
+// // 				{ bio },
+// // 				{ withCredentials: true }
+// // 			)
+// // 			.then((response) => {
+// // 				setIsEditingBio(false);
+// // 				setProfile((prev) => ({ ...prev, bio: response.data.bio }));
+// // 			})
+// // 			.catch((err) => console.error("Error updating bio:", err));
+// // 	};
+
+// // 	// Handle bio input change
+// // 	const handleBioChange = (e) => {
+// // 		const newBio = e.target.value;
+// // 		setBio(newBio);
+// // 		setBioLength(newBio.length);
+// // 		setIsOverLimit(newBio.length > 1000);
+// // 	};
+
+// // 	// Handle profile picture update
+// // 	const handleProfilePictureChange = (e) => {
+// // 		const formData = new FormData();
+// // 		formData.append("profile_picture", e.target.files[0]);
+
+// // 		axios
+// // 			.put(
+// // 				`${import.meta.env.VITE_APP_BACKEND_URL}/profile/picture`,
+// // 				formData,
+// // 				{
+// // 					headers: { "Content-Type": "multipart/form-data" },
+// // 					withCredentials: true,
+// // 				}
+// // 			)
+// // 			.then((response) => {
+// // 				setProfile((prev) => ({
+// // 					...prev,
+// // 					profile_picture_url: response.data.profilePictureUrl,
+// // 				}));
+// // 			})
+// // 			.catch((err) =>
+// // 				console.error("Error updating profile picture:", err)
+// // 			);
+// // 	};
+
+// // 	// Handle deleting a recipe
+// // 	const handleDeleteRecipe = (recipeId) => {
+// // 		if (window.confirm("Are you sure you want to delete this recipe?")) {
+// // 			axios
+// // 				.delete(
+// // 					`${
+// // 						import.meta.env.VITE_APP_BACKEND_URL
+// // 					}/recipes/${recipeId}`,
+// // 					{
+// // 						withCredentials: true,
+// // 					}
+// // 				)
+// // 				.then(() => {
+// // 					setRecipes((prevRecipes) =>
+// // 						prevRecipes.filter((recipe) => recipe.id !== recipeId)
+// // 					);
+// // 				})
+// // 				.catch((err) => console.error("Error deleting recipe:", err));
+// // 		}
+// // 	};
+
+// // 	if (isLoading) return <div>Loading...</div>;
+
+// // 	return (
+// // 		<div className="max-w-6xl mx-auto p-8">
+// // 			<div className="grid grid-cols-12 gap-4">
+// // 				{/* Profile Picture */}
+// // 				<div className="relative col-span-12 md:col-span-4 h-full">
+// // 					<img
+// // 						src={
+// // 							profile.profile_picture_url
+// // 								? `${import.meta.env.VITE_APP_BACKEND_URL}${
+// // 										profile.profile_picture_url
+// // 								  }`
+// // 								: "https://placehold.co/400x400"
+// // 						}
+// // 						alt="Profile picture"
+// // 						className="rounded-lg h-full min-h-[300px] object-cover w-full"
+// // 					/>
+// // 					<label
+// // 						htmlFor="profilePictureInput"
+// // 						className="absolute bottom-4 right-4 bg-green-500 p-3 rounded-full cursor-pointer"
+// // 					>
+// // 						<input
+// // 							type="file"
+// // 							id="profilePictureInput"
+// // 							onChange={handleProfilePictureChange}
+// // 							className="hidden"
+// // 						/>
+// // 						<CameraIcon />
+// // 					</label>
+// // 				</div>
+
+// // 				{/* Profile Information */}
+// // 				<div className="col-span-12 md:col-span-8">
+// // 					<h1 className="text-4xl font-pacifico mb-6">
+// // 						{profile.first_name} {profile.last_name}
+// // 					</h1>
+
+// // 					{/* Bio */}
+// // 					<div className="text-gray-700 leading-relaxed">
+// // 						{isEditingBio ? (
+// // 							<div>
+// // 								<textarea
+// // 									placeholder="Add your bio here..."
+// // 									value={bio}
+// // 									onChange={handleBioChange}
+// // 									maxLength="1000"
+// // 									className={`w-full border rounded-md p-2 ${
+// // 										isOverLimit
+// // 											? "border-red-500"
+// // 											: "border-gray-300"
+// // 									}`}
+// // 								/>
+// // 								<p
+// // 									className={`text-sm mt-1 ${
+// // 										isOverLimit
+// // 											? "text-red-500"
+// // 											: "text-gray-600"
+// // 									}`}
+// // 								>
+// // 									{bioLength}/1000 characters
+// // 								</p>
+// // 								<Button
+// // 									onClick={handleBioSave}
+// // 									size="medium"
+// // 									className="bg-green-500 text-white"
+// // 								>
+// // 									Save
+// // 								</Button>
+// // 								<Button
+// // 									onClick={() => setIsEditingBio(false)}
+// // 									size="medium"
+// // 									className="bg-gray-200 text-black ml-2"
+// // 								>
+// // 									Cancel
+// // 								</Button>
+// // 							</div>
+// // 						) : (
+// // 							<p>{profile.bio || "No bio available."}</p>
+// // 						)}
+// // 					</div>
+// // 				</div>
+
+// // 				{/* Filters and Sorting */}
+// // 				<div className="col-start-2 col-span-10 flex items-center justify-between mt-12 mb-8">
+// // 					<FiltersMenu />
+// // 					<SortMenu />
+// // 				</div>
+
+// // 				{/* User's Recipes */}
+// // 				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
+// // 					{recipes.map((recipe) => (
+// // 						<div key={recipe.id} className="relative">
+// // 							<RecipeCard
+// // 								key={recipe.id}
+// // 								id={recipe.id}
+// // 								image={`${
+// // 									import.meta.env.VITE_APP_BACKEND_URL
+// // 								}${recipe.image_url}`}
+// // 								dishName={recipe.title}
+// // 								categoryName={recipe.category_name}
+// // 								time={`${recipe.cooking_time_minutes} min`}
+// // 								authorName={`${recipe.first_name} ${recipe.last_name}`}
+// // 								authorImage={`${
+// // 									import.meta.env.VITE_APP_BACKEND_URL
+// // 								}${recipe.profile_picture_url}`}
+// // 								// Correct average rating (rounded to 1 decimal)
+// // 								rating={parseFloat(
+// // 									recipe.average_rating
+// // 								).toFixed(1)}
+// // 								// Correct review count (distinct users who reviewed)
+// // 								reviews={recipe.review_count || 0}
+// // 								// Correct comment count (comments + replies)
+// // 								commentsCount={recipe.total_comments || 0}
+// // 							/>
+// // 							<Button
+// // 								onClick={() => handleDeleteRecipe(recipe.id)}
+// // 								size="small"
+// // 								className="absolute top-2 right-2 bg-red-500 text-white"
+// // 							>
+// // 								Delete
+// // 							</Button>
+// // 						</div>
+// // 					))}
+// // 				</div>
+// // 			</div>
+// // 		</div>
+// // 	);
+// // }
+
+// // export default ProfilePage;
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../components/Button";
@@ -314,10 +566,11 @@ import { CameraIcon } from "../assets/icons/Cameraicon";
 import RecipeCard from "../components/RecipeCard";
 import FiltersMenu from "../components/FiltersMenu";
 import SortMenu from "../components/SortMenu";
+import { TrashIcon } from "../assets/icons/TrashIcon";
 
 function ProfilePage() {
 	const [profile, setProfile] = useState(null);
-	const [recipes, setRecipes] = useState([]);
+	const [recipes, setRecipes] = useState([]); // Dynamic recipes
 	const [isEditingBio, setIsEditingBio] = useState(false);
 	const [bio, setBio] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
@@ -427,6 +680,11 @@ function ProfilePage() {
 		}
 	};
 
+	// // Edit Recipe (redirect to edit page)
+	// const handleEditRecipe = (recipeId) => {
+	// 	window.location.href = `/edit-recipe/${recipeId}`;
+	// };
+
 	if (isLoading) return <div>Loading...</div>;
 
 	return (
@@ -489,23 +747,41 @@ function ProfilePage() {
 								>
 									{bioLength}/1000 characters
 								</p>
-								<Button
-									onClick={handleBioSave}
-									size="medium"
-									className="bg-green-500 text-white"
-								>
-									Save
-								</Button>
-								<Button
-									onClick={() => setIsEditingBio(false)}
-									size="medium"
-									className="bg-gray-200 text-black ml-2"
-								>
-									Cancel
-								</Button>
+								<div className="flex justify-end mt-2">
+									<Button
+										onClick={handleBioSave}
+										size="medium"
+										className={`${
+											isOverLimit
+												? "bg-gray-300 cursor-not-allowed"
+												: "bg-green-500"
+										} text-white`}
+										disabled={isOverLimit}
+									>
+										Save
+									</Button>
+									<Button
+										onClick={() => setIsEditingBio(false)}
+										size="medium"
+										className="bg-gray-200 text-black ml-2"
+									>
+										Cancel
+									</Button>
+								</div>
 							</div>
 						) : (
-							<p>{profile.bio || "No bio available."}</p>
+							<div>
+								<p>{profile.bio || "No bio available."}</p>
+								<div className="flex justify-end">
+									<Button
+										onClick={() => setIsEditingBio(true)}
+										size="medium"
+										className="bg-pink-500 text-white"
+									>
+										Edit
+									</Button>
+								</div>
+							</div>
 						)}
 					</div>
 				</div>
@@ -520,7 +796,22 @@ function ProfilePage() {
 				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 					{recipes.map((recipe) => (
 						<div key={recipe.id} className="relative">
+							{/* <RecipeCard
+								image={`${
+									import.meta.env.VITE_APP_BACKEND_URL
+								}${recipe.image_url}`}
+								dishName={recipe.title}
+								categoryName={recipe.category_name}
+								time={`${recipe.cooking_time_minutes} min`}
+								authorName={`${profile.first_name} ${profile.last_name}`}
+								rating={parseFloat(
+									recipe.average_rating
+								).toFixed(1)}
+								reviews={recipe.review_count || 0}
+							/> */}
+
 							<RecipeCard
+								id={recipe.id}
 								image={`${
 									import.meta.env.VITE_APP_BACKEND_URL
 								}${recipe.image_url}`}
@@ -530,18 +821,25 @@ function ProfilePage() {
 								authorName={`${profile.first_name} ${profile.last_name}`}
 								authorImage={`${
 									import.meta.env.VITE_APP_BACKEND_URL
-								}${profile.profile_picture_urll}`}
-								rating={recipe.average_rating}
-								reviews={recipe.review_count}
-								commentsCount={recipe.total_comments}
+								}${profile.profile_picture_url}`}
+								rating={parseFloat(
+									recipe.average_rating
+								).toFixed(1)}
+								reviews={recipe.review_count || 0}
+								commentsCount={recipe.total_comments || 0}
+								isOwner={true} // <-- This enables delete/edit buttons
+								onDelete={handleDeleteRecipe} // <-- Delete handler
+								onEdit={(id) =>
+									console.log(`Edit recipe with ID: ${id}`)
+								} // <-- Edit handler (you can replace with navigation)
 							/>
-							<Button
+
+							<button
 								onClick={() => handleDeleteRecipe(recipe.id)}
-								size="small"
-								className="absolute top-2 right-2 bg-red-500 text-white"
+								className="absolute top-2 right-2 bg-white rounded-full p-1"
 							>
-								Delete
-							</Button>
+								<TrashIcon className="text-black" />
+							</button>
 						</div>
 					))}
 				</div>

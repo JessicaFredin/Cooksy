@@ -8,8 +8,6 @@ const exploreLinks = [
 	{ label: "Recipes", to: "/recipes" },
 	{ label: "Articles", to: "/articles" },
 	{ label: "Categories", to: "/categories" },
-	{ label: "Log in", to: "/login" },
-	{ label: "Sign up", to: "/signup" },
 ];
 
 const aboutLinks = [
@@ -22,7 +20,7 @@ const preferencesLinks = [
 	{ label: "Cookies", to: "/cookies" },
 	{ label: "Privacy Policy", to: "/privacy-policy" },
 	{ label: "Terms & Conditions", to: "/terms-and-conditions" },
-	{ label: "Faq", to: "/faq" },
+	{ label: "FAQ", to: "/faq" },
 ];
 
 function Footer() {
