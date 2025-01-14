@@ -56,14 +56,14 @@ function NewsletterPage() {
 				</div>
 			</div>
 
-			<div className="grid grid-cols-12 gap-x-4 py-32">
-				{/* Underubrik och huvudtext */}
-				<div className="col-start-2 col-span-10">
-					<div className="relative z-10">
-						<h2 className="text-xl font-medium mb-2">
-							New Recipes and Fresh Inspiration Every Week!
-						</h2>
-						<p className="text-gray-700 text-sm">
+			<div className="grid grid-cols-12 gap-x-4 py-32 -mt-8">
+  {/* Underubrik och huvudtext */}
+  <div className="col-start-2 col-span-10">
+    <div className="relative z-10 -translate-y-4">
+      <h2 className="text-xl font-medium mb-2">
+        New Recipes and Fresh Inspiration Every Week!
+      </h2>
+      <p className="text-gray-700 text-sm">
 							Get inspired to cook healthy and delicious meals
 							with Cooksy&apos;s weekly newsletter! As a
 							subscriber, you&apos;ll receive easy-to-follow

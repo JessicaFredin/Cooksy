@@ -77,7 +77,6 @@ const StarRating = ({
 }) => {
 	const [hoveredStar, setHoveredStar] = useState(0); // State för att hålla reda på vilken stjärna som är "hovered"
 	const [selectedRating, setSelectedRating] = useState(initialRating); // State för att hålla reda på användarens valda betyg
-	console.log(initialRating);
 	useEffect(() => {
 		// Initierar valt betyg baserat på staticRating om det ges
 		if (staticRating !== null) {

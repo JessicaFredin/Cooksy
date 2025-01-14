@@ -24,29 +24,51 @@ router.get("/:recipeId", async (req, res) => {
 			    u.first_name AS user_first_name,
 			    u.last_name AS user_last_name,
 			    u.profile_picture_url AS user_profile_picture_url,
-			    COALESCE(COUNT(DISTINCT CASE WHEN cv.vote_type = 1 THEN cv.id END), 0) AS likes_count,
-    			COALESCE(COUNT(DISTINCT CASE WHEN cv.vote_type = -1 THEN cv.id END), 0) AS dislikes_count,
-			    COALESCE(json_agg(json_build_object(
-			        'id', r.id,
-			        'content', r.content,
-			        'user_id', r.user_id,
-			        'created_at', r.created_at,
-			        'first_name', ur.first_name,
-			        'last_name', ur.last_name,
-			        'profile_picture_url', ur.profile_picture_url  -- Corrected this field
-			    )) FILTER (WHERE r.id IS NOT NULL), '[]') AS replies
+
+			    -- Subquery to count likes
+			    COALESCE((
+			        SELECT COUNT(*) 
+			        FROM comment_votes cv 
+			        WHERE cv.comment_id = c.id AND cv.vote_type = 1
+			    ), 0) AS likes_count,
+
+			    -- Subquery to count dislikes
+			    COALESCE((
+			        SELECT COUNT(*) 
+			        FROM comment_votes cv 
+			        WHERE cv.comment_id = c.id AND cv.vote_type = -1
+			    ), 0) AS dislikes_count,
+
+			    -- Aggregate replies without duplication
+			    COALESCE(
+			        json_agg(DISTINCT jsonb_build_object(
+			            'id', r.id,
+			            'content', r.content,
+			            'user_id', r.user_id,
+			            'created_at', r.created_at,
+			            'first_name', ur.first_name,
+			            'last_name', ur.last_name,
+			            'profile_picture_url', ur.profile_picture_url
+			        )) FILTER (WHERE r.id IS NOT NULL),
+			        '[]'
+			    ) AS replies
+
 			FROM comments c
 			JOIN users u ON c.user_id = u.id
-			LEFT JOIN comment_votes cv ON cv.comment_id = c.id
+
+			-- Join replies without affecting votes aggregation
 			LEFT JOIN replies r ON r.comment_id = c.id
-			LEFT JOIN users ur ON r.user_id = ur.id  -- Correct join to fetch reply user details
+			LEFT JOIN users ur ON r.user_id = ur.id
+
 			WHERE c.recipe_id = $1
+
 			GROUP BY c.id, u.id
 			ORDER BY c.created_at ASC;
 			`,
 			[recipeId]
 		);
 
+		// Send back the comments with replies, likes, and dislikes
 		res.status(200).json(commentsResult.rows);
 	} catch (error) {
 		console.error("Error fetching comments and replies:", error);
@@ -170,27 +192,41 @@ router.post("/votes/:commentId", authenticateUser, async (req, res) => {
                      WHERE user_id = $1 AND comment_id = $2`,
 					[userId, commentId]
 				);
-				return res.status(200).json({ message: "Vote removed" });
 			} else {
 				// Different vote → Update vote
-				const updatedVote = await pool.query(
+				await pool.query(
 					`UPDATE comment_votes 
                      SET vote_type = $1 
-                     WHERE user_id = $2 AND comment_id = $3
-                     RETURNING *`,
+                     WHERE user_id = $2 AND comment_id = $3`,
 					[voteType, userId, commentId]
 				);
-				return res.status(200).json(updatedVote.rows[0]);
 			}
 		} else {
 			// No vote → Insert new vote
-			const newVote = await pool.query(
+			await pool.query(
 				`INSERT INTO comment_votes (comment_id, user_id, vote_type) 
-                 VALUES ($1, $2, $3) RETURNING *`,
+                 VALUES ($1, $2, $3)`,
 				[commentId, userId, voteType]
 			);
-			return res.status(201).json(newVote.rows[0]);
 		}
+
+		// Fetch updated like and dislike counts
+		const updatedVotes = await pool.query(
+			`SELECT 
+				COUNT(*) FILTER (WHERE vote_type = 1) AS likes,
+				COUNT(*) FILTER (WHERE vote_type = -1) AS dislikes
+			 FROM comment_votes
+			 WHERE comment_id = $1`,
+			[commentId]
+		);
+
+		const { likes, dislikes } = updatedVotes.rows[0];
+
+		res.status(200).json({
+			message: "Vote updated",
+			likes: parseInt(likes, 10),
+			dislikes: parseInt(dislikes, 10),
+		});
 	} catch (error) {
 		console.error("Error handling vote:", error);
 		res.status(500).json({ error: "Failed to process vote" });

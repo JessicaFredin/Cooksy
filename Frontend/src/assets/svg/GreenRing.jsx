@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 
 const GreenRing = ({ text, isActive, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);

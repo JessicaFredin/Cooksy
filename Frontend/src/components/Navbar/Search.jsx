@@ -44,8 +44,8 @@ function Search({ onSearch }) {
 							type="text"
 							value={query}
 							onChange={handleInputChange}
-							placeholder="Search for recipe"
-							className="flex-1 h-full px-6 text-gray-400 placeholder-gray-100 focus:outline-none bg-transparent"
+							placeholder="Search for recipe..."
+							className="flex-1 h-full px-6 text-gray-400 placeholder-gray-200 focus:outline-none bg-transparent"
 						/>
 						{/* Inner Submit Button */}
 						<button

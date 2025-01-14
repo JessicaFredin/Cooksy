@@ -102,7 +102,7 @@ function FiltersMenu() {
 	return (
 		<div
 			className={
-				isOpen ? "h-screen overflow-hidden" : "h-auto overflow-auto"
+				isOpen ? "" : "h-auto overflow-auto"
 			}
 		>
 			{/* Knapp för att öppna filtret */}

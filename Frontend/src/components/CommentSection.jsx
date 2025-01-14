@@ -11,13 +11,14 @@ function CommentSection() {
 	const [comments, setComments] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-    // Funktion för att hämta kommentarer från backend
+	// Funktion för att hämta kommentarer från backend
 	const fetchComments = async () => {
 		try {
 			const response = await axios.get(
 				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/${recipeId}` // Dynamisk endpoint baserad på recipeId
 			);
 			setComments(response.data); // Uppdaterar kommentarerna i state
+			console.log(response.data);
 		} catch (err) {
 			console.error("Error fetching comments:", err);
 			setError("Failed to load comments."); // Visa felmeddelande om något går fel
@@ -25,11 +26,11 @@ function CommentSection() {
 			setLoading(false);
 		}
 	};
-    // Kör när komponenten mountas eller när recipeId ändras
+	// Kör när komponenten mountas eller när recipeId ändras
 	useEffect(() => {
 		fetchComments();
 	}, [recipeId]);
-    // Funktion för att lägga till en ny kommentar
+	// Funktion för att lägga till en ny kommentar
 	const addComment = async (text) => {
 		try {
 			await axios.post(
@@ -73,7 +74,7 @@ function CommentSection() {
 			alert("You need to be logged in to reply.");
 		}
 	};
-    // Visa laddningsmeddelande tills data är hämtad
+	// Visa laddningsmeddelande tills data är hämtad
 	if (loading) return <p>Loading comments...</p>;
 	// Visa felmeddelande om något går fel
 	if (error) return <p className="text-red-500">{error}</p>;
@@ -91,7 +92,7 @@ function CommentSection() {
 					onSubmit={addComment}
 					buttonText="Send"
 				/>
-                {/* Lista över kommentarer */}
+				{/* Lista över kommentarer */}
 				<div className="mt-6">
 					{comments.length === 0 ? (
 						// Visa meddelande om inga kommentarer finns

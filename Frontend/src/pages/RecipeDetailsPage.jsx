@@ -19,7 +19,7 @@ import RecipeSwoosh from "../assets/svg/RecipeSwoosh";
 function RecipeDetailsPage() {
 	const { id } = useParams();
 	const { isLoggedIn } = useAuth(); // Use AuthContext
-	const [userRating, setUserRating] = useState(null); // Store the user's rating
+	const [userRating, setUserRating] = useState(0); // Store the user's rating
 	const [hoveredStar, setHoveredStar] = useState(0);
 	const [recipe, setRecipe] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -28,6 +28,7 @@ function RecipeDetailsPage() {
 	const [averageRating, setAverageRating] = useState(0);
 	const [reviewCount, setReviewCount] = useState(0);
 	const { openPopup } = usePopup();
+
 	// Hämtar receptdetaljer
 	useEffect(() => {
 		const fetchRecipe = async () => {
@@ -92,7 +93,7 @@ function RecipeDetailsPage() {
 
 		fetchRatings();
 	}, [id]);
-    // Visa laddningsindikator, felmeddelande eller innehåll
+	// Visa laddningsindikator, felmeddelande eller innehåll
 	if (loading) {
 		return <p>Loading recipe details...</p>;
 	}
@@ -141,7 +142,7 @@ function RecipeDetailsPage() {
 					<StarRating totalStars={5} staticRating={averageRating} />
 					<h5 className="mt-1 ml-2">({reviewCount} reviews)</h5>
 				</div>
-                {/* Recepttitel */}
+				{/* Recepttitel */}
 				<h1 className="text-4xl font-bold col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-2 lg:row-span-1 lg:text-5xl">
 					{recipe.title}
 				</h1>
@@ -159,7 +160,7 @@ function RecipeDetailsPage() {
 						}${recipe.user_profile_picture}`}
 					/>
 				</div>
-                {/* Kort info om receptet */}
+				{/* Kort info om receptet */}
 				<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
 					<RecipeShortInfoBox
 						category={recipe.category_name} // e.g., "Poultry"
@@ -171,23 +172,23 @@ function RecipeDetailsPage() {
 				<p className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-4 lg:row-start-4 lg:row-span-1 lg:text-lg">
 					{recipe.description}
 				</p>
-                {/* Allergivarningar */}
+				{/* Allergivarningar */}
 				<div className="col-start-2 col-span-6 md:col-start-2 md:col-span-4 md:row-start-5 lg:row-start-5 lg:col-start-2 lg:col-span-2 grid grid-cols-2">
 					<Warning title="Lactose" isPresent={recipe.lactose} />
 					<Warning title="Gluten" isPresent={recipe.gluten} />
 				</div>
-                {/* Näringsinformation */}
+				{/* Näringsinformation */}
 				<div className="col-start-2 col-span-10 md:col-start-6 md:col-span-6 md:row-start-4 md:row-span-3 lg:row-start-6  lg:row-span-1">
 					<NutritionInfo id={id} />
 				</div>
-                {/* Ändra portioner */}
+				{/* Ändra portioner */}
 				<div className="col-start-2 col-span-10 md:row-start-7">
 					<PortionBar
 						currentPortion={recipe.serving_size}
 						onPortionChange={handlePortionChange}
 					/>
 				</div>
-                {/* Ingredienser och instruktioner */}
+				{/* Ingredienser och instruktioner */}
 				<div className="col-start-2 col-span-10">
 					<IngredientsInstructions
 						ingredients={recipe.ingredients || []}
@@ -196,7 +197,7 @@ function RecipeDetailsPage() {
 						portionMultiplier={portionMultiplier}
 					/>
 				</div>
-                {/* Näringsvärden dropdown */}
+				{/* Näringsvärden dropdown */}
 				<div className="col-start-2 col-span-10">
 					<NutritionalValueDropdown
 						protein={recipe.protein}
@@ -206,21 +207,19 @@ function RecipeDetailsPage() {
 						energyKCAL={recipe.energyKCAL}
 					/>
 				</div>
-                {/* Betygsättning */}
+				{/* Betygsättning */}
 				<div className="col-start-2 col-span-10 grid ">
 					<div className=" md:col-start-2 mt-10 md:mt-0 flex flex-col items-center">
 						<h3 className="font-bold text-2xl">Rate this recipe</h3>
-                        
+
 						{isLoggedIn ? (
 							<div className="mt-4 flex flex-col items-center">
-								{userRating && (
-									<StarRating
-										totalStars={5}
-										onRatingChange={handleRatingChange}
-										onHoverChange={setHoveredStar}
-										initialRating={userRating}
-									/>
-								)}
+								<StarRating
+									totalStars={5}
+									onRatingChange={handleRatingChange}
+									onHoverChange={setHoveredStar}
+									initialRating={userRating}
+								/>
 
 								<p className="mt-2 text-gray-600 text-center">
 									{{
@@ -253,7 +252,7 @@ function RecipeDetailsPage() {
 					Ad
 				</div>
 			</div>
-            {/* Kommentarsektion */}
+			{/* Kommentarsektion */}
 			<CommentSection />
 		</div>
 	);

@@ -3,7 +3,7 @@ import { useState } from "react";
 function CategoriesCard({img, title}) {
 
     return (
-        <div className="group relative overflow-hidden rounded-lg h-[550px]">
+        <div className="group relative overflow-hidden rounded-lg ">
       {/* Bild */}
       <img
         src={img}

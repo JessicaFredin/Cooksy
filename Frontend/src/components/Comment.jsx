@@ -6,20 +6,20 @@ import { ThumbsDownIcon } from "../assets/icons/ThumbsDownIcon";
 import axios from "axios";
 //Tar emot comment och onReply som prop
 const Comment = ({ comment, onReply }) => {
-	  // Lokala tillstånd för komponenten
+	// Lokala tillstånd för komponenten
 	const [isReplying, setIsReplying] = useState(false); // Håller reda på om användaren är i reply-läge
 	const [replyText, setReplyText] = useState(""); // Texten som skrivs in när användaren svarar
 	const [likes, setLikes] = useState(comment.likes_count); // Antal likes för kommentaren
 	const [dislikes, setDislikes] = useState(comment.dislikes_count); // Antal dislikes för kommentaren
 	const [isVoting, setIsVoting] = useState(false); // Prevent double voting
 
-	  // Funktion för att hantera röstning på kommentarer.
+	// Funktion för att hantera röstning på kommentarer.
 	const handleVote = async (voteType) => {
-		if (isVoting) return; // Förhindrar flera röstningar samtidigt
+		if (isVoting) return; // Prevent multiple votes at the same time
 		setIsVoting(true);
 
 		try {
-			// Skickar en POST-förfrågan till backend för att hantera röstningen
+			// Send the vote to the backend
 			const response = await axios.post(
 				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/votes/${
 					comment.comment_id
@@ -28,28 +28,17 @@ const Comment = ({ comment, onReply }) => {
 				{ withCredentials: true }
 			);
 
-			if (voteType === 1) {
-				// Hanterar logiken för likes
-				if (response.data.message === "Vote removed") {
-					// Förhindrar negativa värden
-					setLikes(Math.max(likes - 1, 0));
-				} else {
-					setLikes(likes + 1); // Ökar likes
-					setDislikes(dislikes - 1); // Reset dislike
-				}
-			} else if (voteType === -1) {
-				if (response.data.message === "Vote removed") {
-					// Förhindrar negativa värden
-					setDislikes(Math.max(dislikes - 1, 0));
-				} else {
-					setDislikes(dislikes + 1); // Set dislike to 1
-					setLikes(likes - 1); // Minskar likes om det fanns en tidigare like
-				}
-			}
+			// Extract the updated likes and dislikes from the response
+			const { likes: updatedLikes, dislikes: updatedDislikes } =
+				response.data;
+
+			// Update state with the new values
+			setLikes(updatedLikes);
+			setDislikes(updatedDislikes);
 		} catch (err) {
-			console.error("Error handling vote:", err); // Loggar eventuella fel
+			console.error("Error handling vote:", err); // Log any errors
 		} finally {
-			setIsVoting(false); // Allow voting again
+			setIsVoting(false); // Enable voting again
 		}
 	};
 
@@ -78,7 +67,7 @@ const Comment = ({ comment, onReply }) => {
 						className="w-10 h-10 rounded-full"
 					/>
 				</div>
-                {/* Kommentarens innehåll */}
+				{/* Kommentarens innehåll */}
 				<div className="flex-1">
 					<div className="flex justify-between items-start">
 						<p className="font-bold">
@@ -98,15 +87,15 @@ const Comment = ({ comment, onReply }) => {
 								.replace(" ", ", ")}
 						</p>
 					</div>
-                    {/* Kommentarens text */}
+					{/* Kommentarens text */}
 					<p>{comment.comment_content}</p>
-                    {/* Reaktionsknappar */}
+					{/* Reaktionsknappar */}
 					<div className="flex items-center space-x-4 mt-3">
 						{/* Tummen upp */}
 						<button
 							onClick={() => handleVote(1)}
 							className="flex items-center space-x-2 bg-gray-200 p-1 rounded-xl hover:bg-gray-500 transition"
-						>   
+						>
 							<ThumbsUpIcon className="w-5 h-5 text-gray-700" />
 							<span className="text-gray-700">{likes}</span>
 						</button>

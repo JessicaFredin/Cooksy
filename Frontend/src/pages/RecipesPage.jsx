@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import HeadingWithLine from "../components/HeadingWithLine";
 import axios from "axios";
+import SortMenu from "../components/SortMenu";
+import FiltersMenu from "../components/FiltersMenu";
+import SearchField from "../components/SearchField"
+
 
 const RecipePage = () => {
 	const [recipes, setRecipes] = useState([]);
@@ -33,6 +37,18 @@ const RecipePage = () => {
 			{/* Page Title */}
 			<div className="col-start-2 col-span-3">
 				<HeadingWithLine text="Recipes" />
+			</div>
+
+			<div className="col-start-2 col-span-10">
+				<div className="flex justify-between items-center space-x-4">
+					<FiltersMenu />
+					
+					<div className="w-1/2">
+					<SearchField />
+					</div>
+
+					<SortMenu />
+				</div>
 			</div>
 
 			{/* Recipe Grid */}

@@ -16,8 +16,10 @@ import RecipeCarousel from "../components/RecipeCarousel";
 import Swoosh from "../assets/svg/Swoosh";
 import Button from "../components/Button";
 import ProfileCard from "../components/ProfileCard";
+import { useSearch } from "../contexts/SearchContext";
 
 function HomePage() {
+	const { handleSearch } = useSearch(); // 🔥 Get search function from context
 	const recipes = [
 		{
 			id: 1,
@@ -113,10 +115,25 @@ function HomePage() {
 
 	const profiles = [
 		{ name: "Liv Thatcher", recipes: 20, followers: 120, following: true },
-		{ name: "Emma Andersson", recipes: 20, followers: 120, following: true },
-		{ name: "Sofia Martinez", recipes: 20, followers: 120, following: true },
-		{ name: "Isabella Sjöqvist", recipes: 20, followers: 120, following: true, }
-	]
+		{
+			name: "Emma Andersson",
+			recipes: 20,
+			followers: 120,
+			following: true,
+		},
+		{
+			name: "Sofia Martinez",
+			recipes: 20,
+			followers: 120,
+			following: true,
+		},
+		{
+			name: "Isabella Sjöqvist",
+			recipes: 20,
+			followers: 120,
+			following: true,
+		},
+	];
 
 	return (
 		<div className="overflow-hidden">
@@ -159,7 +176,8 @@ function HomePage() {
 					<HighlightedHeader />
 					<div className="flex items-center w-full">
 						<div className="text-center sm:text-left w-full my-3">
-							<SearchField />
+							{/* ✅ Pass handleSearch as a prop */}
+							<SearchField onSearch={handleSearch} />
 						</div>
 					</div>
 				</div>

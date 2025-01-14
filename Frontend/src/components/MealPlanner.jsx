@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import HeadingWithLine from "../components/HeadingWithLine";
 
 const daysOfWeek = [
@@ -61,10 +61,10 @@ const MealPlanner = () => {
                 {daysOfWeek.map((day) => (
                     <div
                         key={day}
-                        className="border-2 border-[#A8D400] rounded-md p-4 grid lg:grid-cols-4 sm:grid-cols-1 gap-4"
+                        className="border-2 border-green-500 rounded-md p-4 grid lg:grid-cols-4 sm:grid-cols-1 gap-4"
                     >
                         {/* Dagens namn */}
-                        <h3 className="text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center bg-[#EAF2C8] lg:bg-transparent">
+                        <h3 className="text-lg font-[Pacifico] text-black font-semibold py-2 rounded-md text-center bg-white lg:bg-transparent">
                             {day}
                         </h3>
 
@@ -76,9 +76,9 @@ const MealPlanner = () => {
                         ].map((meal) => (
                             <div
                                 key={meal}
-                                className="border-[#A8D400] border rounded-md flex justify-center items-center text-gray-500 h-[15rem]"
+                                className="border-green-500 border rounded-md flex justify-center items-center text-gray-500 h-[15rem]"
                             >
-                                <span className="text-[#A8D400] text-2xl font-semibold">
+                                <span className="text-green-500 text-2xl font-semibold">
                                     +
                                 </span>
                             </div>

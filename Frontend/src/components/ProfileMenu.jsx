@@ -92,6 +92,7 @@
 import  { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RecipeFeedIcon from "../assets/icons/RecipeFeedIcon";
 import {
 	faUser,
 	faBell,
@@ -180,6 +181,17 @@ function ProfileMenu({ isOpen, onClose, onLogOut }) {
 						Meal planner
 					</Link>
 				</li>
+
+				<li className="px-4 py-2 flex items-center hover:bg-green-100 cursor-pointer">
+					<span className="mr-3 text-gray-800">
+						<RecipeFeedIcon/>
+					</span>
+					<Link to="/recipe-feed" className="flex-1 text-gray-700">
+						Recipe feed
+					</Link>
+				</li>
+
+
 				<li className="px-4 py-2 flex items-center hover:bg-green-100 cursor-pointer">
 					<span className="mr-3 text-gray-800">
 						<FontAwesomeIcon icon={faCog} />

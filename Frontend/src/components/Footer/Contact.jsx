@@ -59,7 +59,7 @@ function Contact() {
 				<div className="col-start-2 col-span-10">
 					<HeadingWithLine text="Contact" />
 				</div>
-				<p className="text-black text-base sm:text-lg md:text-xl mb-6">
+				<p className="text-black text-sm sm:text-base md:text-lg mb-6 mt-4">
 					Need assistance with your account or have questions you
 					can&apos;t find an answer to? Reach out to us through the
 					contact form or by email. We&apos;re here to help and ensure

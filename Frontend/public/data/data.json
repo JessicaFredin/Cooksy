@@ -1,0 +1,522 @@
+{
+    "profiles": [
+        {
+            "img": "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Liv Thatcher",
+            "recipes": 64,
+            "followers": 120,
+            "following": true,
+            "description": "Hi, I’m Liv Thatcher! Cooking is my way of expressing creativity, and I love to try new ingredients and techniques to craft mouthwatering dishes. From homemade breads to savory stews, I’m always exploring new ways to elevate classic flavors. I’m so excited to share my kitchen adventures with you and hope my recipes inspire you to create something delicious in your own home!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Emma Andersson",
+            "recipes": 5,
+            "followers": 34,
+            "following": true,
+            "description": "Hi, I’m Emma Andersson! I’m passionate about fresh, wholesome ingredients, and I enjoy crafting simple, yet flavorful recipes. Whether it’s a quick lunch or a cozy dinner, I believe cooking should be fun and accessible to everyone. I can’t wait to share my culinary creations with you and inspire you to add a little more joy to your kitchen!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Sofia Martinez",
+            "recipes": 17,
+            "followers": 83,
+            "following": true,
+            "description": "Hi, I’m Sofia Martinez! For me, cooking is all about comfort and flavor. I love preparing dishes that bring people together around the table and create memories. From vibrant salads to rich desserts, I’m always looking for new ways to make meals that feel like home. Join me on my journey to create food that’s as comforting as it is delicious!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/10260774/pexels-photo-10260774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Isabella Sjöqvist",
+            "recipes": 98,
+            "followers": 220,
+            "following": true,
+            "description": "Hi, I’m Isabella Sjöqvist! Cooking is my passion, and I love creating dishes that are both beautiful and flavorful. From classic comfort food to more adventurous meals, I’m always looking for ways to experiment with flavors. I hope my recipes inspire you to cook with creativity and share the joy of food with your loved ones!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Luca Bianchi",
+            "recipes": 17,
+            "followers": 10,
+            "following": true,
+            "description": "Hi, I’m Luca Bianchi! Cooking is where I find my joy, and I love combining fresh ingredients to create flavorful meals. I’m always looking for new ways to experiment with different cuisines and techniques. I hope you enjoy following along as I share my culinary journey with you and inspire you to try something new!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Matilda Holmgren",
+            "recipes": 0,
+            "followers": 70,
+            "following": true,
+            "description": "Hi, I’m Matilda Holmgren! Cooking is one of my greatest passions, and I love exploring new ingredients and techniques. I’m always looking for ways to create delicious meals that are easy to prepare and fun to share. Follow along as I discover and share recipes that bring a little more flavor and joy into your life!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Alessandro Moretti",
+            "recipes": 14,
+            "followers": 34,
+            "following": true,
+            "description": "Hi, I’m Alessandro Moretti! I’ve always been passionate about bringing people together through food. I love preparing simple, rustic dishes that highlight fresh, seasonal ingredients. Whether it’s a quick weeknight dinner or a festive meal, I can’t wait to share my recipes with you and inspire you to cook with love!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg",
+            "name": "Lukas Andersson",
+            "recipes": 73,
+            "followers": 146,
+            "following": true,
+            "description": "Hi, I’m Lukas Andersson! Cooking is my passion, and I love experimenting with different flavors and cuisines. I enjoy creating dishes that are both comforting and adventurous, and I believe in the magic of home-cooked meals. Join me as I share my journey and favorite recipes with you, and I hope to inspire your own culinary creativity!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/1102341/pexels-photo-1102341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Elena Fernandez",
+            "recipes": 3,
+            "followers": 4,
+            "following": true,
+            "description": "Hi, I’m Elena Fernandez! Cooking is all about exploring new flavors and sharing delicious moments with others. I love creating simple, tasty meals that bring joy to the table. From easy snacks to satisfying dinners, I’m here to share my culinary creations and hope to inspire you to cook with love!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Adam Lindström",
+            "recipes": 54,
+            "followers": 246,
+            "following": true,
+            "description": "Hi, I’m Adam Lindström! I’ve always loved creating meals that bring people together. From quick weeknight dinners to elaborate weekend feasts, I enjoy sharing my passion for food with others. I hope my recipes inspire you to cook with confidence and have fun in the kitchen!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Matilda Holmgren",
+            "recipes": 19,
+            "followers": 46,
+            "following": true,
+            "description": "Hi, I’m Matilda Holmgren! Cooking is a way for me to explore creativity and enjoy simple pleasures. I love experimenting with new ingredients and making meals that taste amazing yet are easy to prepare. Follow me as I share my favorite recipes and inspire you to create delicious dishes with what’s in your kitchen!"
+        },
+        {
+            "img": "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "name": "Alessandro Moretti",
+            "recipes": 45,
+            "followers": 164,
+            "following": true,
+            "description": "Hi, I’m Alessandro Moretti! I’m passionate about creating hearty, flavorful meals that bring people together. I believe food is meant to be enjoyed and shared, and I love experimenting with new ingredients to make every dish special. Join me as I explore the world of cooking and share my favorite recipes with you!"
+        }
+    ],
+    "recipes": [
+        {
+            "img": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 1,
+            "name": "Homemade Sushi",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "90 min",
+            "rating": 2,
+            "reviews": 25,
+            "comments": 5
+        },
+        {
+            "img": "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg",
+            "id": 2,
+            "name": "Tomato pie with feta cheese and olives",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "30 min",
+            "rating": 5,
+            "reviews": 36,
+            "comments": 10
+        },
+        {
+            "img": "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 3,
+            "name": "Smashed burger with extra cheese",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "60 min",
+            "rating": 4,
+            "reviews": 55,
+            "comments": 7
+        },
+        {
+            "img": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 4,
+            "name": "Pizza with basil and mozzarella",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "80 min",
+            "rating": 1,
+            "reviews": 15,
+            "comments": 8
+        },
+        {
+            "img": "https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 5,
+            "name": "Chickpea and harissa stew with herby yoghurt",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "45 min",
+            "rating": 3,
+            "reviews": 125,
+            "comments": 6
+        },
+        {
+            "img": "https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 6,
+            "name": "Shrimp salad",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "120 min",
+            "rating": 3,
+            "reviews": 37,
+            "comments": 19
+        },
+        {
+            "img": "https://images.pexels.com/photos/1832016/pexels-photo-1832016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 7,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "75 min",
+            "rating": 2,
+            "reviews": 78,
+            "comments": 35
+        },
+        {
+            "img": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 8,
+            "name": "Chicken and asparagus",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "90 min",
+            "rating": 3,
+            "reviews": 356,
+            "comments": 77
+        },
+        {
+            "img": "https://images.pexels.com/photos/6546424/pexels-photo-6546424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 9,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89
+        },
+        {
+            "img": "https://images.pexels.com/photos/2116094/pexels-photo-2116094.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 10,
+            "name": "Chicken and asparagus",
+            "icon": "ChickenIcon",
+            "category": "Chicken",
+            "time": "90 min",
+            "rating": 3,
+            "reviews": 356,
+            "comments": 77
+        },
+        {
+            "img": "https://images.pexels.com/photos/24405872/pexels-photo-24405872/free-photo-of-gronsaker-middag-maltid-kott.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 11,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89
+        },
+        {
+            "img": "https://cdn.pixabay.com/photo/2014/11/05/15/57/new-years-eve-518032_1280.jpg",
+            "id": 12,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89
+        }
+    ],
+    "articles": [
+        {
+            "img": "https://cdn.pixabay.com/photo/2017/07/20/18/40/apricots-2523272_960_720.jpg",
+            "title": "Peaches: A Nutritional Powerhouse",
+            "description": "Peaches are low in calories and rich in vitamins A and C, antioxidants, and fiber, making them beneficial for immune health and digestion.",
+            "content": "Peaches are a nutritious and delicious fruit that offer a wealth of health benefits, making them an excellent addition to a balanced diet. Low in calories yet rich in essential nutrients, peaches are especially noted for their high content of vitamins A and C, antioxidants, and dietary fiber. These nutrients together contribute to improved immune health, skin health, and digestive function.  Additionally, the dietary fiber in peaches promotes satiety, aiding in weight management and maintaining stable blood sugar levels. Enjoyed fresh, dried, or in smoothies,. Vitamin A in peaches is crucial for maintaining healthy skin and vision, as well as supporting immune health by helping cells function properly. Additionally, vitamin C in peaches plays a vital role in immunity by encouraging the production of white blood cells that defend the body against infections. It also acts as a powerful antioxidant, protecting cells from damage by free radicals. This vitamin is essential for collagen synthesis, which keeps the skin firm and resilient, promotes faster wound healing, and reduces signs of aging. Peaches are rich in antioxidants, including polyphenols and carotenoids, which play a significant role in reducing oxidative stress in the body. Oxidative stress occurs when there’s an imbalance between free radicals and antioxidants, potentially leading to cellular damage and chronic diseases like heart disease and certain cancers. Antioxidants found in peaches neutralize these free radicals, reducing inflammation and helping prevent long-term health issues"
+        },
+        {
+            "img": "https://images.pexels.com/photos/52521/pistachio-nuts-pistachios-crisps-52521.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Nutritional Benefits of Pistachios",
+            "description": "Pistachios are rich in healthy fats, protein, fiber, and essential vitamins, supporting heart health and muscle function.",
+            "content": "Pistachios are not just a delicious snack; they’re a nutritional powerhouse with impressive health benefits that make them worth adding to your daily routine. Did you know that regularly enjoying pistachios may significantly reduce the risk of developing type 2 diabetes? These vibrant green nuts, when paired with high-glycemic foods, can even help stabilize blood sugar levels, making them a smart choice for those keeping an eye on their glucose. For individuals with diabetes, pistachios offer even more. Studies suggest that including pistachios in your diet can improve glycemic control, lower blood pressure, and reduce inflammation – all key factors in managing the condition. But the benefits don’t stop there. For people with prediabetes, pistachios have been found to enhance insulin metabolism and decrease insulin resistance, reducing the risk of heart disease in the process. Nutritionally, pistachios are a goldmine. Packed with 20.5 grams of protein per 100 grams, they’re a great plant-based protein source. They’re also rich in magnesium (158 mg/100 g) and potassium (1090 mg/100 g), essential nutrients for heart health and energy regulation. What’s more, pistachios are loaded with healthy fats, especially monounsaturated fats (32.7 g/100 g), which are known to support cardiovascular health. The key to unlocking pistachios’ full potential lies in consuming them in moderation and unsalted. While they’re nutrient-dense, overindulging could lead to consuming too many calories, offsetting their benefits. In summary, pistachios are more than just a tasty treat – they’re a versatile and nutrient-packed snack that supports overall health. From managing blood sugar to improving heart health, these tiny nuts pack a powerful punch. So, why not make pistachios part of your balanced diet and enjoy their many benefits, one handful at a time? "
+        },
+        {
+            "img": "https://images.pexels.com/photos/2325843/pexels-photo-2325843.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Iron Deficiency and Your Energy Levels",
+            "description": "Iron plays a crucial role in maintaining energy levels by supporting the production of hemoglobin, the protein in red blood cells that transports oxygen throughout the body...",
+            "content": "Iron is a vital mineral that plays a starring role in maintaining your energy levels and overall vitality. As a key component of hemoglobin, iron helps transport oxygen from your lungs to the rest of your body. Without sufficient iron, your cells may not get the oxygen they need, leading to fatigue, weakness, and reduced productivity. One of the most common reasons for low energy levels is iron deficiency, a condition that can affect anyone but is particularly prevalent among women, athletes, and vegetarians. Iron deficiency can result in anemia, leaving you feeling sluggish and drained. By ensuring an adequate intake of iron, you can support optimal energy production and feel more vibrant throughout the day. Foods rich in iron are essential for keeping your body fueled and energized. Iron is found in two forms: heme iron, which is present in animal products like red meat, poultry, and fish, and non-heme iron, which is abundant in plant-based sources like spinach, lentils, and fortified cereals. Pairing plant-based iron sources with vitamin C-rich foods, such as oranges or bell peppers, can enhance absorption and maximize their benefits. In addition to energy, iron is crucial for cognitive function and immune health. Ensuring your body has enough iron not only keeps you feeling active but also strengthens your focus and resistance to illness. Whether you’re an athlete looking to optimize performance or simply want to tackle your busy day with more vigor, maintaining healthy iron levels is essential. By incorporating iron-rich foods into your diet, you can combat fatigue and unlock your full energy potential. After all, good nutrition, including sufficient iron intake, is the foundation of a healthy, energetic life. "
+        },
+        {
+            "img": "https://images.pexels.com/photos/3737691/pexels-photo-3737691.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Plant-Based Protein Sources for Vegans",
+            "description": "Legumes such as lentils, chickpeas, and black beans are fantastic sources of protein and dietary fiber, making them a staple in many vegan diets. Similarly, tofu, tempeh, and edamame—made from soybeans—are protein-packed options that are versatile enough to fit into a variety of dishes, from stir-fries to salads..."
+        }
+    ],
+    "mainIngredients": [
+        {
+            "name": "Chicken",
+            "img": "https://i.pinimg.com/736x/02/01/60/02016082a6fde6123fde3e6ff9fe9f84.jpg"
+        },
+        {
+            "name": "Fish",
+            "img": "https://i.pinimg.com/736x/8d/9b/8f/8d9b8f6e26529780cec79af61de0d112.jpg"
+        },
+        {
+            "name": "Beef",
+            "img": "https://i.pinimg.com/736x/10/9d/97/109d97db916c75ff643787a3075ff399.jpg"
+        },
+        {
+            "name": "Vegetables",
+            "img": "https://i.pinimg.com/736x/81/05/1f/81051fc7f53c398b51b989f77a25bac8.jpg"
+        }
+    ],
+    "categories": [
+        {
+            "name": "Low-calories",
+            "img": "https://images.pexels.com/photos/3872373/pexels-photo-3872373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Low-sugar",
+            "img": "https://images.pexels.com/photos/5379496/pexels-photo-5379496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "High-fiber",
+            "img": "https://example.com/images/high-fiber.png"
+        },
+        {
+            "name": "Low-carb",
+            "img": "https://images.pexels.com/photos/1640775/pexels-photo-1640775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "High-protein",
+            "img": "https://images.pexels.com/photos/1860204/pexels-photo-1860204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        }
+    ],
+    "worldCuisines": [
+        {
+            "name": "American",
+            "img": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Mediterranean",
+            "img": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Middle Eastern",
+            "img": "https://images.pexels.com/photos/6543757/pexels-photo-6543757.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Asian",
+            "img": "https://images.pexels.com/photos/955137/pexels-photo-955137.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        }
+    ],
+    "dietaryPreferences": [
+        {
+            "name": "Vegetarian",
+            "img": "https://images.pexels.com/photos/162744/tomatoes-tomato-quiche-red-yellow-162744.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Vegan",
+            "img": "https://images.pexels.com/photos/248509/pexels-photo-248509.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Gluten-free",
+            "img": "https://images.pexels.com/photos/461060/pexels-photo-461060.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        }
+    ],
+    "themes": [
+        {
+            "name": "Christmas",
+            "img": "https://example.com/images/christmas.png"
+        },
+        {
+            "name": "Thanksgiving",
+            "img": "https://images.pexels.com/photos/5718104/pexels-photo-5718104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "name": "Easter",
+            "img": "https://files.oaiusercontent.com/file-HyJxGPiS1wH6rRWthpk9Jh?se=2025-01-13T17%3A16%3A05Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D47558da6-a64f-46ac-b4a2-4ca2a79a0d48.webp&sig=XKZ7J%2Bh0iClfHrKCcYXu%2BLD/CSGO3qHkjMoIzJMrkBQ%3D"
+        }
+    ],
+    "newsCards": [
+        {
+            "title": "High-Protein Recipes",
+            "description": "Boost your protein intake with tasty, nourishing meals. Get recipes that support muscle growth, energy, and health—ranging from quick snacks to hearty dinners. Stay fueled and satisfied!",
+            "img": "https://example.com/images/high-protein-recipes.png"
+        },
+        {
+            "title": "Low-Calorie Recipes",
+            "description": "Enjoy lighter, flavorful meals with calorie-conscious recipes. Discover satisfying options to support weight management and a balanced diet, making healthy eating enjoyable and sustainable!",
+            "img": "https://example.com/images/low-calorie-recipes.png"
+        },
+        {
+            "title": "Vegan Recipes",
+            "description": "Perfect for plant-based eaters or anyone seeking variety. Enjoy flavorful, nutrient-packed vegan dishes. Discover creative meals that make plant-based eating easy and delicious!",
+            "img": "https://images.pexels.com/photos/53148/shish-kebab-meat-skewer-vegetable-skewer-meat-products-53148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        },
+        {
+            "title": "Gluten-Free Recipes",
+            "description": "Ideal for those avoiding gluten or looking to add more gluten-free meals. Enjoy delicious, flavorful recipes that are easy to prepare and completely gluten-free, making every meal safe and satisfying!",
+            "img": "https://example.com/images/gluten-free-recipes.png"
+        },
+        {
+            "title": "Fresh & Flavorful Fish Recipes",
+            "description": "Discover a range of nutritious and tasty fish dishes. From light meals to hearty dinners, these recipes are perfect for any occasion—whether you're looking for quick and easy options or something more gourmet. Dive into the ocean’s best flavors!",
+            "img": "https://example.com/images/fish-recipes.png"
+        },
+        {
+            "title": "Healthy Bakery Recipes",
+            "description": "Perfect for baking enthusiasts who want nutritious treats! Enjoy delicious, health-conscious recipes, from whole-grain breads to low-sugar muffins, using wholesome ingredients for guilt-free indulgence.",
+            "img": "https://example.com/images/healthy-bakery-recipes.png"
+        }
+    ],
+    "notifications": [
+        {
+            "avatar": "profile1",
+            "name": "Liv Thatcher",
+            "repliedTo": null,
+            "text": "Amazing recipe! I added a bit more spinach than what was called for, and it turned out absolutely perfect! The extra spinach gave it flavor!",
+            "stars": null,
+            "color": "green",
+            "min": "1"
+        },
+        {
+            "avatar": "profile1",
+            "name": "Emma Andersson",
+            "repliedTo": null,
+            "text": "This cake was incredible! I couldn’t believe how moist and rich it turned out. I used almond milk, and it worked perfectly. My non-vegan friends didn’t even realize it was dairy-free!",
+            "stars": null,
+            "color": "green",
+            "min": "5"
+        },
+        {
+            "avatar": "profile1",
+            "name": "Isabella Sjöqvist",
+            "repliedTo": null,
+            "text": "unfollowed you",
+            "stars": null,
+            "color": "pink",
+            "min": "21"
+        },
+        {
+            "avatar": "profile1",
+            "name": "Matilda Holmgren",
+            "repliedTo": null,
+            "text": "gave you",
+            "stars": 4,
+            "color": "green",
+            "min": "33"
+        }
+    ],
+    "faqItems": [
+        {
+            "question": "How do I upload a recipe?",
+            "answer": "To upload a recipe, click the \"Add Recipe\" button located on the right side of the navigation bar. If you don’t see this button, make sure you are logged in or create an account first."
+        },
+        {
+            "question": "Can I share my recipe with others?",
+            "answer": "Yes, you can share your recipe by clicking the \"Share\" button located at the top of your recipe page. If you don’t see this button, it means your recipe is set to private and cannot be shared."
+        },
+        {
+            "question": "Where can I find my saved recipe?",
+            "answer": "You can find your saved recipes by clicking on your profile picture located on the right side of the navigation bar. This will open a menu where you’ll see an option labeled \"My Favorite Recipes.\""
+        }
+    ],
+    "filterCategories": [
+        {
+            "title": "Calories (per portion)",
+            "options": [
+                "0-100 kcal",
+                "100-200 kcal",
+                "200-400 kcal",
+                "400-600 kcal",
+                "600-800 kcal",
+                "800+ kcal"
+            ]
+        },
+        {
+            "title": "Time",
+            "options": [
+                "0-30 min",
+                "31-60 min",
+                "61-90 min",
+                "91-120 min",
+                "121-150 min",
+                "150+ min"
+            ]
+        },
+        {
+            "title": "Meal Type",
+            "options": [
+                "Breakfast",
+                "Lunch",
+                "Dinner",
+                "Snacks"
+            ]
+        },
+        {
+            "title": "Dite",
+            "options": [
+                "Vegan",
+                "Vegetarian",
+                "Keto",
+                "Paleo"
+            ]
+        },
+        {
+            "title": "Protein Type",
+            "options": [
+                "Chicken",
+                "Beef",
+                "Fish",
+                "Lentils",
+                "Seafood",
+                "Egg",
+                "Lamb"
+            ]
+        },
+        {
+            "title": "Recipes Without",
+            "options": [
+                "Dairy",
+                "Eggs",
+                "Nuts",
+                "Gluten",
+                "Fish",
+                "Seeds",
+                "Flour",
+                "Milk",
+                "Chesse",
+                "Sugar",
+                "Soy",
+                "Cream"
+            ]
+        },
+        {
+            "title": "World Cuisine",
+            "options": [
+                "Italian",
+                "Indian",
+                "Chinese",
+                "Mexican",
+                "Swedish",
+                "Asian",
+                "American",
+                "Middle Eastern"
+            ]
+        },
+        {
+            "title": "Ingredient",
+            "options": [
+                "Tomatoes",
+                "Cheese",
+                "Chicken",
+                "Basil"
+            ]
+        }
+    ]
+}
