@@ -1,14 +1,16 @@
 import HeadingWithLine from "../components/HeadingWithLine";
 import { useParams } from "react-router-dom";
-import articels from "../components/Articels.jsx"
+import { useData } from "../contexts/DataContext";
 
 
 const BlogPage = () => {
+  const { data, loading, error } = useData();
 
   const { id } = useParams();
-  const articel = articels[parseInt(id)];
+  
+  const article = data.articles[parseInt(id)];
 
-  if (!articel) {
+  if (!article) {
     return <div>Blog not found</div>;
   }
 
@@ -16,18 +18,17 @@ const BlogPage = () => {
     <div className="relative my-20 grid grid-cols-12 gap-6">
         {/* Heading Section */}
         <div className="mb-4 col-start-2 col-span-10">
-          <HeadingWithLine text={articel.titel} />
+          <HeadingWithLine text={article.titel} />
         </div>
-          {/* Image Column (matches the height of the text) */}
-          
           {/* Text Column (first 6 columns) */}
           <div className="col-start-2 col-span-10 md:col-start-2 md:col-span-5">
-            <p className="text-gray-700 leading-relaxed">{articel.content}</p>
+            <p className="text-gray-700 leading-relaxed">{article.content}</p>
           </div>
+          {/* Image Column (matches the height of the text) */}
           <div className="col-start-2 col-span-10 md:col-start-7 md:col-span-5">
             <img
-              src={articel.img}
-              alt={articel.titel}
+              src={article.img}
+              alt={article.titel}
               className="w-full h-auto mb-6"
             />
           </div>

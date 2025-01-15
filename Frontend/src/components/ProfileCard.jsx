@@ -52,7 +52,7 @@ function ProfileCard({
 
 	return (
 		<div className="">
-			<Link to={`/profile/${id}`}>
+			<Link to={`/user/${id}`}>
 				<div
 					className={`bg-white rounded-lg flex flex-col items-center p-5 relative shadow-lg ${sizeClass.container}`}
 				>
@@ -66,25 +66,26 @@ function ProfileCard({
 							<TopContributorTwo />
 						</div>
 					)}
+<div className="relative flex flex-col items-center">
+  {/* Profilbild */}
+  <div
+    className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
+  >
+    <img
+      src={profileImage || PlaceholderProfileImage}
+      alt={`${name}'s profile`}
+      className="w-full h-full object-cover rounded-full bg-black flex items-center justify-center"
+      onError={(e) => (e.target.src = PlaceholderProfileImage)}
+    />
+  </div>
 
-					<div
-						className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
-					>
-						<img
-							src={profileImage || PlaceholderProfileImage}
-							alt={`${name}'s profile`}
-							className="w-full h-full object-cover rounded-full bg-black flex items-center justify-center"
-							onError={(e) =>
-								(e.target.src = PlaceholderProfileImage)
-							}
-						/>
-					</div>
-
-					<div
-						className={`bg-green-300 rounded-lg flex items-center justify-center absolute z-10 transform ${sizeClass.nameBox}`}
-					>
-						<p>{name}</p>
-					</div>
+  {/* Namn-del */}
+  <div
+    className={`bg-green-300 rounded-lg flex items-center justify-center absolute z-10 ${sizeClass.nameBox} bottom-4`}
+  >
+    <p>{name}</p>
+  </div>
+</div>
 
 					<div className="space-y-2 mb-4 w-full px-4 mt-2">
 						<div

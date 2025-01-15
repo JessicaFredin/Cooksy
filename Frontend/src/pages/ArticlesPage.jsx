@@ -1,9 +1,10 @@
 import Blogpost from "../components/Blogpost";
 import HeadingWithLine from "../components/HeadingWithLine";
 import SearchField from "../components/SearchField";
-import articels from "../components/Articels.jsx"
+import { useData } from "../contexts/DataContext";
 
 function ArticelsPage() {
+	const { data, loading, error } = useData();
 
 	return (
 		<div className="grid-layouten grid grid-cols-12 gap-x-4 py-32">
@@ -17,8 +18,9 @@ function ArticelsPage() {
 			{/* Sektion för att lista artiklar */}
 			<div className="col-start-2 col-span-10 grid grid-rows-2 gap-4">
 				{/* Mappar igenom artiklarna och renderar Blogpost-komponenter */}
-				{articels.map((articel, index) => (
+				{data.articles.map((articel, index) => (
 					<Blogpost
+						key={index}
 						image={articel.img}
 						title={articel.titel}
 						description={articel.description}

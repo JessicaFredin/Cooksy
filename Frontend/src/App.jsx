@@ -34,6 +34,8 @@ import TopContributorPage from "./pages/TopContributorPage";
 import MySavedRecipesFolderPage from "./pages/MySavedRecipesFolderPage";
 import MySavedRecipesPage from "./pages/MySavedRecipesPage"
 import MyUploadedRecipes from "./pages/MyUploadedRecipes";
+import OtherProfilePage from "./pages/OtherProfilePage";
+import RecipeFeed from "./pages/RecipeFeed";
 
 function App() {
 	return (
@@ -115,6 +117,10 @@ function App() {
 										element={<BlogPage />}
 									/>
 									<Route
+										path="/blog/:id"
+										element={<BlogPage />}
+									/>
+									<Route
 										path="/settings"
 										element={<SettingsPage />}
 									/>
@@ -146,6 +152,15 @@ function App() {
 									<Route
 										path="/uploaded-recipes"
 										element={<MyUploadedRecipes />}
+									/>
+
+									<Route
+										path="/user/:id"
+										element={<OtherProfilePage />}
+									/>
+									<Route
+										path="/recipe-feed"
+										element={<RecipeFeed/>}
 									/>
 								</Routes>
 								<Footer />

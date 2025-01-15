@@ -55,31 +55,6 @@ router.get("/", authenticateUser, async (req, res) => {
 	}
 });
 
-// // Update profile picture
-// router.put(
-// 	"/picture",
-// 	authenticateUser,
-// 	upload.single("profile_picture"),
-// 	async (req, res) => {
-// 		try {
-// 			const userId = req.user.id;
-// 			const profilePictureUrl = `/uploads/${req.file.filename}`;
-// 			await pool.query(
-// 				"UPDATE users SET profile_picture_url = $1 WHERE id = $2",
-// 				[profilePictureUrl, userId]
-// 			);
-
-// 			res.json({
-// 				message: "Profile picture updated successfully",
-// 				profilePictureUrl,
-// 			});
-// 		} catch (err) {
-// 			console.error("Error updating profile picture:", err);
-// 			res.status(500).send("Server error");
-// 		}
-// 	}
-// );
-
 // Update profile picture
 router.put(
 	"/picture",

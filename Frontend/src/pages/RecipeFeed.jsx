@@ -1,35 +1,46 @@
 import HeadingWithLine from "../components/HeadingWithLine";
-import RecipeFeedCard from "../components/RecipeFeedCard";
+import RecipeCard from "../components/RecipeCard";
+import { useData } from "../contexts/DataContext";
 
 const RecipeFeed = () => {
-	// Statisk data för receptkorten
-	const recipes = [
-		{ id: 1, name: "Recipe name" },
-		{ id: 2, name: "Cheeseburger pasta skillet (one pot)" },
-		{ id: 3, name: "Smashed burger med extra ost" },
-		{ id: 4, name: "Sushi" },
-		{ id: 5, name: "Chickpea and harissa stew with herby yoghurt" },
-		{ id: 6, name: "Shrimp salad" },
-		{ id: 7, name: "Steamed mussels in tomato cream sauce" },
-		{ id: 8, name: "Chicken and asparagus" },
-		{ id: 9, name: "Steamed mussels in tomato cream sauce" },
-	];
+  const { data, loading, error } = useData();
 
-	return (
-		<div className="container mx-auto py-8 px-4 grid grid-cols-12 gap-6">
-			{/* Titel */}
-			<div className="col-start-2 col-span-3">
-				<HeadingWithLine text="Recipe Feed" />
-			</div>
+  if (loading) {
+    return <p>Loading recipes...</p>;
+  }
 
-			{/* Recipe Grid */}
-			<div className="col-start-2 col-span-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-				{recipes.map((recipe, index) => (
-					<RecipeFeedCard key={index} size="large" />
-				))}
-			</div>
-		</div>
-	);
+  if (error) {
+    return <p>Something went wrong: {error.message}</p>;
+  }
+
+  return (
+    <div className="grid grid-cols-12 gap-x-4 py-32">
+      {/* Header */}
+      <div className="col-start-2 col-span-10">
+        <HeadingWithLine text="Recipe Feed" />
+      </div>
+
+      {/* Recipe Cards */}
+      <div className="col-start-2 col-span-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 mt-8">
+        {data.recipes.map((recipe, index) => (
+          <div key={index} className="flex justify-center">
+            <RecipeCard
+              image={recipe.img} // Replace with appropriate image
+              dishName={recipe.name}
+			  description={recipe.description} // Lägg till beskrivning
+              categoryName={recipe.category}
+              time={recipe.time}
+              authorName="Lisa Karlsson"
+              authorImage={recipe.img}
+              rating={recipe.rating}
+              reviews={recipe.reviews}
+              commentsCount={recipe.comments}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default RecipeFeed;

@@ -106,11 +106,7 @@ const SearchPage = () => {
 					))}
 				</div>
 			);
-    }
-    
-
-
-    
+		}
 
 		// Render Articles
 		if (activeTab === "articles") {

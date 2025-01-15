@@ -16,11 +16,15 @@ import Button from "../components/Button";
 import { useSearch } from "../contexts/SearchContext";
 /*import { useData } from "../contexts/DataContext";
 /*import MainIngredient from "../components/MainIngredient"*/;
-
+import { useState } from "react";
+import Popup from "../components/Popup"; // Importera Popup-komponenten
 import { Link } from "react-router-dom";
 
 function HomePage() {
 	const { handleSearch } = useSearch(); // 🔥 Get search function from context
+	const [isPopupVisible, setIsPopupVisible] = useState(false);
+	const isLoggedIn = false; // Simulera användarens inloggningsstatus
+	// const navigate = useNavigate(); // Skapa en instans av navigate
 /*	const { data, loading, error } = useData();*/
 	const recipes = [
 		{
@@ -114,9 +118,16 @@ function HomePage() {
 			comments: 89,
 		},
 	];
-
+    const handleAddRecipeClick = () => {
+		if (!isLoggedIn) {
+		  setIsPopupVisible(true); // Visa popup om användaren inte är inloggad
+		} else {
+		  console.log("Navigera till AddRecipePage"); // Byt till navigeringslogik om det behövs
+		}
+	  };
 	return (
 		<div className="overflow-hidden">
+			{isPopupVisible && <Popup onClose={() => setIsPopupVisible(false)} />}
 			{/* Grid Background */}
 			{/* <div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
 				<div className="bg-purple-300"></div>
@@ -232,7 +243,7 @@ function HomePage() {
 							<h2 className="text-2xl md:text-3xl lg:text-4xl font-medium my-10 md:my-16 font-pacifico">
 								Share and publish your own recipes
 							</h2>
-							<Button>Add recipe</Button>
+							<Button onClick={handleAddRecipeClick}>Add recipe</Button>
 						</div>
 					</div>
 				</div>
