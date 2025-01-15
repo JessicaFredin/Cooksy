@@ -564,8 +564,6 @@ import axios from "axios";
 import Button from "../components/Button";
 import { CameraIcon } from "../assets/icons/Cameraicon";
 import RecipeCard from "../components/RecipeCard";
-import FiltersMenu from "../components/FiltersMenu";
-import SortMenu from "../components/SortMenu";
 import { TrashIcon } from "../assets/icons/TrashIcon";
 
 function ProfilePage() {
@@ -786,14 +784,8 @@ function ProfilePage() {
 					</div>
 				</div>
 
-				{/* Filters and Sorting */}
-				<div className="col-start-2 col-span-10 flex items-center justify-between mt-12 mb-8">
-					<FiltersMenu />
-					<SortMenu />
-				</div>
-
 				{/* User's Recipes */}
-				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
+				<div className="col-span-12 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 					{recipes.map((recipe) => (
 						<div key={recipe.id} className="relative">
 							{/* <RecipeCard

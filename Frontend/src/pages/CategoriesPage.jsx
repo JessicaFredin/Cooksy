@@ -1,14 +1,20 @@
+import React, { useContext, useEffect, useState } from 'react';
 import HeadingWithLine from "../components/HeadingWithLine";
 import CategoriesCard from "../components/CategoriesCard";
+import { useData } from '../contexts/DataContext';
 
 function CategoriesPage() {
+    const { data, loading, error } = useData();
+    console.log(data)
 
-    const { categories, worldCuisines, dietaryPreferences, themes } = data
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!data) return <p>No data available</p>;
 
     return (
         <div className="grid-layouten grid grid-cols-12 gap-x-4 py-32">
             <div className="col-start-2 col-span-10">
-                <HeadingWithLine text="Categories Categories Categories" />
+                <HeadingWithLine text="Categories" />
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
@@ -16,38 +22,38 @@ function CategoriesPage() {
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-                {categories.map((categorie, index) => (
-                    <CategoriesCard img={categorie.img} title={categorie.name} />
+                {data.categories.map((categorie, index) => (
+                    <CategoriesCard key={index} img={categorie.img} title={categorie.name} />
                 ))}
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="World Cuisines" />
+                <HeadingWithLine text="World Cuisines" />
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-                {worldCuisines.map((worldCuisin, index) => (
-                    <CategoriesCard img={worldCuisin.img} title={worldCuisin.name} />
+                {data.worldCuisines.map((worldCuisin, index) => (
+                    <CategoriesCard key={index} img={worldCuisin.img} title={worldCuisin.name} />
                 ))}
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="Dietary Preferences" />
+                <HeadingWithLine text="Dietary Preferences" />
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-                {dietaryPreferences.map((dietaryPreferenc, index) => (
-                    <CategoriesCard img={dietaryPreferenc.img} title={dietaryPreferenc.name} />
+                {data.dietaryPreferences.map((dietaryPreferenc, index) => (
+                    <CategoriesCard key={index} img={dietaryPreferenc.img} title={dietaryPreferenc.name} />
                 ))}
             </div>
 
             <div className="col-start-2 col-span-10 pb-12 pt-20">
-                <HeadingWithLine className="col-start-2 col-span-10" text="Themes" />
+                <HeadingWithLine text="Themes" />
             </div>
 
             <div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-                {themes.map((themes, index) => (
-                    <CategoriesCard img={themes.img} title={themes.name} />
+                {data.themes.map((theme, index) => (
+                    <CategoriesCard key={index} img={theme.img} title={theme.name} />
                 ))}
             </div>
         </div>

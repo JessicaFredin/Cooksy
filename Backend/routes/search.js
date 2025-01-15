@@ -19,43 +19,53 @@ router.get("/:query", async (req, res) => {
 		const recipesResult = await pool.query(
 			`
             SELECT
-				r.id, 
-				r.title, 
-				r.description, 
-				r.image_url, 
-				c.name AS category_name,
-				r.cooking_time_minutes, 
-				r.protein, 
-				r.carbs, 
-				r.fat,
-				COALESCE(AVG(rt.rating), 0) AS average_rating,
-				COUNT(DISTINCT cm.id) AS total_comments
-			FROM recipes r
-			LEFT JOIN categories c ON r.category_id = c.id
-			LEFT JOIN ratings rt ON rt.recipe_id = r.id
-			LEFT JOIN comments cm ON cm.recipe_id = r.id
-			WHERE LOWER(r.title) LIKE $1
-			   OR LOWER(r.description) LIKE $1
-			   OR LOWER(c.name) LIKE $1
-			GROUP BY r.id, c.name
-			ORDER BY r.id ASC;
-			`,
+                r.id, 
+                r.title, 
+                r.description, 
+                r.image_url, 
+                c.name AS category_name,
+                r.cooking_time_minutes, 
+                r.protein, 
+                r.carbs, 
+                r.fat,
+                COALESCE(AVG(rt.rating), 0) AS average_rating,
+                COUNT(DISTINCT cm.id) AS total_comments,
+                u.first_name AS user_first_name,     
+                u.last_name AS user_last_name,       
+                u.profile_picture_url AS user_profile_picture_url 
+            FROM recipes r
+            LEFT JOIN categories c ON r.category_id = c.id
+            LEFT JOIN ratings rt ON rt.recipe_id = r.id
+            LEFT JOIN comments cm ON cm.recipe_id = r.id
+            LEFT JOIN users u ON r.user_id = u.id 
+            WHERE LOWER(r.title) LIKE $1
+               OR LOWER(r.description) LIKE $1
+               OR LOWER(c.name) LIKE $1
+            GROUP BY r.id, c.name, u.first_name, u.last_name, u.profile_picture_url  -- Updated GROUP BY
+            ORDER BY r.id ASC;
+            `,
 			[searchQuery]
 		);
 
 		// Search Profiles by first and last name
 		const profilesResult = await pool.query(
 			`
-			SELECT 
-				id, 
-				first_name, 
-				last_name, 
-				profile_picture_url, 
-				bio 
-			FROM users 
-			WHERE LOWER(first_name) LIKE $1 
-			   OR LOWER(last_name) LIKE $1
-			ORDER BY first_name ASC;
+            SELECT 
+                u.id, 
+                u.first_name, 
+                u.last_name, 
+                u.profile_picture_url, 
+                u.bio,
+                (
+                    SELECT COUNT(*) 
+                    FROM recipes r 
+                    WHERE r.user_id = u.id
+                ) AS recipes_count
+            FROM users u
+            WHERE LOWER(u.first_name) LIKE $1 
+               OR LOWER(u.last_name) LIKE $1
+            ORDER BY u.first_name ASC;
+
 			`,
 			[searchQuery]
 		);

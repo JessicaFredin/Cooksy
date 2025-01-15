@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
+import axios from "axios";
 
 // Create the context
 export const DataContext = createContext();
@@ -10,28 +12,30 @@ export const useData = () => {
 
 // Create a provider component
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(null);    // Holds the fetched data
-  const [loading, setLoading] = useState(true);  // Loading state to handle data fetch status
-  const [error, setError] = useState(null);    // Error state for any issues during fetch
+  const [data, setData] = useState(null); // Holds the fetched data
+  const [loading, setLoading] = useState(true); // Loading state to handle data fetch status
+  const [error, setError] = useState(null); // Error state for any issues during fetch
 
   useEffect(() => {
-    // Fetch data from data.json
-    fetch('/data/data.json')
+    // Fetch data from data.json using Axios
+    axios.get('/data/data.json')
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setData(json);        // Store the fetched data
-        setLoading(false);    // Set loading to false once data is fetched
+        setData(response.data); // Store the fetched data
+        setLoading(false); // Set loading to false once data is fetched
       })
       .catch((err) => {
+        console.error("Error fetching data:", err); // Log the full error for debugging
         setError(err.message); // Store any error message
-        setLoading(false);     // Set loading to false after error
+        setLoading(false); // Set loading to false after error
       });
-  }, []);
+  }, []); // Empty dependency array means this runs once when the component mounts
+
+  // Optionally log data changes (for debugging purposes)
+  useEffect(() => {
+    if (data) {
+      console.log("Data has been updated:", data);
+    }
+  }, [data]);
 
   // Return context with the data, loading state, and error
   return (
@@ -39,4 +43,9 @@ export const DataProvider = ({ children }) => {
       {children}
     </DataContext.Provider>
   );
+};
+
+// Validate the 'children' prop using PropTypes
+DataProvider.propTypes = {
+  children: PropTypes.node.isRequired, // children must be a valid React node
 };

@@ -30,7 +30,10 @@ import { SearchProvider } from "./contexts/SearchContext";
 import NotificationsPage from "./pages/NotificationsPage";
 import FAQ from "./components/Footer/FAQ";
 import SearchPage from "./pages/SearchPage";
-import TopContributorPage from "./pages/TopContributorPage"
+import TopContributorPage from "./pages/TopContributorPage";
+import MySavedRecipesFolderPage from "./pages/MySavedRecipesFolderPage";
+import MySavedRecipesPage from "./pages/MySavedRecipesPage"
+import MyUploadedRecipes from "./pages/MyUploadedRecipes";
 
 function App() {
 	return (
@@ -127,11 +130,22 @@ function App() {
 										path="/meal-planner"
 										element={<MealPlanner />}
 									/>
-
+									<Route
+										path="/saved-recipes"
+										element={<MySavedRecipesPage />}
+									/>
+									<Route
+										path="/folder-details"
+										element={<MySavedRecipesFolderPage />}
+									/>
 
 									<Route
 										path="/top-contributor-page"
 										element={<TopContributorPage />}
+									/>
+									<Route
+										path="/uploaded-recipes"
+										element={<MyUploadedRecipes />}
 									/>
 								</Routes>
 								<Footer />

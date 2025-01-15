@@ -12,15 +12,20 @@ const HeartFavorites = ({ size = "small" }) => {
 		medium: "w-10 h-10",
 		large: "w-12 h-12",
 	};
-    // Bestämmer vilken storlek som ska användas, baserat på props
+	// Bestämmer vilken storlek som ska användas, baserat på props
 	const heartSize = sizeClasses[size] || sizeClasses.small;
 
 	return (
 		// Yttre container för hjärtikonen
 		<div
 			className={`flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 bg-white ${heartSize}`}
-			onClick={() => setIsClicked((prev) => !prev)}
-		>   {/* Hjärt-ikonen med dynamisk färg baserat på isClicked */}
+			onClick={(event) => {
+				event.preventDefault();
+				setIsClicked((prev) => !prev);
+			}}
+		>
+			{" "}
+			{/* Hjärt-ikonen med dynamisk färg baserat på isClicked */}
 			<HeartIcon
 				stroke={isClicked ? "#E12F6B" : "#E12F6B"}
 				fill={isClicked ? "#E12F6B" : "none"}

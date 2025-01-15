@@ -7,16 +7,13 @@ import { PeopleIcon } from "../assets/icons/PeopleIcon";
 import { TopContributorOne } from "../assets/icons/TopContributorOne";
 import { TopContributorTwo } from "../assets/icons/TopContributorTwo";
 import { Link } from "react-router-dom";
-
-// Import the uploaded placeholder image
-import PlaceholderProfileImage from "../assets/images/PlaceholderProfileImage.jpg";
 function ProfileCard({
 	id,
 	profileImage,
 	size = "medium",
 	name,
 	recipes,
-	followers,
+	followers
 }) {
 	const [isFollowing, setIsFollowing] = useState(false);
 
@@ -56,6 +53,7 @@ function ProfileCard({
 				<div
 					className={`bg-white rounded-lg flex flex-col items-center p-5 relative shadow-lg ${sizeClass.container}`}
 				>
+
 					{size === "xl" && (
 						<div className="absolute -top-6 right-2 z-10">
 							<TopContributorOne />
@@ -67,18 +65,14 @@ function ProfileCard({
 						</div>
 					)}
 
-					<div
-						className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
-					>
-						<img
-							src={profileImage || PlaceholderProfileImage}
-							alt={`${name}'s profile`}
-							className="w-full h-full object-cover rounded-full bg-black flex items-center justify-center"
-							onError={(e) =>
-								(e.target.src = PlaceholderProfileImage)
-							}
-						/>
-					</div>
+<div
+	className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
+>
+	<img
+		src={profileImage}
+		className="w-full h-full rounded-full bg-black flex items-center justify-center"
+	/>
+</div>
 
 					<div
 						className={`bg-green-300 rounded-lg flex items-center justify-center absolute z-10 transform ${sizeClass.nameBox}`}

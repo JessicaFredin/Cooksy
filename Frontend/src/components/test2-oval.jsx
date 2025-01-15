@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 // Import the uploaded placeholder image
 import PlaceholderProfileImage from "../assets/images/PlaceholderProfileImage.jpg";
+
 function ProfileCard({
 	id,
 	profileImage,
@@ -24,6 +25,7 @@ function ProfileCard({
 		setIsFollowing((prev) => !prev);
 	};
 
+	// Define size classes for responsiveness
 	const sizeClasses = {
 		medium: {
 			container: "w-64 h-96",
@@ -51,11 +53,12 @@ function ProfileCard({
 	const sizeClass = sizeClasses[size] || sizeClasses.medium;
 
 	return (
-		<div className="">
+		<div>
 			<Link to={`/profile/${id}`}>
 				<div
 					className={`bg-white rounded-lg flex flex-col items-center p-5 relative shadow-lg ${sizeClass.container}`}
 				>
+					{/* Top Contributor Badges */}
 					{size === "xl" && (
 						<div className="absolute -top-6 right-2 z-10">
 							<TopContributorOne />
@@ -67,6 +70,7 @@ function ProfileCard({
 						</div>
 					)}
 
+					{/* Profile Picture - Perfect Circle */}
 					<div
 						className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
 					>
@@ -80,12 +84,14 @@ function ProfileCard({
 						/>
 					</div>
 
+					{/* Name Box */}
 					<div
-						className={`bg-green-300 rounded-lg flex items-center justify-center absolute z-10 transform ${sizeClass.nameBox}`}
+						className={`bg-green-300 rounded-lg flex items-center justify-center ${sizeClass.nameBox}`}
 					>
 						<p>{name}</p>
 					</div>
 
+					{/* Recipes and Followers */}
 					<div className="space-y-2 mb-4 w-full px-4 mt-2">
 						<div
 							className={`flex items-center gap-2 ${sizeClass.iconText}`}
@@ -101,6 +107,7 @@ function ProfileCard({
 						</div>
 					</div>
 
+					{/* Bio for XL Cards */}
 					{size === "xl" && (
 						<div className="bg-green-100 text-black p-4 w-full rounded-lg mb-4 max-h-[100px] min-h-[100px]">
 							Exploring new recipes is always an adventure, and I
@@ -109,10 +116,11 @@ function ProfileCard({
 						</div>
 					)}
 
+					{/* Follow Button */}
 					<div className="flex justify-end w-full mt-auto">
 						<Button
 							size={sizeClass.buttonSize}
-							variant={isFollowing ? "green" : "default"} // Använder variant
+							variant={isFollowing ? "green" : "default"}
 							onClick={handleFollowClick}
 						>
 							{isFollowing ? "Following" : "Follow"}

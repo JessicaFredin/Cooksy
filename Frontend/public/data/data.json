@@ -278,6 +278,7 @@
         {
             "name": "Low-calories",
             "img": "https://images.pexels.com/photos/3872373/pexels-photo-3872373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            
         },
         {
             "name": "Low-sugar",
@@ -285,7 +286,7 @@
         },
         {
             "name": "High-fiber",
-            "img": "https://example.com/images/high-fiber.png"
+            "img": "https://images.pexels.com/photos/1640769/pexels-photo-1640769.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         },
         {
             "name": "Low-carb",
@@ -313,7 +314,7 @@
             "name": "Asian",
             "img": "https://images.pexels.com/photos/955137/pexels-photo-955137.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         }
-    ],
+    ], 
     "dietaryPreferences": [
         {
             "name": "Vegetarian",
@@ -331,7 +332,7 @@
     "themes": [
         {
             "name": "Christmas",
-            "img": "https://example.com/images/christmas.png"
+            "img": "https://img.freepik.com/free-photo/baked-turkey-christmas-dinner-christmas-table-is-served-with-turkey-decorated-with-bright-tinsel-candles-fried-chicken-table-family-dinner-top-view-hands-frame_2829-20304.jpg?t=st=1736934897~exp=1736938497~hmac=d81b29b8b3d08480ab14021bbc9c75ed38d53986c91b56fe74a96fc9964e7da4&w=740"
         },
         {
             "name": "Thanksgiving",
@@ -339,7 +340,7 @@
         },
         {
             "name": "Easter",
-            "img": "https://files.oaiusercontent.com/file-HyJxGPiS1wH6rRWthpk9Jh?se=2025-01-13T17%3A16%3A05Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D47558da6-a64f-46ac-b4a2-4ca2a79a0d48.webp&sig=XKZ7J%2Bh0iClfHrKCcYXu%2BLD/CSGO3qHkjMoIzJMrkBQ%3D"
+            "img": "https://images.pexels.com/photos/6625198/pexels-photo-6625198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         }
     ],
     "newsCards": [

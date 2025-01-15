@@ -123,7 +123,9 @@ function RecipeCard({
 
 export default RecipeCard;
 
-// /* eslint-disable react/prop-types */
+// // Detta receptkort fungerar för pop mealplan
+
+// import { useState } from "react";
 // import HeartFavourites from "./HeartFavourites";
 // import AddToMealPlanner from "./AddToMealPlanner";
 // import StarRating from "./StarRating";
@@ -132,51 +134,18 @@ export default RecipeCard;
 // import { FishIcon } from "../assets/icons/FishIcon";
 // import { VegetableIcon } from "../assets/icons/VegetableIcon";
 // import { SeafoodIcon } from "../assets/icons/SeafoodIcon";
-// import { DrinksIcon } from "../assets/icons/DrinksIcon";
 // import { TimeIcon } from "../assets/icons/TimeIcon";
 // import { CommentIcon } from "../assets/icons/CommentIcon";
 // import { Link } from "react-router-dom";
+// import PopMealPlan from "./PopMealPlan";
+// import CloseButton from "./CloseButton";
 
-// // Category Icon Mapping
 // const categoryIconMap = {
-// 	Meat: MeatIcon,
-// 	Poultry: ChickenIcon,
-// 	Fish: FishIcon,
-// 	Vegetable: VegetableIcon,
-// 	Seafood: SeafoodIcon,
-// 	Drinks: DrinksIcon,
-// };
-
-// // Size Variants (Restored and Extended)
-// const sizeVariants = {
-// 	mini: {
-// 		container: "w-36",        // Very small card
-// 		imageHeight: "h-24",      // Smaller image
-// 		textSize: "text-xs",      // Extra small text
-// 		iconSize: "w-4 h-4",      // Tiny icons
-// 		buttonSize: "p-1",        // Small button padding
-// 	},
-// 	small: {
-// 		container: "w-48",
-// 		imageHeight: "h-32",
-// 		textSize: "text-sm",
-// 		iconSize: "w-5 h-5",
-// 		buttonSize: "p-1.5",
-// 	},
-// 	medium: {
-// 		container: "w-72",  // SAME as original design
-// 		imageHeight: "h-48",
-// 		textSize: "text-lg",
-// 		iconSize: "w-6 h-6",
-// 		buttonSize: "p-2",
-// 	},
-// 	large: {
-// 		container: "w-96",
-// 		imageHeight: "h-64",
-// 		textSize: "text-xl",
-// 		iconSize: "w-8 h-8",
-// 		buttonSize: "p-3",
-// 	},
+//   Meat: MeatIcon,
+//   Poultry: ChickenIcon,
+//   Fish: FishIcon,
+//   Vegetable: VegetableIcon,
+//   Seafood: SeafoodIcon,
 // };
 
 // function RecipeCard({
@@ -190,89 +159,182 @@ export default RecipeCard;
 // 	reviews,
 // 	rating,
 // 	commentsCount,
-// 	size = "medium", // Default is medium
-// }) {
+// 	size = "medium",
+// 	disableHover = false,
+// 	disableActions = false,
+// 	showCloseButton = false, // Ny prop för CloseButton
+//   }) {
+// 	const [showMealPlan, setShowMealPlan] = useState(false);
+// 	const [selectedRecipe, setSelectedRecipe] = useState(null);
+  
 // 	const CategoryIcon = categoryIconMap[categoryName] || MeatIcon;
-// 	const currentSize = sizeVariants[size];
-
+  
+// 	const handleAddToMealPlanner = (e) => {
+// 	  e.preventDefault();
+// 	  e.stopPropagation();
+// 	  setSelectedRecipe({
+// 		id,
+// 		image,
+// 		dishName,
+// 		categoryName,
+// 		time,
+// 		authorName,
+// 		authorImage,
+// 		reviews,
+// 		rating,
+// 		commentsCount,
+// 	  });
+// 	  setShowMealPlan(true);
+// 	};
+  
+// 	const handleDragStart = (e) => {
+// 	  const recipeData = JSON.stringify({
+// 		id,
+// 		image,
+// 		dishName,
+// 		categoryName,
+// 		time,
+// 		authorName,
+// 		authorImage,
+// 		reviews,
+// 		rating,
+// 		commentsCount,
+// 	  });
+// 	  e.dataTransfer.setData("recipeData", recipeData);
+// 	};
+  
+// 	const sizeClasses = {
+// 		large: {
+// 		  container: "w-80 h-[24rem]", // Fast bredd och höjd för large
+// 		  image: "h-48 w-full object-cover",
+// 		  text: "text-lg",
+// 		  icon: "w-6 h-6",
+// 		},
+// 		medium: {
+// 		  container: "w-60 h-[20rem]", // Medium-storlek med mer kompakt layout
+// 		  image: "h-40 w-full object-cover",
+// 		  text: "text-sm",
+// 		  icon: "w-5 h-5",
+// 		},
+// 		small: {
+// 		  container: "w-auto h-[18rem]", // Small-storlek med mindre bredd och höjd
+// 		  image: "h-32 w-full object-cover",
+// 		  text: "text-xs",
+// 		  icon: "w-4 h-4",
+// 		},
+// 		mini: {
+// 		  container: "w-auto h-[12rem]", // Mini-storlek för små kort
+// 		  image: "h-24 w-full object-cover",
+// 		  text: "text-xs",
+// 		  icon: "w-3 h-3",
+// 		},
+// 	  }
+  
+// 	const currentSize = sizeClasses[size];
+  
 // 	return (
+// 	  <>
 // 		<Link
-// 			to={`/recipe/${id}`}
-// 			className={`${currentSize.container} bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative hover:shadow-xl transition-transform duration-300 transform hover:scale-105`}
+// 		  to={`/recipe/${id}`}
+// 		  className={`${currentSize.container} bg-white rounded-lg shadow-lg flex flex-col relative ${
+// 			disableHover ? "" : "hover:shadow-xl transition-shadow duration-300"
+// 		  } overflow-hidden`}
+// 		  draggable="true"
+// 		  onDragStart={handleDragStart}
 // 		>
-// 			{/* Image Section */}
-// 			<div className={`relative ${currentSize.imageHeight} overflow-hidden group`}>
-// 				<img
-// 					src={image}
-// 					alt={dishName}
-// 					className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform group-hover:scale-110"
+// 		  <div className={`relative ${currentSize.image}`}>
+// 			<img
+// 			  src={image}
+// 			  alt={dishName}
+// 			  className="w-full h-full object-cover"
+// 			/>
+// 			{!disableHover && (
+// 			  <div className="absolute inset-0 bg-black bg-opacity-50 text-white flex items-center justify-center text-2xl font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">
+// 				View Recipe
+// 			  </div>
+// 			)}
+// 			{/* Visa CloseButton istället för HeartFavourites om showCloseButton är true */}
+// 			<div className="absolute top-2 right-2 flex flex-col space-y-2">
+// 			  {showCloseButton ? (
+// 				<CloseButton
+// 				  size={size}
+// 				  onClick={(e) => {
+// 					e.stopPropagation();
+// 					console.log("Close button clicked!");
+// 				  }}
 // 				/>
-
-// 				{/* Restored Heart and Add Icons */}
-// 				<div className="absolute top-2 right-2 flex flex-col space-y-2">
-// 					{/* Heart Icon (Restored) */}
-// 					<div className="absolute top-2 right-2">
-// 						<HeartFavourites size={size} />
-// 					</div>
-
-// 					{/* Add to Meal Planner Icon (Restored) */}
-// 					<div className="absolute top-12 right-2">
-// 						<AddToMealPlanner size={size} />
-// 					</div>
-// 				</div>
-
-// 				{/* Author Section */}
-// 				<div className="absolute bottom-0 right-0 bg-green-500 text-black px-4 flex items-center w-[calc(100%-30%)] rounded-tl-lg">
-// 					<p className="text-sm flex-grow">{authorName}</p>
-// 					<div className="absolute -top-3 right-2 w-8 h-8 rounded-lg overflow-hidden border-2 border-white">
-// 						<img
-// 							src={authorImage}
-// 							alt={authorName}
-// 							className="w-full h-full object-cover"
-// 						/>
-// 					</div>
-// 				</div>
+// 			  ) : (
+// 				!disableActions && (
+// 				  <button
+// 					className="p-2 rounded-full shadow-md"
+// 					onClick={(e) => e.stopPropagation()}
+// 				  >
+// 					<HeartFavourites size={size} />
+// 				  </button>
+// 				)
+// 			  )}
+// 			  {!disableActions && (
+// 				<button
+// 				  className="p-2 rounded-full shadow-md"
+// 				  onClick={handleAddToMealPlanner}
+// 				>
+// 				  <AddToMealPlanner size={size} />
+// 				</button>
+// 			  )}
 // 			</div>
-
-// 			{/* Content Section */}
-// 			<div className="p-4 flex flex-col flex-grow">
-// 				{/* Recipe Title */}
-// 				<div className="h-12 mb-8">
-// 					<h3 className={`${currentSize.textSize} text-gray-800 line-clamp-2`}>
-// 						{dishName}
-// 					</h3>
-// 				</div>
-
-// 				{/* Category and Time */}
-// 				<div className="flex justify-between items-center text-gray-600 mt-2">
-// 					<div className="flex items-center space-x-1">
-// 						<CategoryIcon />
-// 						<span>{categoryName}</span>
-// 					</div>
-// 					<div className="flex items-center space-x-1">
-// 						<TimeIcon />
-// 						<span>{time}</span>
-// 					</div>
-// 				</div>
-
-// 				{/* Divider */}
-// 				<div className="border-t border-gray-200 my-2"></div>
-
-// 				{/* Rating and Comments */}
-// 				<div className="flex justify-between items-center">
-// 					<div className="flex items-center space-x-1">
-// 						<StarRating totalStars={5} staticRating={rating} />
-// 						<span className="text-sm text-gray-600">({reviews})</span>
-// 					</div>
-
-// 					<div className="flex items-center space-x-1">
-// 						<CommentIcon />
-// 						<span className="text-sm text-gray-600">{commentsCount}</span>
-// 					</div>
-// 				</div>
+// 		  </div>
+// 		  <div className="p-4 flex flex-col justify-between flex-grow">
+// 			<h3
+// 			  className={`${currentSize.text} text-gray-800 line-clamp-2 min-h-[48px]`}
+// 			>
+// 			  {dishName}
+// 			</h3>
+// 			<div className="flex justify-between items-center text-gray-600 mt-2">
+// 			  <div className="flex items-center space-x-1">
+// 				<CategoryIcon className={currentSize.icon} />
+// 				<span className={currentSize.text}>{categoryName}</span>
+// 			  </div>
+// 			  <div className="flex items-center space-x-1">
+// 				<TimeIcon className={currentSize.icon} />
+// 				<span className={currentSize.text}>{time}</span>
+// 			  </div>
 // 			</div>
+// 			<div className="border-t border-gray-200 my-2"></div>
+// 			<div className="flex justify-between items-center mt-1">
+// 			  <div className="flex items-center space-x-1">
+// 				<StarRating
+// 				  totalStars={5}
+// 				  staticRating={rating}
+// 				  size={currentSize.icon}
+// 				/>
+// 				<span className={`${currentSize.text} text-gray-600`}>
+// 				  ({reviews})
+// 				</span>
+// 			  </div>
+// 			  <div className="flex items-center space-x-1">
+// 				<CommentIcon className={currentSize.icon} />
+// 				<span className={`${currentSize.text} text-gray-600`}>
+// 				  {commentsCount}
+// 				</span>
+// 			  </div>
+// 			</div>
+// 		  </div>
 // 		</Link>
+// 		{showMealPlan && (
+// 		  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+// 			<div className="relative bg-white rounded-lg shadow-lg w-[90%] max-w-4xl">
+// 			  <button
+// 				className="absolute top-4 right-4 bg-green-400 text-black px-4 py-2 rounded-full"
+// 				onClick={() => setShowMealPlan(false)}
+// 			  >
+// 				X
+// 			  </button>
+// 			  <PopMealPlan selectedRecipe={selectedRecipe} />
+// 			</div>
+// 		  </div>
+// 		)}
+// 	  </>
 // 	);
-// }
-
-// export default RecipeCard;
+//   }
+  
+//   export default RecipeCard;

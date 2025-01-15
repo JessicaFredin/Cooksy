@@ -161,7 +161,7 @@ function ProfileMenu({ isOpen, onClose, onLogOut }) {
 					<Link
 						to="/uploaded-recipes"
 						className="flex-1 text-gray-700"
-					>
+					> 
 						My uploaded recipes
 					</Link>
 				</li>

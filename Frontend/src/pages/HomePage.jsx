@@ -2,8 +2,6 @@ import SearchField from "../components/SearchField";
 import CooksyHatImage from "../assets/images/CooksyHat.png";
 import SwooshLine from "../assets/svg/SwooshLine";
 import HighlightedHeader from "../components/HighlightedHeader";
-import MainIngredient from "../components/MainIngredient";
-import Blogpost from "../components/Blogpost";
 import HeadingWithLine from "../components/HeadingWithLine";
 import { MeatIcon } from "../assets/icons/MeatIcon";
 import { ChickenIcon } from "../assets/icons/ChickenIcon";
@@ -15,13 +13,15 @@ import { VegetableIcon } from "../assets/icons/VegetableIcon";
 import RecipeCarousel from "../components/RecipeCarousel";
 import Swoosh from "../assets/svg/Swoosh";
 import Button from "../components/Button";
-import ProfileCard from "../components/ProfileCard";
 import { useSearch } from "../contexts/SearchContext";
+/*import { useData } from "../contexts/DataContext";
+/*import MainIngredient from "../components/MainIngredient"*/;
 
 import { Link } from "react-router-dom";
 
 function HomePage() {
 	const { handleSearch } = useSearch(); // 🔥 Get search function from context
+/*	const { data, loading, error } = useData();*/
 	const recipes = [
 		{
 			id: 1,
@@ -112,28 +112,6 @@ function HomePage() {
 			rating: 4,
 			reviews: 545,
 			comments: 89,
-		},
-	];
-
-	const profiles = [
-		{ name: "Liv Thatcher", recipes: 20, followers: 120, following: true },
-		{
-			name: "Emma Andersson",
-			recipes: 20,
-			followers: 120,
-			following: true,
-		},
-		{
-			name: "Sofia Martinez",
-			recipes: 20,
-			followers: 120,
-			following: true,
-		},
-		{
-			name: "Isabella Sjöqvist",
-			recipes: 20,
-			followers: 120,
-			following: true,
 		},
 	];
 
@@ -237,10 +215,13 @@ function HomePage() {
 				</div>
 
 				<div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-					<MainIngredient />
-					<MainIngredient />
-					<MainIngredient />
-					<MainIngredient />
+					{/* {data.mainIngredients.map((mainIngredient, index) => (
+						<MainIngredient
+							key={index}
+							title={mainIngredient.name}
+							image={mainIngredient.img}
+						/>
+					))} */}
 				</div>
 				<div className="col-start-0 col-span-12 relative">
 					{/* Swoosh Background */}
@@ -260,7 +241,7 @@ function HomePage() {
 				</div>
 				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 					{/* Justerat gap */}
-					{profiles.map((profile, index) => (
+					{/* {data.profiles.slice(0, 4).map((profile, index) => (
 						<div key={index} className="flex justify-center">
 							<ProfileCard
 								name={profile.name}
@@ -269,22 +250,28 @@ function HomePage() {
 								following={profile.following}
 							/>
 						</div>
-					))}
+					))} */}
 				</div>
 
 				<div className="col-start-2 col-span-10 py-10 flex justify-end">
-          <Link to="/top-contributor-page">
-            <Button>See all Top Contributors</Button>
-          </Link>
-        </div>
+					<Link to="/top-contributor-page">
+						<Button>See all Top Contributors</Button>
+					</Link>
+				</div>
 
 				<div className="col-start-2 col-span-10 py-10">
 					<HeadingWithLine text="Food and Health: Research & Findings" />
 				</div>
 
 				<div className="col-start-2 col-span-10 grid grid-rows-2 gap-4">
-					<Blogpost />
-					<Blogpost />
+					{/* {data.articles.slice(0, 2).map((articel, index) => (
+						<Blogpost
+							image={articel.img}
+							title={articel.title}
+							description={articel.description}
+							id={index}
+						/>
+					))} */}
 				</div>
 			</div>
 		</div>

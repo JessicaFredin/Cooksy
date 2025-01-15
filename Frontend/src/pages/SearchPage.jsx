@@ -25,8 +25,8 @@ const SearchPage = () => {
 	}, [query]);
 
 	const renderContent = () => {
-    const currentResults = searchResults[activeTab];
-    console.log(currentResults);
+		const currentResults = searchResults[activeTab];
+		console.log(currentResults);
 
 		if (loading) {
 			return <p className="text-center">Loading results...</p>;
@@ -62,7 +62,6 @@ const SearchPage = () => {
 						// 	reviews={recipe.review_count}
 						//   commentsCount={recipe.total_comments}
 						// />
-            
 
 						<RecipeCard
 							key={recipe.id}
@@ -73,10 +72,10 @@ const SearchPage = () => {
 							dishName={recipe.title}
 							categoryName={recipe.category_name}
 							time={`${recipe.cooking_time_minutes} min`}
-							authorName={`${recipe.first_name} ${recipe.last_name}`}
+							authorName={`${recipe.user_first_name} ${recipe.user_last_name}`}
 							authorImage={`${
 								import.meta.env.VITE_APP_BACKEND_URL
-							}${recipe.profile_picture_url}`}
+							}${recipe.user_profile_picture_url}`}
 							rating={parseFloat(recipe.average_rating).toFixed(
 								1
 							)} // Correct average rating (rounded to 1 decimal)
@@ -95,14 +94,23 @@ const SearchPage = () => {
 					{currentResults.map((profile) => (
 						<ProfileCard
 							key={profile.id}
+							id={profile.id}
 							name={`${profile.first_name} ${profile.last_name}`}
-							profileImage={profile.profile_picture_url}
+							profileImage={`${
+								import.meta.env.VITE_APP_BACKEND_URL
+							}${profile.profile_picture_url}`}
 							bio={profile.bio}
+							recipes={profile.recipes_count}
+							followers={profile.followers_count}
 						/>
 					))}
 				</div>
 			);
-		}
+    }
+    
+
+
+    
 
 		// Render Articles
 		if (activeTab === "articles") {
