@@ -1,12 +1,17 @@
+import { useState, useEffect } from "react";
 import SearchField from "../components/SearchField";
 import CooksyHatImage from "../assets/images/CooksyHat.png";
 import SwooshLine from "../assets/svg/SwooshLine";
 import HighlightedHeader from "../components/HighlightedHeader";
 import HeadingWithLine from "../components/HeadingWithLine";
-import { MeatIcon } from "../assets/icons/MeatIcon";
-import { ChickenIcon } from "../assets/icons/ChickenIcon";
-import { FishIcon } from "../assets/icons/FishIcon";
-import { VegetableIcon } from "../assets/icons/VegetableIcon";
+
+// import { MeatIcon } from "../assets/icons/MeatIcon";
+// import { ChickenIcon } from "../assets/icons/ChickenIcon";
+// import { FishIcon } from "../assets/icons/FishIcon";
+// import { VegetableIcon } from "../assets/icons/VegetableIcon";
+// import { SeafoodIcon } from "../assets/icons/SeafoodIcon";
+// import { DrinksIcon } from "../assets/icons/DrinksIcon";
+
 // import food1 from "../assets/images/food1.jpg";
 // import profile1 from "../assets/images/profile1.jpg";
 // import RecipeCard from "../components/RecipeCard";
@@ -16,118 +21,162 @@ import Button from "../components/Button";
 import { useSearch } from "../contexts/SearchContext";
 /*import { useData } from "../contexts/DataContext";
 /*import MainIngredient from "../components/MainIngredient"*/;
-import { useState } from "react";
 import Popup from "../components/Popup"; // Importera Popup-komponenten
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+// const categoryIconMap = {
+// 	Meat: MeatIcon,
+// 	Poultry: ChickenIcon,
+// 	Fish: FishIcon,
+// 	Vegetable: VegetableIcon,
+// 	Seafood: SeafoodIcon,
+// 	Drinks: DrinksIcon,
+// };
 
 function HomePage() {
 	const { handleSearch } = useSearch(); // 🔥 Get search function from context
 	const [isPopupVisible, setIsPopupVisible] = useState(false);
 	const isLoggedIn = false; // Simulera användarens inloggningsstatus
-	// const navigate = useNavigate(); // Skapa en instans av navigate
-/*	const { data, loading, error } = useData();*/
-	const recipes = [
-		{
-			id: 1,
-			name: "Shishkebab med baba ganoush",
-			icon: <MeatIcon />,
-			category: "Meat",
-			time: "90 min",
-			rating: 2,
-			reviews: 25,
-			comments: 5,
-		},
-		{
-			id: 2,
-			name: "Cheeseburger pasta skillet (one pot)",
-			icon: <MeatIcon />,
-			category: "Meat",
-			time: "30 min",
-			rating: 5,
-			reviews: 36,
-			comments: 10,
-		},
-		{
-			id: 3,
-			name: "Smashed burger med extra ost",
-			icon: <ChickenIcon />,
-			category: "Chicken",
-			time: "60 min",
-			rating: 4,
-			reviews: 55,
-			comments: 7,
-		},
-		{
-			id: 4,
-			name: "Sushi",
-			icon: <FishIcon />,
-			category: "Fish",
-			time: "80 min",
-			rating: 1,
-			reviews: 15,
-			comments: 8,
-		},
-		{
-			id: 5,
-			name: "Chickpea and harissa stew with herby yoghurt",
-			icon: <VegetableIcon />,
-			category: "Vegetable",
-			time: "45 min",
-			rating: 3,
-			reviews: 125,
-			comments: 6,
-		},
-		{
-			id: 6,
-			name: "Shrimp salad",
-			icon: <FishIcon />,
-			category: "Fish",
-			time: "120 min",
-			rating: 3,
-			reviews: 37,
-			comments: 19,
-		},
-		{
-			id: 7,
-			name: "Steamed mussels in tomato cream sauce",
-			icon: <VegetableIcon />,
-			category: "Vegetable",
-			time: "75 min",
-			rating: 2,
-			reviews: 78,
-			comments: 35,
-		},
-		{
-			id: 8,
-			name: "Chicken and asparagus",
-			icon: <ChickenIcon />,
-			category: "Chicken",
-			time: "90 min",
-			rating: 3,
-			reviews: 356,
-			comments: 77,
-		},
-		{
-			id: 9,
-			name: "Steamed mussels in tomato cream sauce",
-			icon: <VegetableIcon />,
-			category: "Vegetable",
-			time: "100 min",
-			rating: 4,
-			reviews: 545,
-			comments: 89,
-		},
-	];
-    const handleAddRecipeClick = () => {
+	const [recipes, setRecipes] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState("");
+
+	
+	// const recipes = [
+	// 	{
+	// 		id: 1,
+	// 		name: "Shishkebab med baba ganoush",
+	// 		icon: <MeatIcon />,
+	// 		category: "Meat",
+	// 		time: "90 min",
+	// 		rating: 2,
+	// 		reviews: 25,
+	// 		comments: 5,
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: "Cheeseburger pasta skillet (one pot)",
+	// 		icon: <MeatIcon />,
+	// 		category: "Meat",
+	// 		time: "30 min",
+	// 		rating: 5,
+	// 		reviews: 36,
+	// 		comments: 10,
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		name: "Smashed burger med extra ost",
+	// 		icon: <ChickenIcon />,
+	// 		category: "Chicken",
+	// 		time: "60 min",
+	// 		rating: 4,
+	// 		reviews: 55,
+	// 		comments: 7,
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		name: "Sushi",
+	// 		icon: <FishIcon />,
+	// 		category: "Fish",
+	// 		time: "80 min",
+	// 		rating: 1,
+	// 		reviews: 15,
+	// 		comments: 8,
+	// 	},
+	// 	{
+	// 		id: 5,
+	// 		name: "Chickpea and harissa stew with herby yoghurt",
+	// 		icon: <VegetableIcon />,
+	// 		category: "Vegetable",
+	// 		time: "45 min",
+	// 		rating: 3,
+	// 		reviews: 125,
+	// 		comments: 6,
+	// 	},
+	// 	{
+	// 		id: 6,
+	// 		name: "Shrimp salad",
+	// 		icon: <FishIcon />,
+	// 		category: "Fish",
+	// 		time: "120 min",
+	// 		rating: 3,
+	// 		reviews: 37,
+	// 		comments: 19,
+	// 	},
+	// 	{
+	// 		id: 7,
+	// 		name: "Steamed mussels in tomato cream sauce",
+	// 		icon: <VegetableIcon />,
+	// 		category: "Vegetable",
+	// 		time: "75 min",
+	// 		rating: 2,
+	// 		reviews: 78,
+	// 		comments: 35,
+	// 	},
+	// 	{
+	// 		id: 8,
+	// 		name: "Chicken and asparagus",
+	// 		icon: <ChickenIcon />,
+	// 		category: "Chicken",
+	// 		time: "90 min",
+	// 		rating: 3,
+	// 		reviews: 356,
+	// 		comments: 77,
+	// 	},
+	// 	{
+	// 		id: 9,
+	// 		name: "Steamed mussels in tomato cream sauce",
+	// 		icon: <VegetableIcon />,
+	// 		category: "Vegetable",
+	// 		time: "100 min",
+	// 		rating: 4,
+	// 		reviews: 545,
+	// 		comments: 89,
+	// 	},
+	// ];
+	const handleAddRecipeClick = () => {
 		if (!isLoggedIn) {
-		  setIsPopupVisible(true); // Visa popup om användaren inte är inloggad
+			setIsPopupVisible(true); // Visa popup om användaren inte är inloggad
 		} else {
-		  console.log("Navigera till AddRecipePage"); // Byt till navigeringslogik om det behövs
+			console.log("Navigera till AddRecipePage"); // Byt till navigeringslogik om det behövs
 		}
-	  };
+	};
+
+	// Fetch recipes dynamically and randomize them
+	useEffect(() => {
+		const fetchRecipes = async () => {
+			try {
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BACKEND_URL}/recipes`
+				);
+
+				// ✅ Shuffle recipes and limit to 12
+				const shuffledRecipes = response.data.sort(
+					() => 0.5 - Math.random()
+				);
+				const limitedRecipes = shuffledRecipes.slice(0, 12);
+
+				setRecipes(limitedRecipes);
+			} catch (err) {
+				console.error("Error fetching recipes:", err);
+				setError("Failed to load recipes.");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchRecipes();
+	}, []);
+
+	if (loading) return <p>Loading recipes...</p>;
+	if (error) return <p>{error}</p>;
+
 	return (
 		<div className="overflow-hidden">
-			{isPopupVisible && <Popup onClose={() => setIsPopupVisible(false)} />}
+			{isPopupVisible && (
+				<Popup onClose={() => setIsPopupVisible(false)} />
+			)}
 			{/* Grid Background */}
 			{/* <div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
 				<div className="bg-purple-300"></div>
@@ -243,7 +292,9 @@ function HomePage() {
 							<h2 className="text-2xl md:text-3xl lg:text-4xl font-medium my-10 md:my-16 font-pacifico">
 								Share and publish your own recipes
 							</h2>
-							<Button onClick={handleAddRecipeClick}>Add recipe</Button>
+							<Button onClick={handleAddRecipeClick}>
+								Add recipe
+							</Button>
 						</div>
 					</div>
 				</div>

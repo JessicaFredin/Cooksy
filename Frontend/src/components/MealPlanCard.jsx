@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"; // Import useState
 import StarRating from "./StarRating"; // Import your StarRating component
 import { MeatIcon } from "../assets/icons/MeatIcon";
@@ -5,6 +6,7 @@ import { ChickenIcon } from "../assets/icons/ChickenIcon";
 import { FishIcon } from "../assets/icons/FishIcon";
 import { VegetableIcon } from "../assets/icons/VegetableIcon";
 import { SeafoodIcon } from "../assets/icons/SeafoodIcon";
+import { DrinksIcon } from "../assets/icons/DrinksIcon";
 import { TimeIcon } from "../assets/icons/TimeIcon";
 import { CommentIcon } from "../assets/icons/CommentIcon";
 
@@ -14,6 +16,7 @@ const categoryIconMap = {
 	Fish: FishIcon,
 	Vegetable: VegetableIcon,
 	Seafood: SeafoodIcon,
+	Drinks: DrinksIcon,
 };
 
 function MealPlanCard({

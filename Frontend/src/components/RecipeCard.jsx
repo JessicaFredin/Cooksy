@@ -143,6 +143,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import PopMealPlan from "./PopMealPlan"; // Import PopMealPlan
 import SaveInFolderPopup from "./SaveInFolderPopup";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { TrashIcon } from "../assets/icons/TrashIcon";
+import { useNavigate } from "react-router-dom";
 
 const categoryIconMap = {
 	Meat: MeatIcon,
@@ -165,7 +168,11 @@ function RecipeCard({
 	rating,
 	commentsCount,
 	description, // Ny prop för beskrivning
+	isOwner,
+	onDelete,
 }) {
+	const navigate = useNavigate(); // ✅ Initialize navigate
+
 	const CategoryIcon = categoryIconMap[categoryName] || MeatIcon;
 	const [showMealPlan, setShowMealPlan] = useState(false); // State for PopMealPlan visibility
 	const [showSaveInFolder, setShowSaveInFolder] = useState(false);
@@ -183,6 +190,16 @@ function RecipeCard({
 		setShowMealPlan(true); // Show PopMealPlan
 	};
 
+	const handleEdit = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		navigate("/add-recipe", {
+			state: {
+				id,
+			},
+		});
+	};
+
 	return (
 		<>
 			<Link
@@ -196,7 +213,8 @@ function RecipeCard({
 						alt={dishName}
 						className="w-full h-full object-cover"
 					/>
-					<div className="flex justify-end">
+
+					{/* <div className="flex justify-end">
 						<button
 							className="absolute top-2 p-2 rounded-full shadow-md"
 							onClick={handleSaveInFolder}
@@ -209,6 +227,52 @@ function RecipeCard({
 						>
 							<AddToMealPlanner />
 						</button>
+					</div> */}
+
+					<div className="flex justify-end">
+						{isOwner ? (
+							<>
+								{/* ✅ Delete Button */}
+								<button
+									className="absolute top-2 right-2 p-1 rounded-full shadow-md bg-white text-red-500 w-8 h-8 flex items-center justify-center"
+									onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										onDelete(id);
+									}}
+								>
+									<TrashIcon />
+								</button>
+
+								{/* ✅ Edit Button */}
+								<button
+									className="absolute top-12 right-2 p-1 rounded-full shadow-md bg-white text-red-500 w-8 h-8 flex items-center justify-center"
+									onClick={(e) => {
+										handleEdit(e);
+									}}
+								>
+									<FontAwesomeIcon icon={faEdit} />
+								</button>
+							</>
+						) : (
+							<>
+								{/* ❤️ Default Heart Button */}
+								<button
+									className="absolute top-2 p-2 rounded-full shadow-md"
+									onClick={handleSaveInFolder}
+								>
+									<HeartFavourites />
+								</button>
+
+								{/* ➕ Default Add to Meal Planner Button */}
+								<button
+									className="absolute top-14 p-2 rounded-full shadow-md"
+									onClick={handleAddToMealPlanner} // Show PopMealPlan
+								>
+									<AddToMealPlanner />
+								</button>
+							</>
+						)}
 					</div>
 
 					{/* Author Section */}
@@ -267,14 +331,14 @@ function RecipeCard({
 			{/* PopMealPlan Modal */}
 			{showMealPlan && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-					<div className="bg-white p-6 rounded-lg shadow-lg relative w-[90%] max-w-2xl">
+					<div className="mt-8 md-mt-0 bg-white p-6 rounded-lg shadow-lg relative w-[90%] max-w-4xl">
 						<button
-							className="absolute top-2 right-3 text-black bg-green-500 rounded-full p-2"
+							className="absolute top-3 right-3 text-black px-2 py-1 rounded-full text-xs bg-green-500"
 							onClick={() => setShowMealPlan(false)} // Close PopMealPlan
 						>
 							<FontAwesomeIcon
 								icon={faXmark}
-								className="text-gray-600"
+								className="text-gray-600 text-xs"
 							/>
 						</button>
 						<PopMealPlan />

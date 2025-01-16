@@ -4,6 +4,8 @@ import HeadingWithLine from "../components/HeadingWithLine";
 import Button from "../components/Button";
 import CloseButton from "../components/CloseButton";
 import NewsletterCard from "../components/NewsletterCard";
+import { useData } from "../contexts/DataContext";
+ 
 
 //Importerar ikoner
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +14,7 @@ import { faUtensils } from "@fortawesome/free-solid-svg-icons";
 //Kontrollerar tillstånd för att se om forumläret har skickats
 function NewsletterPage() {
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const { data, loading, error } = useData();
 
 	//Om formuläret har skickas visas istället bekräftelsemeddelande
 	const handleSubmit = (e) => {
@@ -19,7 +22,7 @@ function NewsletterPage() {
 		setIsSubmitted(true);
 	};
 
-	//Återställer allt innehåll då bekräftelsemeddelandet stängs
+	//Används för att återställa allt innehåll då bekräftelsemeddelandet stängs
 	const handleCloseSuccessMessage = () => {
 		setIsSubmitted(false);
 	};
@@ -56,14 +59,14 @@ function NewsletterPage() {
 				</div>
 			</div>
 
-			<div className="grid grid-cols-12 gap-x-4 py-32 -mt-8">
-  {/* Underubrik och huvudtext */}
-  <div className="col-start-2 col-span-10">
-    <div className="relative z-10 -translate-y-4">
-      <h2 className="text-xl font-medium mb-2">
-        New Recipes and Fresh Inspiration Every Week!
-      </h2>
-      <p className="text-gray-700 text-sm">
+			<div className="grid grid-cols-12 gap-x-4 py-32">
+				{/* Underubrik och huvudtext */}
+				<div className="col-start-2 col-span-10">
+					<div className="relative z-10">
+						<h2 className="text-xl font-medium mb-2">
+							New Recipes and Fresh Inspiration Every Week!
+						</h2>
+						<p className="text-gray-700 text-sm">
 							Get inspired to cook healthy and delicious meals
 							with Cooksy&apos;s weekly newsletter! As a
 							subscriber, you&apos;ll receive easy-to-follow
@@ -82,12 +85,13 @@ function NewsletterPage() {
 									inspiration you&apos;d like to receive
 								</h3>
 								<div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-4 xl:gap-x-24 md:gap-y-10">
-									<NewsletterCard></NewsletterCard>
-									<NewsletterCard></NewsletterCard>
-									<NewsletterCard></NewsletterCard>
-									<NewsletterCard></NewsletterCard>
-									<NewsletterCard></NewsletterCard>
-									<NewsletterCard></NewsletterCard>
+									{data.newsCards.map((newsCard, index) => (
+										<NewsletterCard
+											title={newsCard.title }
+											description={newsCard.description}
+											img={newsCard.img}
+										/>
+									))}
 								</div>
 							</div>
 

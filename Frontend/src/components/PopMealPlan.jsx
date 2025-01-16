@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import MealPlanCard from "./MealPlanCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 const daysOfWeek = [
   "Monday",
@@ -73,7 +75,7 @@ const PopMealPlan = () => {
   // Renderar ett receptkort för en specifik måltid eller en tom plats om inget recept är valt
   const renderCard = (meal, mealType) =>
     meal ? (
-      <RecipeCardd {...meal} />
+      <MealPlanCard {...meal} />
     ) : (
       <div
         className="text-gray-500 flex items-center justify-center h-full font-semibold"
@@ -88,7 +90,7 @@ const PopMealPlan = () => {
     );
 
   return (
-    <div className="w-full h-full mx-auto bg-white p-6 rounded-lg shadow-lg overflow-y-auto" >
+    <div className="w-full max-w-7xl mt-4 mx-auto bg-white p-2 rounded-lg shadow-lg overflow-y-auto lg:overflow-visible max-h-screen" >
       {/* Sektion för att navigera mellan veckor */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-2 font-[Pacifico]">
@@ -96,24 +98,24 @@ const PopMealPlan = () => {
             Week {weeks[currentWeekIndex]}
           </h2>
           <button
-            className="bg-pink-500 text-black px-3 py-1 rounded-full text-sm"
+            className="bg-pink-500 text-black px-2 py-1 rounded-full text-xs"
             onClick={() =>
               setCurrentWeekIndex((prevIndex) =>
                 prevIndex === 0 ? weeks.length - 1 : prevIndex - 1
               )
             }
           >
-            &lt;
+            <FontAwesomeIcon icon={faChevronLeft} />
           </button>
           <button
-            className="bg-pink-500 text-black px-3 py-1 rounded-full text-sm"
+            className="bg-pink-500 text-black px-2 py-1 rounded-full text-xs"
             onClick={() =>
               setCurrentWeekIndex((prevIndex) =>
                 prevIndex === weeks.length - 1 ? 0 : prevIndex + 1
               )
             }
           >
-            &gt;
+             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
       </div>
@@ -122,7 +124,7 @@ const PopMealPlan = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 border-2 border-[#A8D400] rounded-md p-6">
         {/* Slot för "No Recipes Selected" */}
         <div
-          className="flex flex-col items-center justify-start text-black-500 bg-white border-[#A8D400] border rounded-md p-4"
+          className="flex flex-col items-center justify-start text-black-500 bg-white p-4"
           style={{ minHeight: "300px" }}
         >
           {/* Dag-navigering */}
@@ -135,20 +137,20 @@ const PopMealPlan = () => {
                 )
               }
             >
-              &lt;
+             <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <h3 className="text-2xl font-bold text-[#333] ml-4 font-[Pacifico]">
+            <h3 className="text-2xl font-bold text-[#333] ml-2 font-[Pacifico]">
               {daysOfWeek[currentDayIndex]}
             </h3>
             <button
-              className="bg-pink-500 text-black px-2 py-1 rounded-full text-xs ml-4"
+              className="bg-pink-500 text-black px-2 py-1 rounded-full text-xs ml-2"
               onClick={() =>
                 setCurrentDayIndex((prevIndex) =>
                   prevIndex === daysOfWeek.length - 1 ? 0 : prevIndex + 1
                 )
               }
             >
-              &gt;
+              <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
           <div
@@ -159,7 +161,7 @@ const PopMealPlan = () => {
             }
           >
             {selectedRecipe ? (
-              <RecipeCardd {...selectedRecipe}/>
+              <MealPlanCard {...selectedRecipe}/>
             ) : (
               <div
                 className="text-gray-500 text-sm flex items-center justify-center font-semibold"
@@ -204,3 +206,4 @@ const PopMealPlan = () => {
 };
 
 export default PopMealPlan;
+

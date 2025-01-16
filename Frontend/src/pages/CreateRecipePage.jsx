@@ -8,8 +8,12 @@ import SharingOptions from "../components/SharingOptions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function CreateRecipePage() {
+	const location = useLocation();
+	const editData = location.state; // ✅ Get the passed recipe data
+
 	// State för att hantera receptdata och formulärfält
 	const [ingredients, setIngredients] = useState([
 		{ volume: "", unit: "", name: "", id: null },
@@ -34,8 +38,75 @@ function CreateRecipePage() {
 	const [imageFile, setImageFile] = useState(null);
 	const [previewImage, setPreviewImage] = useState(null);
 	const [sharingOption, setSharingOption] = useState("public");
-    
-    // Funktion för att hantera delningsalternativ
+
+	// 🟢 Fetch recipe data if editing
+	useEffect(() => {
+		if (editData?.id) {
+			const fetchRecipeData = async () => {
+				try {
+					const baseURL = import.meta.env.VITE_APP_BACKEND_URL;
+					const response = await axios.get(
+						`${baseURL}/recipes/${editData.id}`,
+						{
+							withCredentials: true,
+						}
+					);
+
+					const data = response.data;
+
+					// 🟢 Fill in the form with fetched data
+					setTitle(data.title || "");
+					setDescription(data.description || "");
+					setServingSize(data.serving_size || "");
+					setCookingTime(data.cooking_time_minutes || "");
+					setSelectedCategory(data.category_id || "");
+					setSelectedMealType(data.meal_type_id || "");
+					setSelectedWorldCuisine(data.world_cuisine_id || "");
+
+					// Fill nutrition
+					let nutritionData = {
+						protein: data.protein || 0,
+						carbs: data.carbs || 0,
+						fat: data.fat || 0,
+						energy: data.energy_kj || 0,
+					};
+					setNutrition(nutritionData);
+
+					// 🟢 Ingredients from DB
+					setIngredients(
+						data.ingredients.map((ingredient) => ({
+							id: ingredient.spoonacular_id || null,
+							name: ingredient.ingredient_name,
+							volume: ingredient.amount,
+							unit: ingredient.unit,
+						}))
+					);
+
+					// 🟢 Instructions from DB
+					setInstructions(
+						data.instructions.map((instruction) => ({
+							text: instruction.text,
+							order: instruction.order,
+						}))
+					);
+
+					// 🟢 Set image preview
+					setImageFile(1);
+					setPreviewImage(`${baseURL}${data.image_url}` || null);
+
+					// 🟢 Sharing option
+					setSharingOption(data.sharing_option || "public");
+				} catch (error) {
+					console.error("Error fetching recipe details:", error);
+					alert("Failed to load recipe data.");
+				}
+			};
+
+			fetchRecipeData();
+		}
+	}, [editData]);
+
+	// Funktion för att hantera delningsalternativ
 	const handleSharingChange = (event) => {
 		setSharingOption(event.target.value);
 	};
@@ -59,7 +130,7 @@ function CreateRecipePage() {
 							withCredentials: true,
 						}),
 					]);
-                // Sätter hämtad data i state
+				// Sätter hämtad data i state
 				setCategories(categoriesRes.data);
 				setMealTypes(mealTypesRes.data);
 				setWorldCuisines(worldCuisinesRes.data);
@@ -112,19 +183,38 @@ function CreateRecipePage() {
 			formData.append("instructions", JSON.stringify(instructions));
 			formData.append("sharing_option", sharingOption);
 
-			// Skickar uppdaterat recept till backend
-			const response = await axios.post(
-				`${baseURL}/recipes/add`,
-				formData,
-				{
-					withCredentials: true,
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				}
+			// // Skickar uppdaterat recept till backend
+			// const response = await axios.post(
+			// 	`${baseURL}/recipes/add`,
+			// 	formData,
+			// 	{
+			// 		withCredentials: true,
+			// 		headers: {
+			// 			"Content-Type": "multipart/form-data",
+			// 		},
+			// 	}
+			// );
+
+			const endpoint = editData
+				? `${baseURL}/recipes/update/${editData.id}` // If editing, send PUT request
+				: `${baseURL}/recipes/add`; // If creating, send POST request
+
+			const method = editData ? "put" : "post"; // Use PUT for update, POST for create
+
+			const response = await axios[method](endpoint, formData, {
+				withCredentials: true,
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
+
+			alert(
+				editData
+					? "Recipe updated successfully!"
+					: "Recipe added successfully!"
 			);
 
-			alert("Recipe added successfully!");
+			// alert("Recipe added successfully!");
 			console.log(response.data); //Logga svar för felsökning
 		} catch (error) {
 			console.error("Error submitting recipe:", error);
@@ -136,7 +226,13 @@ function CreateRecipePage() {
 		<div className="grid grid-cols-12 gap-x-4 py-12">
 			<div className="col-start-2 col-span-10">
 				<div>
-					<HeadingWithLine text="Create your own recipe" />
+					<HeadingWithLine
+						text={
+							editData
+								? "Edit your recipe"
+								: "Create your own recipe"
+						}
+					/>
 				</div>
 
 				<form onSubmit={handleSubmit} className="grid gap-6">
@@ -277,7 +373,7 @@ function CreateRecipePage() {
 						<div className="space-y-4">
 							<NutritionInformation
 								ingredients={ingredients}
-								setNutrition={setNutrition} 
+								setNutrition={setNutrition}
 							/>
 						</div>
 						{/* Instuktioner */}
@@ -371,8 +467,12 @@ function CreateRecipePage() {
 						</div>
 						{/* Submit-knapp */}
 						<div>
-							<Button size="mediumMoreWidth" type="submit">
+							{/* <Button size="mediumMoreWidth" type="submit">
 								Post Recipe
+							</Button> */}
+
+							<Button size="mediumMoreWidth" type="submit">
+								{editData ? "Update Recipe" : "Post Recipe"}
 							</Button>
 						</div>
 					</div>

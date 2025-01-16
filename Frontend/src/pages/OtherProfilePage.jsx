@@ -102,6 +102,7 @@ import SortMenu from "../components/SortMenu";
 import FiltersMenu from "../components/FiltersMenu";
 import RecipeCard from "../components/RecipeCard";
 import PlaceholderProfileImage from "../assets/images/PlaceholderProfileImage.jpg";
+import { PeopleIcon } from "../assets/icons/PeopleIcon";
 
 function OtherProfilePage() {
 	const { id } = useParams(); // Get user ID from URL
@@ -135,8 +136,6 @@ function OtherProfilePage() {
 						  )
 						: []
 				);
-
-                
 			} catch (err) {
 				console.error("Error fetching data:", err);
 				setError("Failed to load profile or recipes.");
@@ -179,33 +178,49 @@ function OtherProfilePage() {
 						<img
 							src={profileImageUrl}
 							alt={`${profile.first_name} ${profile.last_name}`}
-							className="rounded-lg h-96 object-cover w-full object-top"
+							className="rounded-lg h-96 object-cover w-full"
 						/>
 						<div className="absolute bottom-0 bg-green-300 w-full h-14 rounded-b-lg flex justify-center items-center">
-							<div className="text-center">
-								<h4>Uploaded Recipes</h4>
-								<h4>{recipes.length}</h4>
+							<div className="text-center font-semibold">
+								<h4>Uploaded Recipes: {recipes.length}</h4>
+								
 							</div>
 						</div>
 					</div>
 
 					{/* ✅ Profile Info */}
-					<div className="col-span-12 md:col-span-8">
-						<h1 className="text-4xl font-pacifico">
-							{profile.first_name} {profile.last_name}
-						</h1>
-						<p className="mt-4 text-gray-700">
-							{profile.bio || "No bio available."}
-						</p>
+					<div className="col-span-12 md:col-span-8 flex justify-between items-start">
+						<div>
+							<h1 className="text-4xl font-pacifico">
+								{profile.first_name} {profile.last_name}
+							</h1>
+							<p className="mt-4 text-gray-700">
+								{profile.bio || "No bio available."}
+							</p>
+						</div>
 
-						<Button size="small" className="mt-6">
-							Follow
-						</Button>
+						{/* ✅ Follow Button Positioned to the Right */}
+						<div className="flex flex-col items-end">
+							<div className="flex items-center text-sm text-gray-600 mb-2">
+								<PeopleIcon className="mr-2" />{" "}
+								<h4>{profile.followers_count} followers</h4>
+							</div>
+							<Button size="small" className="px-6 py-2">
+								Follow
+							</Button>
+						</div>
 					</div>
 				</div>
 
 				{/* ✅ Recipes Heading */}
-				<HeadingWithLine text={`${profile.first_name}'s Recipes`} />
+				<div className="mt-10">
+					<HeadingWithLine
+						text={`${profile.first_name}'s Recipes`}
+						className="mt-10"
+					/>
+				</div>
+
+				{/* <h2 className="text-3xl mt-10">{`${profile.first_name}'s Recipes`}</h2> */}
 
 				{/* ✅ Filters and Sort Menu */}
 				<div className="flex items-center justify-between mt-12 mb-8">
@@ -217,17 +232,6 @@ function OtherProfilePage() {
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{recipes.length > 0 ? (
 						recipes.map((recipe) => (
-							// <RecipeCard
-							// 	key={recipe.id}
-							// 	image={`${import.meta.env.VITE_APP_BACKEND_URL}${
-							// 		recipe.image_url
-							// 	}`}
-							// 	dishName={recipe.title}
-							// 	categoryName={recipe.category_name}
-							// 	time={`${recipe.cooking_time_minutes} min`}
-							// 	authorName={`${profile.first_name} ${profile.last_name}`}
-							// />
-
 							<RecipeCard
 								key={recipe.id}
 								id={recipe.id}

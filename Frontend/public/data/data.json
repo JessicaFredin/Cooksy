@@ -98,151 +98,151 @@
         }
     ],
     "recipes": [
-    {
-        "img": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 1,
-        "name": "Homemade Sushi",
-        "icon": "FishIcon",
-        "category": "Fish",
-        "time": "90 min",
-        "rating": 2,
-        "reviews": 25,
-        "comments": 5,
-        "description": "Fresh sushi made at..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg",
-        "id": 2,
-        "name": "Tomato pie with feta cheese and olives",
-        "icon": "VegetableIcon",
-        "category": "Vegetable",
-        "time": "30 min",
-        "rating": 5,
-        "reviews": 36,
-        "comments": 10,
-        "description": "Juicy tomatoes, feta, and..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 3,
-        "name": "Smashed burger with extra cheese",
-        "icon": "MeatIcon",
-        "category": "Meat",
-        "time": "60 min",
-        "rating": 4,
-        "reviews": 55,
-        "comments": 7,
-        "description": "Juicy burger with cheese..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 4,
-        "name": "Pizza with basil and mozzarella",
-        "icon": "VegetableIcon",
-        "category": "Vegetable",
-        "time": "80 min",
-        "rating": 1,
-        "reviews": 15,
-        "comments": 8,
-        "description": "Classic pizza with basil..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 5,
-        "name": "Chickpea and harissa stew with herby yoghurt",
-        "icon": "VegetableIcon",
-        "category": "Vegetable",
-        "time": "45 min",
-        "rating": 3,
-        "reviews": 125,
-        "comments": 6,
-        "description": "Spicy stew with chickpeas..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 6,
-        "name": "Shrimp salad",
-        "icon": "MeatIcon",
-        "category": "Meat",
-        "time": "120 min",
-        "rating": 3,
-        "reviews": 37,
-        "comments": 19,
-        "description": "Refreshing shrimp salad for..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/1832016/pexels-photo-1832016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 7,
-        "name": "Steamed mussels in tomato cream sauce",
-        "icon": "FishIcon",
-        "category": "Fish",
-        "time": "75 min",
-        "rating": 2,
-        "reviews": 78,
-        "comments": 35,
-        "description": "Mussels in creamy sauce..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 8,
-        "name": "Chicken and asparagus",
-        "icon": "VegetableIcon",
-        "category": "Vegetable",
-        "time": "90 min",
-        "rating": 3,
-        "reviews": 356,
-        "comments": 77,
-        "description": "Chicken with fresh asparagus..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/6546424/pexels-photo-6546424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 9,
-        "name": "Steamed mussels in tomato cream sauce",
-        "icon": "VegetableIcon",
-        "category": "Vegetable",
-        "time": "100 min",
-        "rating": 4,
-        "reviews": 545,
-        "comments": 89,
-        "description": "Steamed mussels in tomato..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/2116094/pexels-photo-2116094.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 10,
-        "name": "Chicken and asparagus",
-        "icon": "ChickenIcon",
-        "category": "Chicken",
-        "time": "90 min",
-        "rating": 3,
-        "reviews": 356,
-        "comments": 77,
-        "description": "Juicy chicken with asparagus..."
-    },
-    {
-        "img": "https://images.pexels.com/photos/24405872/pexels-photo-24405872/free-photo-of-gronsaker-middag-maltid-kott.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "id": 11,
-        "name": "Steamed mussels in tomato cream sauce",
-        "icon": "MeatIcon",
-        "category": "Meat",
-        "time": "100 min",
-        "rating": 4,
-        "reviews": 545,
-        "comments": 89,
-        "description": "Mussels steamed in sauce..."
-    },
-    {
-        "img": "https://cdn.pixabay.com/photo/2014/11/05/15/57/new-years-eve-518032_1280.jpg",
-        "id": 12,
-        "name": "Steamed mussels in tomato cream sauce",
-        "icon": "FishIcon",
-        "category": "Fish",
-        "time": "100 min",
-        "rating": 4,
-        "reviews": 545,
-        "comments": 89,
-        "description": "Savory mussels in tomato..."
-    }
-],
+        {
+            "img": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 1,
+            "name": "Homemade Sushi",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "90 min",
+            "rating": 2,
+            "reviews": 25,
+            "comments": 5,
+            "description": "Fresh sushi made at..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/604969/pexels-photo-604969.jpeg",
+            "id": 2,
+            "name": "Tomato pie with feta cheese and olives",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "30 min",
+            "rating": 5,
+            "reviews": 36,
+            "comments": 10,
+            "description": "Juicy tomatoes, feta, and..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 3,
+            "name": "Smashed burger with extra cheese",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "60 min",
+            "rating": 4,
+            "reviews": 55,
+            "comments": 7,
+            "description": "Juicy burger with cheese..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 4,
+            "name": "Pizza with basil and mozzarella",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "80 min",
+            "rating": 1,
+            "reviews": 15,
+            "comments": 8,
+            "description": "Classic pizza with basil..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 5,
+            "name": "Chickpea and harissa stew with herby yoghurt",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "45 min",
+            "rating": 3,
+            "reviews": 125,
+            "comments": 6,
+            "description": "Spicy stew with chickpeas..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 6,
+            "name": "Shrimp salad",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "120 min",
+            "rating": 3,
+            "reviews": 37,
+            "comments": 19,
+            "description": "Refreshing shrimp salad for..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/1832016/pexels-photo-1832016.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 7,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "75 min",
+            "rating": 2,
+            "reviews": 78,
+            "comments": 35,
+            "description": "Mussels in creamy sauce..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 8,
+            "name": "Chicken and asparagus",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "90 min",
+            "rating": 3,
+            "reviews": 356,
+            "comments": 77,
+            "description": "Chicken with fresh asparagus..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/6546424/pexels-photo-6546424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 9,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "VegetableIcon",
+            "category": "Vegetable",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89,
+            "description": "Steamed mussels in tomato..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/2116094/pexels-photo-2116094.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 10,
+            "name": "Chicken and asparagus",
+            "icon": "ChickenIcon",
+            "category": "Chicken",
+            "time": "90 min",
+            "rating": 3,
+            "reviews": 356,
+            "comments": 77,
+            "description": "Juicy chicken with asparagus..."
+        },
+        {
+            "img": "https://images.pexels.com/photos/24405872/pexels-photo-24405872/free-photo-of-gronsaker-middag-maltid-kott.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "id": 11,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "MeatIcon",
+            "category": "Meat",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89,
+            "description": "Mussels steamed in sauce..."
+        },
+        {
+            "img": "https://cdn.pixabay.com/photo/2014/11/05/15/57/new-years-eve-518032_1280.jpg",
+            "id": 12,
+            "name": "Steamed mussels in tomato cream sauce",
+            "icon": "FishIcon",
+            "category": "Fish",
+            "time": "100 min",
+            "rating": 4,
+            "reviews": 545,
+            "comments": 89,
+            "description": "Savory mussels in tomato..."
+        }
+    ],
     "articles": [
         {
             "img": "https://cdn.pixabay.com/photo/2017/07/20/18/40/apricots-2523272_960_720.jpg",
@@ -290,7 +290,6 @@
         {
             "name": "Low-calories",
             "img": "https://images.pexels.com/photos/3872373/pexels-photo-3872373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            
         },
         {
             "name": "Low-sugar",
@@ -312,11 +311,11 @@
     "worldCuisines": [
         {
             "name": "American",
-            "img": "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            "img": "https://img.freepik.com/free-photo/huge-burger-with-fried-meat-vegetables_140725-971.jpg?t=st=1737019905~exp=1737023505~hmac=3a5dc65c177c057146a7a1ce0bbd3790d630dde4baa91017de1c72d914afbfd5&w=740"
         },
         {
             "name": "Mediterranean",
-            "img": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            "img": "https://img.freepik.com/premium-photo/fresh-greek-salad-cucumber-tomato-sweet-pepper-red-onion-feta-cheese-olives-with-olive-oil-healthy-food_186277-2642.jpg?w=900"
         },
         {
             "name": "Middle Eastern",
@@ -324,9 +323,9 @@
         },
         {
             "name": "Asian",
-            "img": "https://images.pexels.com/photos/955137/pexels-photo-955137.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            "img": "https://img.freepik.com/free-photo/rice-noodles-with-chicken-vegetables_23-2148195630.jpg?t=st=1737020285~exp=1737023885~hmac=165dba2419e59dea038db53b895d5e626b9fe42dd2ec5598be49640e96b5caae&w=740"
         }
-    ], 
+    ],
     "dietaryPreferences": [
         {
             "name": "Vegetarian",
@@ -359,12 +358,12 @@
         {
             "title": "High-Protein Recipes",
             "description": "Boost your protein intake with tasty, nourishing meals. Get recipes that support muscle growth, energy, and health—ranging from quick snacks to hearty dinners. Stay fueled and satisfied!",
-            "img": "https://example.com/images/high-protein-recipes.png"
+            "img": "https://images.pexels.com/photos/30168758/pexels-photo-30168758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         },
         {
             "title": "Low-Calorie Recipes",
             "description": "Enjoy lighter, flavorful meals with calorie-conscious recipes. Discover satisfying options to support weight management and a balanced diet, making healthy eating enjoyable and sustainable!",
-            "img": "https://example.com/images/low-calorie-recipes.png"
+            "img": "https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         },
         {
             "title": "Vegan Recipes",
@@ -379,17 +378,17 @@
         {
             "title": "Fresh & Flavorful Fish Recipes",
             "description": "Discover a range of nutritious and tasty fish dishes. From light meals to hearty dinners, these recipes are perfect for any occasion—whether you're looking for quick and easy options or something more gourmet. Dive into the ocean’s best flavors!",
-            "img": "https://example.com/images/fish-recipes.png"
+            "img": "https://images.pexels.com/photos/1123250/pexels-photo-1123250.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         },
         {
             "title": "Healthy Bakery Recipes",
             "description": "Perfect for baking enthusiasts who want nutritious treats! Enjoy delicious, health-conscious recipes, from whole-grain breads to low-sugar muffins, using wholesome ingredients for guilt-free indulgence.",
-            "img": "https://example.com/images/healthy-bakery-recipes.png"
+            "img": "https://images.pexels.com/photos/1277202/pexels-photo-1277202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         }
     ],
     "notifications": [
         {
-            "avatar": "profile1",
+            "avatar": "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "name": "Liv Thatcher",
             "repliedTo": null,
             "text": "Amazing recipe! I added a bit more spinach than what was called for, and it turned out absolutely perfect! The extra spinach gave it flavor!",
@@ -398,7 +397,7 @@
             "min": "1"
         },
         {
-            "avatar": "profile1",
+            "avatar": "https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "name": "Emma Andersson",
             "repliedTo": null,
             "text": "This cake was incredible! I couldn’t believe how moist and rich it turned out. I used almond milk, and it worked perfectly. My non-vegan friends didn’t even realize it was dairy-free!",
@@ -407,7 +406,7 @@
             "min": "5"
         },
         {
-            "avatar": "profile1",
+            "avatar": "https://images.pexels.com/photos/10260774/pexels-photo-10260774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "name": "Isabella Sjöqvist",
             "repliedTo": null,
             "text": "unfollowed you",
@@ -416,10 +415,10 @@
             "min": "21"
         },
         {
-            "avatar": "profile1",
+            "avatar": "https://images.pexels.com/photos/38554/girl-people-landscape-sun-38554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             "name": "Matilda Holmgren",
             "repliedTo": null,
-            "text": "gave you",
+            "text": "gave you a four star",
             "stars": 4,
             "color": "green",
             "min": "33"

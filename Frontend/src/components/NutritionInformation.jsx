@@ -87,7 +87,7 @@ function NutritionInformation({ ingredients, setNutrition }) {
 			{loading && (
 				<p className="text-center">Calculating nutrition values...</p>
 			)}
-            {/* Visa beräknade näringsvärden */}
+            
 			<div className="grid grid-cols-6 gap-x-2 items-center">
 				<label className="col-span-1 font-medium">Protein</label>
 				<div className="col-span-4 border-b-2 border-black/30 py-1">

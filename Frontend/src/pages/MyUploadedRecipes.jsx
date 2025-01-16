@@ -10,7 +10,7 @@ const MyUploadedRecipes = () => {
 	return (
 		<div className="grid grid-cols-12 gap-x-4 py-12">
 			{/* Rubrik */}
-			<div className="col-start-2 col-span-10">
+			<div className="col-start-2 col-span-10 mb-20">
 				<HeadingWithLine text="My Uploaded recipes" />
 			</div>
 

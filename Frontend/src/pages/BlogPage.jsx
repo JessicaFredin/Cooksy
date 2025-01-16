@@ -18,7 +18,7 @@ const BlogPage = () => {
     <div className="relative my-20 grid grid-cols-12 gap-6">
         {/* Heading Section */}
         <div className="mb-4 col-start-2 col-span-10">
-          <HeadingWithLine text={article.titel} />
+          <HeadingWithLine text={article.title} />
         </div>
           {/* Text Column (first 6 columns) */}
           <div className="col-start-2 col-span-10 md:col-start-2 md:col-span-5">

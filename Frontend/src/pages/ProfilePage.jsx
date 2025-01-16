@@ -564,7 +564,7 @@ import axios from "axios";
 import Button from "../components/Button";
 import { CameraIcon } from "../assets/icons/Cameraicon";
 import RecipeCard from "../components/RecipeCard";
-import { TrashIcon } from "../assets/icons/TrashIcon";
+// import { TrashIcon } from "../assets/icons/TrashIcon";
 
 function ProfilePage() {
 	const [profile, setProfile] = useState(null);
@@ -826,12 +826,12 @@ function ProfilePage() {
 								} // <-- Edit handler (you can replace with navigation)
 							/>
 
-							<button
+							{/* <button
 								onClick={() => handleDeleteRecipe(recipe.id)}
 								className="absolute top-2 right-2 bg-white rounded-full p-1"
 							>
 								<TrashIcon className="text-black" />
-							</button>
+							</button> */}
 						</div>
 					))}
 				</div>

@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-import food1 from "../assets/images/food1.jpg";
-import profile1 from "../assets/images/profile1.jpg";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import RecipeCard from "./RecipeCard"; // Anta att RecipeCard är din komponent
@@ -80,16 +78,26 @@ const RecipeCarousel = ({ recipes }) => {
 								: "sm:w-1/4"
 						} flex-shrink-0`}
 					>
+			
+
 						<RecipeCard
-							image={food1}
-							dishName={recipe.name}
-							categoryName={recipe.category}
-							time={recipe.time}
-							authorName="Lisa Karlsson"
-							authorImage={profile1}
-							rating={recipe.rating}
-							reviews={recipe.reviews}
-							commentsCount={recipe.comments}
+							key={recipe.id}
+							id={recipe.id}
+							image={`${import.meta.env.VITE_APP_BACKEND_URL}${
+								recipe.image_url
+							}`}
+							dishName={recipe.title}
+							categoryName={recipe.category_name}
+							time={`${recipe.cooking_time_minutes} min`}
+							authorName={`${recipe.first_name} ${recipe.last_name}`}
+							authorImage={`${
+								import.meta.env.VITE_APP_BACKEND_URL
+							}${recipe.profile_picture_url}`}
+							rating={parseFloat(recipe.average_rating).toFixed(
+								1
+							)}
+							reviews={recipe.review_count || 0}
+							commentsCount={recipe.total_comments || 0}
 						/>
 					</div>
 				))}

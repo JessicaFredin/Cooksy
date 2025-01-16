@@ -17,7 +17,7 @@ function Ingredients({ ingredients, setIngredients }) {
 			}
 		}, 1000);
 
-		return () => clearTimeout(delayDebounceFn);  // Rensar timeout om searchQuery ändras
+		return () => clearTimeout(delayDebounceFn); // Rensar timeout om searchQuery ändras
 	}, [searchQuery]);
 
 	//Hämtar ingrediensförslag från API

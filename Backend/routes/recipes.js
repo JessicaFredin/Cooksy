@@ -120,13 +120,13 @@ ORDER BY recipes.id ASC;
 	}
 });
 
-
 // --------------------- GET User's Own Recipes (Auth Required) ---------------------
 router.get("/my-recipes", authenticateUser, async (req, res) => {
 	try {
 		const userId = req.user.id;
 
-		const result = await pool.query(`
+		const result = await pool.query(
+			`
 			SELECT
 				recipes.id,
 				recipes.title,
@@ -147,7 +147,9 @@ router.get("/my-recipes", authenticateUser, async (req, res) => {
 			WHERE recipes.user_id = $1
 			GROUP BY recipes.id, categories.name, meal_types.name
 			ORDER BY recipes.id DESC
-		`, [userId]);
+		`,
+			[userId]
+		);
 
 		res.json(result.rows);
 	} catch (err) {
@@ -155,7 +157,6 @@ router.get("/my-recipes", authenticateUser, async (req, res) => {
 		res.status(500).send("Server error");
 	}
 });
-
 
 // --------------------- DELETE Recipe by ID (Only Owner Can Delete) ---------------------
 router.delete("/:id", authenticateUser, async (req, res) => {
@@ -170,11 +171,16 @@ router.delete("/:id", authenticateUser, async (req, res) => {
 		);
 
 		if (recipe.rows.length === 0) {
-			return res.status(403).json({ error: "Not authorized to delete this recipe." });
+			return res
+				.status(403)
+				.json({ error: "Not authorized to delete this recipe." });
 		}
 
 		// Delete related comments, replies, and ratings first to avoid foreign key constraint errors
-		await pool.query("DELETE FROM replies WHERE comment_id IN (SELECT id FROM comments WHERE recipe_id = $1)", [id]);
+		await pool.query(
+			"DELETE FROM replies WHERE comment_id IN (SELECT id FROM comments WHERE recipe_id = $1)",
+			[id]
+		);
 		await pool.query("DELETE FROM comments WHERE recipe_id = $1", [id]);
 		await pool.query("DELETE FROM ratings WHERE recipe_id = $1", [id]);
 
@@ -187,7 +193,6 @@ router.delete("/:id", authenticateUser, async (req, res) => {
 		res.status(500).send("Server error");
 	}
 });
-
 
 // router.get("/:id", async (req, res) => {
 // 	const { id } = req.params;
@@ -508,6 +513,185 @@ router.post(
 			});
 		} catch (err) {
 			console.error("Error adding recipe:", err);
+			res.status(500).send("Server error");
+		}
+	}
+);
+
+// Update Recipe Route with Image Upload
+router.put(
+	"/update/:id",
+	authenticateUser,
+	recipeUpload.single("recipe_image"), // Middleware to handle the file upload
+	async (req, res) => {
+		try {
+			const { id } = req.params;
+
+			const {
+				title,
+				description,
+				serving_size,
+				cooking_time_minutes,
+				category_id,
+				meal_type_id,
+				world_cuisine_id,
+				ingredients,
+				instructions,
+				sharing_option,
+				nutrition, // Nutrition info from frontend
+			} = req.body;
+
+			const userId = req.user.id; // Authenticated user ID
+
+			// Check if an image was uploaded
+			const imageUrl = req.file
+				? `/uploads/recipes/${req.file.filename}`
+				: null;
+
+			// Validate instructions
+			const parsedInstructions = JSON.parse(instructions || "[]");
+			if (
+				!parsedInstructions.length ||
+				parsedInstructions.some((inst) => !inst.text.trim())
+			) {
+				return res.status(400).json({
+					error: "At least one valid instruction is required.",
+				});
+			}
+
+			// Validate nutrition info
+			const parsedNutrition = JSON.parse(nutrition || "{}");
+			const { protein, carbs, fat, energy } = parsedNutrition;
+
+			// Get isPublic status
+			const isPublic = sharing_option === "public" ? true : false;
+
+			// ---------------------- Update Recipe Details ----------------------
+			let updateRecipeQuery = `
+				UPDATE recipes
+				SET title = $1,
+					description = $2,
+					serving_size = $3,
+					cooking_time_minutes = $4,
+					category_id = $5,
+					meal_type_id = $6,
+					world_cuisine_id = $7,
+					protein = $8,
+					carbs = $9,
+					fat = $10,
+					energy_kj = $11,
+					energy_kcal = $12,
+					is_public = $13
+				WHERE id = $14 AND user_id = $15
+			`;
+
+			let updateRecipeValues = [
+				title,
+				description,
+				serving_size,
+				cooking_time_minutes,
+				category_id,
+				meal_type_id,
+				world_cuisine_id,
+				protein,
+				carbs,
+				fat,
+				energy * 4.18,
+				energy,
+				isPublic,
+				id,
+				userId,
+			];
+
+			// If image is uploaded, update the image_url as well
+			if (imageUrl) {
+				updateRecipeQuery = `
+					UPDATE recipes
+					SET title = $1,
+						description = $2,
+						serving_size = $3,
+						cooking_time_minutes = $4,
+						category_id = $5,
+						meal_type_id = $6,
+						world_cuisine_id = $7,
+						protein = $8,
+						carbs = $9,
+						fat = $10,
+						energy_kj = $11,
+						energy_kcal = $12,
+						is_public = $13,
+						image_url = $14
+					WHERE id = $15 AND user_id = $16
+				`;
+				updateRecipeValues = [
+					title,
+					description,
+					serving_size,
+					cooking_time_minutes,
+					category_id,
+					meal_type_id,
+					world_cuisine_id,
+					protein,
+					carbs,
+					fat,
+					energy * 4.18,
+					energy,
+					isPublic,
+					imageUrl,
+					id,
+					userId,
+				];
+			}
+
+			await pool.query(updateRecipeQuery, updateRecipeValues);
+
+			// ---------------------- Update Ingredients ----------------------
+			// Delete old ingredients
+			await pool.query(
+				`DELETE FROM recipes_ingredients WHERE recipe_id = $1`,
+				[id]
+			);
+
+			// Insert new ingredients
+			if (ingredients && ingredients.length > 0) {
+				for (const ingredient of JSON.parse(ingredients)) {
+					await pool.query(
+						`INSERT INTO recipes_ingredients 
+						 (recipe_id, spoonacular_ingredient_id, amount, unit, ingredient_name)
+						 VALUES ($1, $2, $3, $4, $5)`,
+						[
+							id,
+							ingredient.id, // spoonacular_ingredient_id
+							ingredient.volume, // amount
+							ingredient.unit, // unit
+							ingredient.name, // name
+						]
+					);
+				}
+			}
+
+			// ---------------------- Update Instructions ----------------------
+			// Delete old instructions
+			await pool.query(`DELETE FROM instructions WHERE recipe_id = $1`, [
+				id,
+			]);
+
+			// Insert new instructions
+			for (const [index, instruction] of parsedInstructions.entries()) {
+				await pool.query(
+					`INSERT INTO instructions 
+					 (recipe_id, instruction_text, instruction_order)
+					 VALUES ($1, $2, $3)`,
+					[id, instruction.text, index + 1]
+				);
+			}
+
+			// ---------------------- Success Response ----------------------
+			res.status(200).json({
+				message: "Recipe updated successfully!",
+			});
+		} catch (err) {
+			console.error("Error updating recipe:", err);
 			res.status(500).send("Server error");
 		}
 	}
