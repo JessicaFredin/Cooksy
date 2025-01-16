@@ -8,7 +8,7 @@ import world_cuisines from "./world_cuisines.js";
 import comments from "./comments.js";
 import search from "./search.js";
 import user from "./user.js"
-// const router = express.Router();
+import top_contributors from "./top_contributors.js"
 
 const app = express();
 
@@ -23,6 +23,8 @@ app.use("/world_cuisines", world_cuisines); // World Cuisines routes
 app.use("/comments", comments); // Comments routes
 app.use("/search", search); // Search routes
 app.use("/user", user); // User routes
+app.use("/top_contributors", top_contributors); // Top Contributors routes
+
 
 // Example default route
 app.get("/", (req, res) => {

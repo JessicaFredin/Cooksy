@@ -14,15 +14,15 @@ function TopContributorsPage() {
       <div className="grid grid-cols-12 gap-x-4 pt-32">
 
         {/* Huvudrubrik placerad med grid*/}
-        <div className="col-start-2 col-span-3">
+        <div className="col-start-2 col-span-3 mb-20">
           <HeadingWithLine text="Top contributors" />
         </div>
         
-        <div className="col-start-2 col-span-12 mb-12">
+        <div className="col-start-2 col-span-10 mb-12">
         {/* Profile cards - justering av ordning */}
-        <div className="col-span-12 sm:col-span-8 md:col-span-9 lg:col-span-10 xl:col-span-10 flex flex-col sm:flex-row sm:items-end justify-start sm:gap-8 mt-8 sm:mt-12 md:mt-16">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-start lg:justify-center gap-8 ">
           {/* ProfileCard 2 först på desktop */}
-          <div className="order-2 sm:order-1">
+          <div className="lg:order-1 order-2 mb-20 lg:mb-0">
             <ProfileCard
               profileImage={data.profiles[1].img}
               size = "large"
@@ -33,7 +33,7 @@ function TopContributorsPage() {
           </div>
           
           {/* ProfileCard 1 */}
-          <div className="order-1 sm:order-2">
+          <div className="lg:order-2 order-1 mb-20 lg:mb-0">
           <ProfileCard
               profileImage={data.profiles[0].img}
               size = "xl"
@@ -44,7 +44,7 @@ function TopContributorsPage() {
           </div>
           
           {/* ProfileCard 3 */}
-          <div className="order-3 sm:order-3">
+          <div className="order-3 mb-20 lg:mb-0">
           <ProfileCard
               profileImage={data.profiles[2].img}
               name={data.profiles[2].name}
@@ -70,3 +70,4 @@ function TopContributorsPage() {
 }
 
 export default TopContributorsPage;
+

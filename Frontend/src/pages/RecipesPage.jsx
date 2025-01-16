@@ -6,7 +6,7 @@ import SortMenu from "../components/SortMenu";
 import FiltersMenu from "../components/FiltersMenu";
 import SearchField from "../components/SearchField"
 
-
+ 
 const RecipePage = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [loading, setLoading] = useState(true);

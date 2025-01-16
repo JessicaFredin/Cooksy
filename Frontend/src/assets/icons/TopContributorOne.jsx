@@ -3,7 +3,7 @@ export function TopContributorOne(props) {
       <svg
         width="36"
         height="76"
-        viewBox="0 0 36 76"
+        viewBox="-5 -5 50 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         {...props}

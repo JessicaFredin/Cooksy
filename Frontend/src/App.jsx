@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "./App.css";
+import "./App.css"; 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -146,7 +146,7 @@ function App() {
 									/>
 
 									<Route
-										path="/top-contributor-page"
+										path="/top-contributors"
 										element={<TopContributorPage />}
 									/>
 									<Route

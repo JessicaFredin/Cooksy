@@ -19,22 +19,21 @@ import RecipeCarousel from "../components/RecipeCarousel";
 import Swoosh from "../assets/svg/Swoosh";
 import Button from "../components/Button";
 import { useSearch } from "../contexts/SearchContext";
-/*import { useData } from "../contexts/DataContext";
-/*import MainIngredient from "../components/MainIngredient"*/;
+import { useData } from "../contexts/DataContext";
+import MainIngredient from "../components/MainIngredient";
 import Popup from "../components/Popup"; // Importera Popup-komponenten
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-// const categoryIconMap = {
-// 	Meat: MeatIcon,
-// 	Poultry: ChickenIcon,
-// 	Fish: FishIcon,
-// 	Vegetable: VegetableIcon,
-// 	Seafood: SeafoodIcon,
-// 	Drinks: DrinksIcon,
-// };
+import ProfileCard from "../components/ProfileCard";
+import { TopContributorOne } from "../assets/icons/TopContributorOne";
+import { TopContributorTwo } from "../assets/icons/TopContributorTwo";
+import { TopContributorThree } from "../assets/icons/TopContributorThree";
+import Blogpost from "../components/Blogpost"
 
 function HomePage() {
+	const [topContributors, setTopContributors] = useState([]);
+	const [loadingContributors, setLoadingContributors] = useState(true);
+	const [errorContributors, setErrorContributors] = useState("");
 	const { handleSearch } = useSearch(); // 🔥 Get search function from context
 	const [isPopupVisible, setIsPopupVisible] = useState(false);
 	const isLoggedIn = false; // Simulera användarens inloggningsstatus
@@ -42,8 +41,6 @@ function HomePage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 
-	
-	// const recipes = [
 	// 	{
 	// 		id: 1,
 	// 		name: "Shishkebab med baba ganoush",
@@ -143,6 +140,27 @@ function HomePage() {
 		}
 	};
 
+	// Fetch top contributors
+	useEffect(() => {
+		const fetchTopContributors = async () => {
+			try {
+				const response = await axios.get(
+					`${
+						import.meta.env.VITE_APP_BACKEND_URL
+					}/top_contributors`
+				);
+				setTopContributors(response.data.slice(0, 4)); // Show only top 4 on homepage
+			} catch (err) {
+				console.error("Error fetching top contributors:", err);
+				setErrorContributors("Failed to load top contributors.");
+			} finally {
+				setLoadingContributors(false);
+			}
+		};
+
+		fetchTopContributors();
+	}, []);
+
 	// Fetch recipes dynamically and randomize them
 	useEffect(() => {
 		const fetchRecipes = async () => {
@@ -168,49 +186,34 @@ function HomePage() {
 
 		fetchRecipes();
 	}, []);
-
+	const { data } = useData();
 	if (loading) return <p>Loading recipes...</p>;
 	if (error) return <p>{error}</p>;
+	if (!data) {
+		return <div>No data available.</div>; // Om ingen data finns
+	}
+	if (loadingContributors) return <p>Loading top contributors...</p>;
+	if (errorContributors) return <p>{errorContributors}</p>;
+
+	// Helper function to get rank icons
+	const getRankIcon = (rank) => {
+		switch (rank) {
+			case 1:
+				return <TopContributorOne />;
+			case 2:
+				return <TopContributorTwo />;
+			case 3:
+				return <TopContributorThree />;
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<div className="overflow-hidden">
 			{isPopupVisible && (
 				<Popup onClose={() => setIsPopupVisible(false)} />
 			)}
-			{/* Grid Background */}
-			{/* <div className="absolute inset-0 grid grid-cols-12 gap-4 pointer-events-none opacity-25 w-full">
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-				<div className="bg-purple-300"></div>
-			</div> */}
-			{/* 
-			<div className="grid grid-cols-12">
-				<div className="relative col-span-12">
-					<HighlightedHeader className="w-full">
-						Cook, share, and inspire with Cooksy
-					</HighlightedHeader>
-				</div>
-			</div> */}
-			{/* <div className="relative mt-20 grid grid-cols-12 gap-6"> */}
-			{/* <div className="relative col-start-2 col-span-12 ">
-					<HighlightedHeader className="w-full">
-						Cook, share, and inspire with Cooksy
-					</HighlightedHeader>
-					<div className="flex items-center md:me-16 md:col-span-5 md:col-start-2 sm:col-start-1 sm:col-span-10 sm:me-0 w-full">
-						<div className="text-center sm:text-left w-1/2 my-3">
-							<SearchField />
-						</div>
-					</div>
-				</div> */}
 			<div className="relative mt-20 grid grid-cols-12 gap-6">
 				<div className="relative col-start-2 col-span-6">
 					<HighlightedHeader />
@@ -275,13 +278,13 @@ function HomePage() {
 				</div>
 
 				<div className="col-start-2 col-span-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-					{/* {data.mainIngredients.map((mainIngredient, index) => (
+					{data.mainIngredients.map((mainIngredient, index) => (
 						<MainIngredient
 							key={index}
 							title={mainIngredient.name}
 							image={mainIngredient.img}
 						/>
-					))} */}
+					))}
 				</div>
 				<div className="col-start-0 col-span-12 relative">
 					{/* Swoosh Background */}
@@ -301,6 +304,7 @@ function HomePage() {
 				<div className="col-start-2 col-span-10 py-10">
 					<HeadingWithLine text="Top Contributors" />
 				</div>
+
 				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 					{/* Justerat gap */}
 					{/* {data.profiles.slice(0, 4).map((profile, index) => (
@@ -313,10 +317,32 @@ function HomePage() {
 							/>
 						</div>
 					))} */}
+
+					{topContributors.map((profile, index) => (
+						<div
+							key={profile.id}
+							className="relative flex justify-center"
+						>
+							<ProfileCard
+								id={profile.id}
+								profileImage={`${import.meta.env.VITE_APP_BACKEND_URL}${profile.profile_image}`}
+								name={profile.name}
+								recipes={profile.recipe_count}
+								followers={0} // Placeholder if followers aren't tracked yet
+							/>
+							{/* Show rank badges only on the homepage */}
+							{index < 3 && (
+								<div className="absolute -top-3 -right-0 z-20">
+									{getRankIcon(index + 1)}
+								</div>
+							)}
+						</div>
+					))}
+
 				</div>
 
 				<div className="col-start-2 col-span-10 py-10 flex justify-end">
-					<Link to="/top-contributor-page">
+					<Link to="/top-contributors">
 						<Button>See all Top Contributors</Button>
 					</Link>
 				</div>
@@ -326,14 +352,15 @@ function HomePage() {
 				</div>
 
 				<div className="col-start-2 col-span-10 grid grid-rows-2 gap-4">
-					{/* {data.articles.slice(0, 2).map((articel, index) => (
+					{data.articles.slice(0, 2).map((articel, index) => (
 						<Blogpost
+							key={index}
 							image={articel.img}
 							title={articel.title}
 							description={articel.description}
 							id={index}
 						/>
-					))} */}
+					))} 
 				</div>
 			</div>
 		</div>
