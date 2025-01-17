@@ -38,7 +38,7 @@ function RecipeDetailsPage() {
 				);
 				setRecipe(response.data);
 
-				 // Sätt portioner baserat på receptdata
+				// Sätt portioner baserat på receptdata
 				if (response.data.serving_size) {
 					setPortionMultiplier(response.data.serving_size);
 				}
@@ -64,9 +64,8 @@ function RecipeDetailsPage() {
 						withCredentials: true,
 					}
 				);
-                
+
 				setUserRating(response.data.user_rating); // Uppdatera användarens betyg
-				console.log(response.data.user_rating);
 			} catch (error) {
 				console.error("Error fetching user rating:", error);
 				setError("Failed to load user rating.");
@@ -107,7 +106,7 @@ function RecipeDetailsPage() {
 	}
 	// Hanterar ändring av portioner
 	const handlePortionChange = (newPortion) => {
-		setPortionMultiplier(newPortion);
+		setPortionMultiplier(Math.max(0, newPortion));
 	};
 
 	// Hanterar ändring av betyg
@@ -163,9 +162,9 @@ function RecipeDetailsPage() {
 				{/* Kort info om receptet */}
 				<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
 					<RecipeShortInfoBox
-						category={recipe.category_name} 
-						cookingTime={recipe.cooking_time_minutes} 
-						ingredientsCount={recipe.ingredients.length} 
+						category={recipe.category_name}
+						cookingTime={recipe.cooking_time_minutes}
+						ingredientsCount={recipe.ingredients.length}
 					/>
 				</div>
 

@@ -86,10 +86,10 @@ function IngredientsInstructions({
 						{ingredients.map((ingredient, index) => (
 							<li key={index}>
 								<CustomCheckbox
-									labelUnit={`${
+									labelUnit={`${(
 										(ingredient.amount / servingSize) *
 										portionMultiplier
-									} ${ingredient.unit}`}
+									).toFixed(2)} ${ingredient.unit}`}
 									labelIngredient={ingredient.ingredient_name}
 									checked={completedIngredients.includes(
 										index

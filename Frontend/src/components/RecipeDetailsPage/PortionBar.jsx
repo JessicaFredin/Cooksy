@@ -10,7 +10,7 @@ function PortionBar({ currentPortion, onPortionChange }) {
 			<button
 				onClick={() => {
 					onPortionChange(count - 1);
-					setCount(count - 1);
+					setCount(Math.max(0, count - 1));
 				}}
 				className="bg-white text-3xl w-9 h-9 flex justify-center items-center rounded-xl"
 			>
