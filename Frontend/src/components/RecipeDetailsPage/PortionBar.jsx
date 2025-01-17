@@ -6,6 +6,7 @@ function PortionBar({ currentPortion, onPortionChange }) {
 
 	return (
 		<div className=" w-56 flex items-center justify-center bg-green-100 text-black rounded-xl py-1">
+			{/* Knappar för att öka antal portioner och minska*/}
 			<button
 				onClick={() => {
 					onPortionChange(count - 1);

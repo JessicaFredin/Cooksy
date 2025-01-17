@@ -3,8 +3,9 @@ import RecipeCard from "../components/RecipeCard";
 import { useData } from "../contexts/DataContext";
 
 const RecipeFeed = () => {
+  //Hämtar data, laddningsstatus och fel från DataContext
   const { data, loading, error } = useData();
-
+  //Hanterar laddningsstatus
   if (loading) {
     return <p>Loading recipes...</p>;
   }
@@ -12,22 +13,23 @@ const RecipeFeed = () => {
   if (error) {
     return <p>Something went wrong: {error.message}</p>;
   }
-
+//Renderar receptflödet om data finns
   return (
     <div className="grid grid-cols-12 gap-x-4 py-32">
-      {/* Header */}
+      {/* Rubrik*/}
       <div className="col-start-2 col-span-10">
         <HeadingWithLine text="Recipe Feed" />
       </div>
 
-      {/* Recipe Cards */}
+      {/* Recept kort */}
       <div className="col-start-2 col-span-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 mt-8">
         {data.recipes.map((recipe, index) => (
           <div key={index} className="flex justify-center">
+            {/*Renderar receptkort */}
             <RecipeCard
-              image={recipe.img} // Replace with appropriate image
+              image={recipe.img} 
               dishName={recipe.name}
-			  description={recipe.description} // Lägg till beskrivning
+			  description={recipe.description} 
               categoryName={recipe.category}
               time={recipe.time}
               authorName="Lisa Karlsson"

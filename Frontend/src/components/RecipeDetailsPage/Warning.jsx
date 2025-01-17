@@ -4,7 +4,7 @@ import { WarningIcon } from "../../assets/icons/WarningIcon";
 function Warning({ title }) {
 	return (
 		<div className="flex items-center space-x-2">
-			{/* <img className="w-8" src={WarningImg}/>*/}
+			{/*en varnings triangel med ingridienser som är vanliga att vara alergiska emot*/}
 			<span>
 				<WarningIcon />
 			</span>

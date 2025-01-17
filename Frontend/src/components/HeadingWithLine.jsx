@@ -5,6 +5,7 @@ function HeadingWithLine({ text }) {
   return (
     // Wrapper för att centrera rubriken och placera den dekorativa linjen
     <div className="relative inline-block text-center">
+       {/* Rubriken som inporteras in för att plaseras över linjen */}
       <h1 className="text-3xl font-pacifico mb-6 whitespace-nowrap">{text}</h1>
       {/* SVG-element för att visa en dekorativ linje under rubriken */}
       <svg

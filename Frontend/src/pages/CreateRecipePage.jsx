@@ -11,35 +11,38 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 function CreateRecipePage() {
+	// Hämta `editData` från routingens state om vi redigerar ett recept
 	const location = useLocation();
-	const editData = location.state; // ✅ Get the passed recipe data
+	const editData = location.state; 
 
 	// State för att hantera receptdata och formulärfält
 	const [ingredients, setIngredients] = useState([
-		{ volume: "", unit: "", name: "", id: null },
+		{ volume: "", unit: "", name: "", id: null }, // Lista över ingredienser
 	]);
+	// Näringsvärden
 	const [nutrition, setNutrition] = useState({
 		protein: 0,
 		carbs: 0,
 		fat: 0,
 		energy: 0,
 	});
-	const [categories, setCategories] = useState([]);
-	const [mealTypes, setMealTypes] = useState([]);
-	const [worldCuisines, setWorldCuisines] = useState([]);
-	const [selectedCategory, setSelectedCategory] = useState("");
-	const [selectedMealType, setSelectedMealType] = useState("");
-	const [selectedWorldCuisine, setSelectedWorldCuisine] = useState("");
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [servingSize, setServingSize] = useState("");
-	const [cookingTime, setCookingTime] = useState("");
-	const [instructions, setInstructions] = useState([]);
-	const [imageFile, setImageFile] = useState(null);
-	const [previewImage, setPreviewImage] = useState(null);
-	const [sharingOption, setSharingOption] = useState("public");
+	const [categories, setCategories] = useState([]); // Kategorier för dropdown
+	const [mealTypes, setMealTypes] = useState([]); // Måltidstyper för dropdown
+	const [worldCuisines, setWorldCuisines] = useState([]); // Världskök för dropdown
+	const [selectedCategory, setSelectedCategory] = useState(""); // Vald kategori
+	const [selectedMealType, setSelectedMealType] = useState(""); // Vald måltid
+	const [selectedWorldCuisine, setSelectedWorldCuisine] = useState(""); // Vald världskök
+	const [title, setTitle] = useState(""); // Receptets titel
+	const [description, setDescription] = useState("");  // Receptets beskrivning
+	const [servingSize, setServingSize] = useState(""); // Poritonsstorlek
+	const [cookingTime, setCookingTime] = useState(""); // Tillagningstid
+	const [instructions, setInstructions] = useState([]); // Lista över tillagningsinstruktioner
+	const [imageFile, setImageFile] = useState(null); // Uppladdad bildfil
+	const [previewImage, setPreviewImage] = useState(null); // Förhandsvisning av bild
+	const [sharingOption, setSharingOption] = useState("public");// Delningsalternativ
 
-	// 🟢 Fetch recipe data if editing
+
+	// Vid redigering hämtas och fylls formuläret med befintliga data
 	useEffect(() => {
 		if (editData?.id) {
 			const fetchRecipeData = async () => {
@@ -54,7 +57,7 @@ function CreateRecipePage() {
 
 					const data = response.data;
 
-					// 🟢 Fill in the form with fetched data
+					// Fyll formulärfält med data från databasen
 					setTitle(data.title || "");
 					setDescription(data.description || "");
 					setServingSize(data.serving_size || "");
@@ -72,7 +75,7 @@ function CreateRecipePage() {
 					};
 					setNutrition(nutritionData);
 
-					// 🟢 Ingredients from DB
+					// Ingredienser från databas
 					setIngredients(
 						data.ingredients.map((ingredient) => ({
 							id: ingredient.spoonacular_id || null,
@@ -82,7 +85,7 @@ function CreateRecipePage() {
 						}))
 					);
 
-					// 🟢 Instructions from DB
+					// Instruktioner från db
 					setInstructions(
 						data.instructions.map((instruction) => ({
 							text: instruction.text,
@@ -94,7 +97,7 @@ function CreateRecipePage() {
 					setImageFile(1);
 					setPreviewImage(`${baseURL}${data.image_url}` || null);
 
-					// 🟢 Sharing option
+					// Delningsalternativ
 					setSharingOption(data.sharing_option || "public");
 				} catch (error) {
 					console.error("Error fetching recipe details:", error);
@@ -183,24 +186,12 @@ function CreateRecipePage() {
 			formData.append("instructions", JSON.stringify(instructions));
 			formData.append("sharing_option", sharingOption);
 
-			// // Skickar uppdaterat recept till backend
-			// const response = await axios.post(
-			// 	`${baseURL}/recipes/add`,
-			// 	formData,
-			// 	{
-			// 		withCredentials: true,
-			// 		headers: {
-			// 			"Content-Type": "multipart/form-data",
-			// 		},
-			// 	}
-			// );
-
+            // Välj rätt API-endpoint baserat på om det är en ny skapelse eller redigering
 			const endpoint = editData
-				? `${baseURL}/recipes/update/${editData.id}` // If editing, send PUT request
-				: `${baseURL}/recipes/add`; // If creating, send POST request
-
-			const method = editData ? "put" : "post"; // Use PUT for update, POST for create
-
+				? `${baseURL}/recipes/update/${editData.id}` // Om redigerar, skicka PUT förfrågan
+				: `${baseURL}/recipes/add`; // Om användaren skapar, skicka POST förfrågan
+			const method = editData ? "put" : "post"; // använd PUT för updatering, POST för att skapa
+            // Skicka formulärdata till servern
 			const response = await axios[method](endpoint, formData, {
 				withCredentials: true,
 				headers: {
@@ -236,7 +227,7 @@ function CreateRecipePage() {
 				</div>
 
 				<form onSubmit={handleSubmit} className="grid gap-6">
-					{/* Formulär för tilläggning av recept*/}
+					{/* Här visas formulärfälten för att skapa/redigera ett recept */}
 					<div className="space-y-10 lg:w-1/2">
 						<div>
 							<label className="block font-semibold mb-2">

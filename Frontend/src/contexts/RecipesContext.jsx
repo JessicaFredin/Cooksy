@@ -1,30 +1,4 @@
 /* eslint-disable react/prop-types */
-// /* eslint-disable react-refresh/only-export-components */
-// /* eslint-disable react/prop-types */
-// import { createContext, useContext, useState } from "react";
-
-// const RatingsContext = createContext();
-
-// export const useRatings = () => useContext(RatingsContext);
-
-// export const RatingsProvider = ({ children }) => {
-// 	const [ratings, setRatings] = useState({});
-
-// 	const updateRating = (id, rating) => {
-// 		setRatings((prev) => ({ ...prev, [id]: rating }));
-// 	};
-
-// 	return (
-// 		<RatingsContext.Provider value={{ ratings, updateRating }}>
-// 			{children}
-// 		</RatingsContext.Provider>
-// 	);
-// };
-
-
-
-
-
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -35,12 +9,13 @@ export const useRecipes = () => useContext(RecipesContext);
 export const RecipesProvider = ({ children }) => {
 	const [recipes, setRecipes] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [filteredRecipes, setFilteredRecipes] = useState([]); 
 
 	// Fetch recipes from the backend
 	const fetchRecipes = async () => {
 		setLoading(true);
 		try {
-			const response = await axios.get("/api/recipes"); // Adjust the endpoint as per your backend
+			const response = await axios.get("/recipes"); // Adjust the endpoint as per your backend
 			setRecipes(response.data);
 		} catch (error) {
 			console.error("Error fetching recipes:", error);
@@ -60,7 +35,15 @@ export const RecipesProvider = ({ children }) => {
 
 	return (
 		<RecipesContext.Provider
-			value={{ recipes, addRecipe, fetchRecipes, loading }}
+			value={{
+				recipes,
+				setRecipes,
+				addRecipe,
+				fetchRecipes,
+				loading,
+				filteredRecipes,
+				setFilteredRecipes,
+			}}
 		>
 			{children}
 		</RecipesContext.Provider>

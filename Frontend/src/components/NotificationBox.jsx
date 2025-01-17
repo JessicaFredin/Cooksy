@@ -11,6 +11,7 @@ const NotificationBox = ({
 	stars,
 	color = "green",
 	min, //Tidsstämpel i minuter som visar hur länge sedan notifikationen skapades
+	onDelete,
 }) => {
 	// Bestämmer kantfärgen baserat på prop color
 	const borderColor =
@@ -20,12 +21,12 @@ const NotificationBox = ({
 		<div
 			className={`col-start-2 col-span-10 flex items-start gap-4 p-4 border-2 rounded-3xl ${borderColor} shadow-md bg-white w-full `}
 		>
-			{/* Avatar */}
+			{/* Användare */}
 			{avatar && (
 				<img
 					src={avatar}
 					alt={`${name}'s avatar`}
-					className="w-12 h-12 md:w-20 md:h-20 rounded-full"
+					className="w-12 h-12 md:w-20 md:h-20 rounded-full object-cover"
 				/>
 			)}
 
@@ -42,12 +43,14 @@ const NotificationBox = ({
 						</span>
 					)}
 				</p>
-				<p className="text-black">{text}</p>
-				{stars && (
-					<div className="mt-2 flex items-start">
-						<StarRating staticRating={stars} />
-					</div>
-				)}
+				<div className="flex items-center">
+					<p className="text-black ">{text}</p>
+					{stars && (
+						<div className="mt-2 ml-6 ">
+							<StarRating staticRating={stars} />
+						</div>
+					)}
+				</div>
 			</div>
 
 			{/* Timestamp och Delete knapp */}
@@ -56,8 +59,8 @@ const NotificationBox = ({
 				{/* Papperskorgsikon för att ta bort notifikationen  + klickhantering som visas som alert*/}
 				<FontAwesomeIcon
 					icon={faTrashAlt}
-					className={`ml-4 text-sm text-pink-300`}
-					onClick={() => alert("Delete notification")}
+					className={`ml-4 text-lg text-pink-300 cursor-pointer`}
+					onClick={onDelete}
 				/>
 			</div>
 		</div>

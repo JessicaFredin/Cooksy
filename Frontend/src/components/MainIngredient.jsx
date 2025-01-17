@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 
-//Tar emot props  bild, titel,
+//Tar emot props  bild, titel
 const MainIngredient = ({ title, image }) => {
 	return (
 		<Link to="/recipes">
+			 {/* Bilderna på huvudingridienser på startsidan */}
 			<div className="cursor-pointer">
 				<img
 					className="rounded-t-xl w-full h-52 object-cover"

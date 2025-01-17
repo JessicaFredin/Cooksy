@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "./App.css"; 
+import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -32,7 +32,7 @@ import FAQ from "./components/Footer/FAQ";
 import SearchPage from "./pages/SearchPage";
 import TopContributorPage from "./pages/TopContributorPage";
 import MySavedRecipesFolderPage from "./pages/MySavedRecipesFolderPage";
-import MySavedRecipesPage from "./pages/MySavedRecipesPage"
+import MySavedRecipesPage from "./pages/MySavedRecipesPage";
 import MyUploadedRecipes from "./pages/MyUploadedRecipes";
 import OtherProfilePage from "./pages/OtherProfilePage";
 import RecipeFeed from "./pages/RecipeFeed";
@@ -40,10 +40,10 @@ import RecipeFeed from "./pages/RecipeFeed";
 function App() {
 	return (
 		<Router>
-			<SearchProvider>
-				<AuthProvider>
-					<PopupProvider>
-						<RecipesProvider>
+			<RecipesProvider>
+				<SearchProvider>
+					<AuthProvider>
+						<PopupProvider>
 							<ScrollToTop />
 							<Navbar />
 
@@ -160,15 +160,15 @@ function App() {
 									/>
 									<Route
 										path="/recipe-feed"
-										element={<RecipeFeed/>}
+										element={<RecipeFeed />}
 									/>
 								</Routes>
 								<Footer />
 							</main>
-						</RecipesProvider>
-					</PopupProvider>
-				</AuthProvider>
-			</SearchProvider>
+						</PopupProvider>
+					</AuthProvider>
+				</SearchProvider>
+			</RecipesProvider>
 		</Router>
 	);
 }

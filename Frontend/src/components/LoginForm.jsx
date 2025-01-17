@@ -106,7 +106,7 @@ function LoginForm({ setView }) {
 					<div className="border-t border-gray-300 w-11"></div>
 				</div>
 
-				{/* Social Media knappar */}
+				{/* Social Media knappar för att logga in med de */}
 				<div className="flex justify-center space-x-4 mt-4 mb-6">
 					<div className="flex items-center justify-center bg-blue-100 text-blue-500 rounded-full w-12 h-12 shadow hover:shadow-md cursor-pointer z-50">
 						<FontAwesomeIcon
@@ -114,10 +114,6 @@ function LoginForm({ setView }) {
 							className="w-5 h-5"
 						/>
 					</div>
-					{/* <div className="flex items-center justify-center bg-red-100 text-red-500 rounded-full w-12 h-12 shadow hover:shadow-md cursor-pointer z-50">
-						<FontAwesomeIcon icon={faGoogle} className="w-5 h-5" />
-					</div> */}
-
 					<div
 						className="flex items-center justify-center bg-red-100 text-red-500 rounded-full w-12 h-12 shadow hover:shadow-md cursor-pointer z-50"
 						onClick={() => {

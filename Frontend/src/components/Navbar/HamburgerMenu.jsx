@@ -57,7 +57,7 @@ function HamburgerMenu({ menuOpen, toggleMenu }) {
 						</a>
 					</nav>
 
-					{/* Footer (valfritt om du vill ha något längst ner) */}
+					{/* Footer */}
 					<footer className="mt-6 text-gray-500 text-sm">
 						© 2024 Cooksy. All rights reserved.
 					</footer>

@@ -4,17 +4,6 @@ import CooksyHatImage from "../assets/images/CooksyHat.png";
 import SwooshLine from "../assets/svg/SwooshLine";
 import HighlightedHeader from "../components/HighlightedHeader";
 import HeadingWithLine from "../components/HeadingWithLine";
-
-// import { MeatIcon } from "../assets/icons/MeatIcon";
-// import { ChickenIcon } from "../assets/icons/ChickenIcon";
-// import { FishIcon } from "../assets/icons/FishIcon";
-// import { VegetableIcon } from "../assets/icons/VegetableIcon";
-// import { SeafoodIcon } from "../assets/icons/SeafoodIcon";
-// import { DrinksIcon } from "../assets/icons/DrinksIcon";
-
-// import food1 from "../assets/images/food1.jpg";
-// import profile1 from "../assets/images/profile1.jpg";
-// import RecipeCard from "../components/RecipeCard";
 import RecipeCarousel from "../components/RecipeCarousel";
 import Swoosh from "../assets/svg/Swoosh";
 import Button from "../components/Button";
@@ -28,7 +17,7 @@ import ProfileCard from "../components/ProfileCard";
 import { TopContributorOne } from "../assets/icons/TopContributorOne";
 import { TopContributorTwo } from "../assets/icons/TopContributorTwo";
 import { TopContributorThree } from "../assets/icons/TopContributorThree";
-import Blogpost from "../components/Blogpost"
+import Blogpost from "../components/Blogpost";
 
 function HomePage() {
 	const [topContributors, setTopContributors] = useState([]);
@@ -41,97 +30,6 @@ function HomePage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 
-	// 	{
-	// 		id: 1,
-	// 		name: "Shishkebab med baba ganoush",
-	// 		icon: <MeatIcon />,
-	// 		category: "Meat",
-	// 		time: "90 min",
-	// 		rating: 2,
-	// 		reviews: 25,
-	// 		comments: 5,
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: "Cheeseburger pasta skillet (one pot)",
-	// 		icon: <MeatIcon />,
-	// 		category: "Meat",
-	// 		time: "30 min",
-	// 		rating: 5,
-	// 		reviews: 36,
-	// 		comments: 10,
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		name: "Smashed burger med extra ost",
-	// 		icon: <ChickenIcon />,
-	// 		category: "Chicken",
-	// 		time: "60 min",
-	// 		rating: 4,
-	// 		reviews: 55,
-	// 		comments: 7,
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: "Sushi",
-	// 		icon: <FishIcon />,
-	// 		category: "Fish",
-	// 		time: "80 min",
-	// 		rating: 1,
-	// 		reviews: 15,
-	// 		comments: 8,
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		name: "Chickpea and harissa stew with herby yoghurt",
-	// 		icon: <VegetableIcon />,
-	// 		category: "Vegetable",
-	// 		time: "45 min",
-	// 		rating: 3,
-	// 		reviews: 125,
-	// 		comments: 6,
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		name: "Shrimp salad",
-	// 		icon: <FishIcon />,
-	// 		category: "Fish",
-	// 		time: "120 min",
-	// 		rating: 3,
-	// 		reviews: 37,
-	// 		comments: 19,
-	// 	},
-	// 	{
-	// 		id: 7,
-	// 		name: "Steamed mussels in tomato cream sauce",
-	// 		icon: <VegetableIcon />,
-	// 		category: "Vegetable",
-	// 		time: "75 min",
-	// 		rating: 2,
-	// 		reviews: 78,
-	// 		comments: 35,
-	// 	},
-	// 	{
-	// 		id: 8,
-	// 		name: "Chicken and asparagus",
-	// 		icon: <ChickenIcon />,
-	// 		category: "Chicken",
-	// 		time: "90 min",
-	// 		rating: 3,
-	// 		reviews: 356,
-	// 		comments: 77,
-	// 	},
-	// 	{
-	// 		id: 9,
-	// 		name: "Steamed mussels in tomato cream sauce",
-	// 		icon: <VegetableIcon />,
-	// 		category: "Vegetable",
-	// 		time: "100 min",
-	// 		rating: 4,
-	// 		reviews: 545,
-	// 		comments: 89,
-	// 	},
-	// ];
 	const handleAddRecipeClick = () => {
 		if (!isLoggedIn) {
 			setIsPopupVisible(true); // Visa popup om användaren inte är inloggad
@@ -145,9 +43,7 @@ function HomePage() {
 		const fetchTopContributors = async () => {
 			try {
 				const response = await axios.get(
-					`${
-						import.meta.env.VITE_APP_BACKEND_URL
-					}/top_contributors`
+					`${import.meta.env.VITE_APP_BACKEND_URL}/top_contributors`
 				);
 				setTopContributors(response.data.slice(0, 4)); // Show only top 4 on homepage
 			} catch (err) {
@@ -161,7 +57,7 @@ function HomePage() {
 		fetchTopContributors();
 	}, []);
 
-	// Fetch recipes dynamically and randomize them
+	// Hämta recept dynamiskt
 	useEffect(() => {
 		const fetchRecipes = async () => {
 			try {
@@ -169,7 +65,7 @@ function HomePage() {
 					`${import.meta.env.VITE_APP_BACKEND_URL}/recipes`
 				);
 
-				// ✅ Shuffle recipes and limit to 12
+				// Shuffle recept och begränsa till 12
 				const shuffledRecipes = response.data.sort(
 					() => 0.5 - Math.random()
 				);
@@ -195,7 +91,7 @@ function HomePage() {
 	if (loadingContributors) return <p>Loading top contributors...</p>;
 	if (errorContributors) return <p>{errorContributors}</p>;
 
-	// Helper function to get rank icons
+	// Hjälpfunktion för att hämta rankningsikoner
 	const getRankIcon = (rank) => {
 		switch (rank) {
 			case 1:
@@ -219,7 +115,7 @@ function HomePage() {
 					<HighlightedHeader />
 					<div className="flex items-center w-full">
 						<div className="text-center sm:text-left w-full my-3">
-							{/* ✅ Pass handleSearch as a prop */}
+							{/* Skicka handleSearch som en prop */}
 							<SearchField onSearch={handleSearch} />
 						</div>
 					</div>
@@ -232,14 +128,6 @@ function HomePage() {
 						className="w-full md:w-5/6 sm:w-2/3 h-auto"
 					/>
 				</div>
-
-				{/* <div className="flex items-center justify-center md:col-start-8 md:col-span-4 sm:col-start-1 sm:col-span-10">
-					<img
-						src={CooksyHatImage}
-						alt="Cooksy Hat"
-						className="md:w-5/6 sm:w-2/3 h-auto "
-					/>
-				</div> */}
 			</div>
 			<div className="w-full">
 				<SwooshLine />
@@ -248,23 +136,8 @@ function HomePage() {
 				<div className="col-start-2 pb-10">
 					<HeadingWithLine text="Discover new recipes" />
 				</div>
-				{/* Recipe Grid */}
+				{/* Recept Grid */}
 				<div className="col-start-2 col-span-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-					{/* {recipes.map((recipe, index) => (
-						<RecipeCard
-							key={index}
-							image={food1}
-							dishName={recipe.name}
-							categoryIcon={recipe.icon} // Change this to other icons dynamically
-							categoryName={recipe.category}
-							time={recipe.time}
-							authorName="Lisa Karlsson"
-							authorImage={profile1}
-							rating={recipe.rating}
-							reviews={recipe.reviews}
-							commentsCount={recipe.comments}
-						/>
-					))} */}
 				</div>
 			</div>
 
@@ -287,9 +160,9 @@ function HomePage() {
 					))}
 				</div>
 				<div className="col-start-0 col-span-12 relative">
-					{/* Swoosh Background */}
+					{/* Swoosh Bakgrund */}
 					<Swoosh className="w-full h-auto" />
-					{/* Text Content */}
+					{/* Text innehåll */}
 					<div className="absolute inset-0 grid grid-cols-12 items-center justify-center">
 						<div className="col-start-2 col-span-10 flex flex-col items-center justify-center">
 							<h2 className="text-2xl md:text-3xl lg:text-4xl font-medium my-10 md:my-16 font-pacifico">
@@ -306,18 +179,6 @@ function HomePage() {
 				</div>
 
 				<div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
-					{/* Justerat gap */}
-					{/* {data.profiles.slice(0, 4).map((profile, index) => (
-						<div key={index} className="flex justify-center">
-							<ProfileCard
-								name={profile.name}
-								recipes={profile.recipes}
-								followers={profile.followers}
-								following={profile.following}
-							/>
-						</div>
-					))} */}
-
 					{topContributors.map((profile, index) => (
 						<div
 							key={profile.id}
@@ -325,12 +186,14 @@ function HomePage() {
 						>
 							<ProfileCard
 								id={profile.id}
-								profileImage={`${import.meta.env.VITE_APP_BACKEND_URL}${profile.profile_image}`}
+								profileImage={`${
+									import.meta.env.VITE_APP_BACKEND_URL
+								}${profile.profile_image}`}
 								name={profile.name}
 								recipes={profile.recipe_count}
-								followers={0} // Placeholder if followers aren't tracked yet
+								followers={0} // Platshållare om följare ännu inte spåras
 							/>
-							{/* Show rank badges only on the homepage */}
+							{/* Visa rankningsmärken endast på startsidan */}
 							{index < 3 && (
 								<div className="absolute -top-3 -right-0 z-20">
 									{getRankIcon(index + 1)}
@@ -338,7 +201,6 @@ function HomePage() {
 							)}
 						</div>
 					))}
-
 				</div>
 
 				<div className="col-start-2 col-span-10 py-10 flex justify-end">
@@ -360,7 +222,7 @@ function HomePage() {
 							description={articel.description}
 							id={index}
 						/>
-					))} 
+					))}
 				</div>
 			</div>
 		</div>

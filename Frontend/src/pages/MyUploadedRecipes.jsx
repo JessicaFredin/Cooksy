@@ -5,6 +5,7 @@ import HeadingWithLine from "../components/HeadingWithLine";
 import { useData } from "../contexts/DataContext";
 
 const MyUploadedRecipes = () => {
+	// Hämta data, laddningsstatus och eventuella fel från DataContext
 	const { data, loading, error } = useData();
 
 	return (
@@ -19,11 +20,12 @@ const MyUploadedRecipes = () => {
 				<h2 className="text-2xl font-semibold mb-4 font-pacifico">
 					My Published Recipes
 				</h2>
+				{/* Grid-layout för att visa publicerade recept */}
 				<div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
 					{data.recipes.slice(0, 3).map((recipe, index) => (
 						<div key={index} className="flex justify-center">
 							<RecipeCard
-								image={recipe.img} // Importera eller använd relevant bild här.
+								image={recipe.img} 
 								dishName={recipe.name}
 								categoryName={recipe.category}
 								time={recipe.time}
@@ -36,6 +38,7 @@ const MyUploadedRecipes = () => {
 						</div>
 					))}
 				</div>
+				{/* Knapp för att ladda fler publicerade recept */}
 				<div className="flex justify-end mt-6">
 					<Button
 						size="medium"
@@ -52,10 +55,10 @@ const MyUploadedRecipes = () => {
 					My Private Recipes
 				</h2>
 				<div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6">
-					{data.recipes.map((recipe, index) => (
+					{data.recipes.slice(6).map((recipe, index) => (
 						<div key={index} className="flex justify-center">
 							<RecipeCard
-								image={recipe.img} // Importera eller använd relevant bild här.
+								image={recipe.img} 
 								dishName={recipe.name}
 								categoryName={recipe.category}
 								time={recipe.time}

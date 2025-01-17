@@ -17,9 +17,9 @@ import RecipeSwoosh from "../assets/svg/RecipeSwoosh";
 
 // Receptdetaljsida
 function RecipeDetailsPage() {
-	const { id } = useParams();
-	const { isLoggedIn } = useAuth(); // Use AuthContext
-	const [userRating, setUserRating] = useState(0); // Store the user's rating
+	const { id } = useParams(); // Hämtar receptets ID från URL:en
+	const { isLoggedIn } = useAuth(); // Kontrollera om användaren är inloggad
+	const [userRating, setUserRating] = useState(0); // Sparar användarens betyg
 	const [hoveredStar, setHoveredStar] = useState(0);
 	const [recipe, setRecipe] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ function RecipeDetailsPage() {
 				);
 				setRecipe(response.data);
 
-				// Once we have the recipe, set portionMultiplier = its serving_size
+				 // Sätt portioner baserat på receptdata
 				if (response.data.serving_size) {
 					setPortionMultiplier(response.data.serving_size);
 				}
@@ -64,15 +64,15 @@ function RecipeDetailsPage() {
 						withCredentials: true,
 					}
 				);
-
-				setUserRating(response.data.user_rating);
+                
+				setUserRating(response.data.user_rating); // Uppdatera användarens betyg
 				console.log(response.data.user_rating);
 			} catch (error) {
 				console.error("Error fetching user rating:", error);
 				setError("Failed to load user rating.");
 			}
 		};
-
+		//Hämtar medelbetyg och antal recensioner
 		fetchUserRating();
 	}, [id]);
 
@@ -120,9 +120,9 @@ function RecipeDetailsPage() {
 					withCredentials: true,
 				}
 			);
-			setAverageRating(response.data.average_rating);
-			setReviewCount(response.data.review_count);
-			setUserRating(newRating); // Update user rating locally
+			setAverageRating(response.data.average_rating); // Uppdatera medelbetyg
+			setReviewCount(response.data.review_count); // Uppdatera recensioner
+			setUserRating(newRating); // Uppdatera användarens betyg
 		} catch (error) {
 			console.error("Error submitting rating:", error);
 			alert("You need to be logged in to rate this recipe.");
@@ -131,7 +131,7 @@ function RecipeDetailsPage() {
 
 	return (
 		<div className="relative">
-			{/* Swoosh Background */}
+			{/* Swoosh Bakgrund */}
 			<div className="absolute -top-[400px] -right-[150px] w-full h-auto z-0 overflow-hidden">
 				<RecipeSwoosh />
 			</div>
@@ -163,9 +163,9 @@ function RecipeDetailsPage() {
 				{/* Kort info om receptet */}
 				<div className="col-start-2 col-span-10 md:col-start-2 md:col-span-4 md:row-start-3 lg:row-start-3 lg:row-span-1 lg:col-span-3 lg:col-start-2">
 					<RecipeShortInfoBox
-						category={recipe.category_name} // e.g., "Poultry"
-						cookingTime={recipe.cooking_time_minutes} // e.g., "30"
-						ingredientsCount={recipe.ingredients.length} // e.g., 12
+						category={recipe.category_name} 
+						cookingTime={recipe.cooking_time_minutes} 
+						ingredientsCount={recipe.ingredients.length} 
 					/>
 				</div>
 

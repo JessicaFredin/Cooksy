@@ -57,7 +57,7 @@ function TopContributorsPage() {
       </div>
       {data.profiles.slice(3, 10).map((profile, index) => (
                 <TopContributor
-                    key={profile.index} // Replace with unique key
+                    key={profile.index} 
                     img={profile.img}
                     name={profile.name}
                     recipes={profile.recipes}

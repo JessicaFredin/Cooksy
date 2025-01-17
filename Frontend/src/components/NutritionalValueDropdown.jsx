@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// Komponent för att visa näringsinformation i en dropdown
 function NutritionalValueDropdown() {
   // Dummy-data som representerar näringsinformation för en portion mat.
   const nutritionData = {

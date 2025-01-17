@@ -3,29 +3,34 @@ import CloseButton from "./CloseButton";
 import Button from "./Button";
 
 
+// Popup-komponent för att spara i mappar
 const SaveInFolderPopup = ({ onClose }) => {
+  // State för att hantera mappar, lägga till nya mappar och aktiv mapp
   const [folders, setFolders] = useState([
     { name: "All recipes", color: "#ffffff" },
     { name: "American recipes", color: "#506FEC" },
   ]);
-  const [isAddingFolder, setIsAddingFolder] = useState(false);
-  const [newFolderName, setNewFolderName] = useState("");
-  const [newFolderColor, setNewFolderColor] = useState("#F56868"); // Default color
-  const [activeFolder, setActiveFolder] = useState("All recipes");
+  const [isAddingFolder, setIsAddingFolder] = useState(false); // Om användaren håller på att lägga till en ny mapp
+  const [newFolderName, setNewFolderName] = useState("");  // Namn för ny mapp
+  const [newFolderColor, setNewFolderColor] = useState("#F56868"); // Standardfärg för nya mappar
+  const [activeFolder, setActiveFolder] = useState("All recipes"); // Aktiv mapp
 
+    // Funktion för att lägga till en ny mapp
   const handleAddFolder = () => {
     if (newFolderName.trim() !== "") {
-      setFolders([...folders, { name: newFolderName, color: newFolderColor }]);
-      setActiveFolder(newFolderName);
-      setIsAddingFolder(false);
-      setNewFolderName("");
-      setNewFolderColor("#FFBF00");
+      // Kontrollera att namnet inte är tomt
+      setFolders([...folders, { name: newFolderName, color: newFolderColor }]); // Lägg till mappen i listan
+      setActiveFolder(newFolderName); // Ställ in den nya mappen som aktiv
+      setIsAddingFolder(false); // Stäng formuläret för att lägga till mapp
+      setNewFolderName(""); // Återställ namn-input
+      setNewFolderColor("#FFBF00"); // Återställ färg-input
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 md:w-3/5 md:max-w-md w-full max-w-xs">
+      {/* Rendera popup baserat på om en ny mapp läggs till */}
         {!isAddingFolder ? (
           <>
             {/* Popup for displaying folders */}
@@ -37,6 +42,7 @@ const SaveInFolderPopup = ({ onClose }) => {
             </div>
             <span className="block w-full h-1 bg-gray-100 shadow-3xl rounded"></span>
             <div className="flex justify-end mt-6">
+              {/* Knapp för att öppna formulär för att lägga till mapp */}
               <button
                 onClick={() => setIsAddingFolder(true)}
                 className="bg-pink-400 text-white text-sm px-4 py-1 text-center rounded-full hover:bg-pink-600"
@@ -44,6 +50,7 @@ const SaveInFolderPopup = ({ onClose }) => {
                 <span className="mr-1 text-lg">+</span> Add folder
               </button>
             </div>
+            {/* Lista med mappar */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6">
               {folders.map((folder) => (
                 <button
@@ -64,7 +71,7 @@ const SaveInFolderPopup = ({ onClose }) => {
             </div>
             <div className="flex justify-end mt-6">
               <Button
-                onClick={onClose} // Close the popup
+                onClick={onClose} //spara och stäng knapp
               >
                 Save
               </Button>
@@ -72,7 +79,7 @@ const SaveInFolderPopup = ({ onClose }) => {
           </>
         ) : (
           <>
-            {/* Popup for adding a folder */}
+            {/* Formulär för att lägga till en ny mapp */}
             <h2 className="text-lg font-bold mb-4">Add folder</h2>
             <div className="mb-4">
               <label className="block mb-1 text-sm font-medium">Folder name</label>

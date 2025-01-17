@@ -32,7 +32,7 @@ const SortMenu = () => {
 			</button>
 			{/* Dropdown-menyn */}
 			{open && (
-				<ul className="absolute left-0 bg-white w-full shadow-lg rounded-md mt-2 z-20">
+				<ul className="absolute left-0 bg-white md:w-52 shadow-lg rounded-md mt-2 z-20">
 					{options.map((option, index) => (
 						<li
 							key={index} // nyckelvärde för varje alternativ

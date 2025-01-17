@@ -1,98 +1,3 @@
-// import { useParams } from 'react-router-dom';
-// import HeadingWithLine from "../components/HeadingWithLine";
-// import Button from "../components/Button";
-// import SortMenu from "../components/SortMenu";
-// import FiltersMenu from "../components/FiltersMenu";
-// import RecipeCard from "../components/RecipeCard";
-// import { useData } from "../contexts/DataContext";
-
-// function OtherProfilePage() {
-//     const { data } = useData();
-//     const { id } = useParams(); // Get the ID from the URL
-//     const { profiles, recipes } = data;
-
-//     // Find the correct profile by ID (if profiles is an array)
-//     const profile = profiles.find((p) => p.id === parseInt(id));
-
-//     if (!profile) {
-//         return <p className="text-center mt-32">Profile not found</p>;
-//     }
-
-//     return (
-//         <div className="my-32 grid grid-cols-12 gap-6">
-//             <div className="col-start-2 col-span-10">
-//                 <div className="grid grid-cols-12 gap-4">
-//                     {/* Profile Image */}
-//                     <div className="relative col-span-12 md:col-span-4 h-full">
-//                         <img
-//                             src={profile.profile_picture_url}
-//                             alt={profile.name}
-//                             className="rounded-lg h-96 object-cover w-full object-top"
-//                         />
-//                         <div className="absolute bottom-0 bg-green-300 w-full h-14 rounded-b-lg flex justify-center items-center">
-//                             <div className="text-center">
-//                                 <h4>Uploaded recipes</h4>
-//                                 <h4>{profile.recipes_count}</h4>
-//                             </div>
-//                         </div>
-//                     </div>
-
-//                     {/* Profile Info */}
-//                     <div className="col-span-12 md:col-span-8">
-//                         <div className="flex flex-col mb-6">
-//                             <div className="flex justify-between mb-6">
-//                                 <h1 className="text-4xl font-pacifico mb-6">
-//                                     {profile.first_name} {profile.last_name}
-//                                 </h1>
-
-//                                 <div className="flex flex-col justify-center text-sm text-gray-600">
-//                                     <h4 className="font-bold mb-2">
-//                                         {profile.followers_count} followers
-//                                     </h4>
-//                                     <Button size="small">Follow</Button>
-//                                 </div>
-//                             </div>
-//                             <p>{profile.bio}</p>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 {/* Recipes Heading */}
-//                 <div className="col-start-2 col-span-10 mt-20">
-//                     <HeadingWithLine text={`${profile.first_name}'s Recipes`} />
-//                 </div>
-
-//                 {/* Filters and Sort Menu */}
-//                 <div className="col-start-2 col-span-10 flex items-center justify-between mt-12 mb-8">
-//                     <FiltersMenu />
-//                     <SortMenu />
-//                 </div>
-
-//                 {/* Recipe Cards */}
-//                 <div className="col-start-2 col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
-//                     {recipes
-//                         .filter((recipe) => recipe.user_id === profile.id)
-//                         .map((recipe) => (
-//                             <RecipeCard
-//                                 key={recipe.id}
-//                                 image={recipe.image_url}
-//                                 dishName={recipe.title}
-//                                 categoryName={recipe.category}
-//                                 time={`${recipe.cooking_time_minutes} min`}
-//                                 authorName={`${profile.first_name} ${profile.last_name}`}
-//                                 rating={recipe.average_rating}
-//                                 reviews={recipe.review_count}
-//                                 commentsCount={recipe.comments_count}
-//                             />
-//                         ))}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default OtherProfilePage;
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -105,30 +10,30 @@ import PlaceholderProfileImage from "../assets/images/PlaceholderProfileImage.jp
 import { PeopleIcon } from "../assets/icons/PeopleIcon";
 
 function OtherProfilePage() {
-	const { id } = useParams(); // Get user ID from URL
+	const { id } = useParams();  // Hämta användar-ID från URL
 	const [profile, setProfile] = useState(null);
 	const [recipes, setRecipes] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
-
+    //Hämta profil och recept från API när komponenten laddas eller när `id` ändras
 	useEffect(() => {
 		const fetchProfileAndRecipes = async () => {
 			try {
 				setLoading(true);
 
-				// ✅ Fetch the user's profile
+				//Hämta användarens profil
 				const profileResponse = await axios.get(
 					`${import.meta.env.VITE_APP_BACKEND_URL}/user/${id}`
 				);
 				setProfile(profileResponse.data);
 
-				// ✅ Fetch the user's uploaded recipes
+				//  Hämta användarens uppladdade recept
 				const recipesResponse = await axios.get(
 					`${
 						import.meta.env.VITE_APP_BACKEND_URL
 					}/recipes?user_id=${id}`
 				);
-
+                // Filtrera recepten för att säkerställa att de tillhör den aktuella användaren
 				setRecipes(
 					Array.isArray(recipesResponse.data)
 						? recipesResponse.data.filter(
@@ -147,22 +52,22 @@ function OtherProfilePage() {
 		fetchProfileAndRecipes();
 	}, [id]);
 
-	// ✅ Handle loading state
+	// Visa laddningsindikator om data laddas
 	if (loading) {
 		return <p className="text-center mt-32">Loading...</p>;
 	}
 
-	// ✅ Handle error state
+	// Hantera felstatus och visa meddelande
 	if (error) {
 		return <p className="text-center mt-32 text-red-500">{error}</p>;
 	}
 
-	// ✅ Handle no profile found
+	// Visa meddelande om profilen inte hittas
 	if (!profile) {
 		return <p className="text-center mt-32">Profile not found</p>;
 	}
 
-	// ✅ Construct the correct profile picture URL
+	// Skapa korrekt URL för profilbilden eller använd en standardbild
 	const profileImageUrl = profile.profile_picture_url
 		? `${import.meta.env.VITE_APP_BACKEND_URL}${
 				profile.profile_picture_url
@@ -173,7 +78,7 @@ function OtherProfilePage() {
 		<div className="my-32 grid grid-cols-12 gap-6">
 			<div className="col-start-2 col-span-10">
 				<div className="grid grid-cols-12 gap-4">
-					{/* ✅ Profile Image */}
+					{/* Profil bild */}
 					<div className="relative col-span-12 md:col-span-4 h-full">
 						<img
 							src={profileImageUrl}
@@ -188,7 +93,7 @@ function OtherProfilePage() {
 						</div>
 					</div>
 
-					{/* ✅ Profile Info */}
+					{/* Profil Info */}
 					<div className="col-span-12 md:col-span-8 flex justify-between items-start">
 						<div>
 							<h1 className="text-4xl font-pacifico">
@@ -199,7 +104,7 @@ function OtherProfilePage() {
 							</p>
 						</div>
 
-						{/* ✅ Follow Button Positioned to the Right */}
+						{/* Följar knapp */}
 						<div className="flex flex-col items-end">
 							<div className="flex items-center text-sm text-gray-600 mb-2">
 								<PeopleIcon className="mr-2" />{" "}
@@ -212,23 +117,20 @@ function OtherProfilePage() {
 					</div>
 				</div>
 
-				{/* ✅ Recipes Heading */}
+				{/* Rubrik för användarens recept */}
 				<div className="mt-10">
 					<HeadingWithLine
 						text={`${profile.first_name}'s Recipes`}
 						className="mt-10"
 					/>
 				</div>
-
-				{/* <h2 className="text-3xl mt-10">{`${profile.first_name}'s Recipes`}</h2> */}
-
-				{/* ✅ Filters and Sort Menu */}
+				{/* Filtrering och sorterings Meny */}
 				<div className="flex items-center justify-between mt-12 mb-8">
 					<FiltersMenu />
 					<SortMenu />
 				</div>
 
-				{/* ✅ Recipes Grid */}
+				{/* Recept grid*/}
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{recipes.length > 0 ? (
 						recipes.map((recipe) => (

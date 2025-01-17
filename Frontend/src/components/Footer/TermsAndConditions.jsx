@@ -11,7 +11,7 @@ function TermsAndConditions() {
 					<HeadingWithLine text="Terms and Conditions" />
 				</div>
 
-				{/* Textinnehållet */}
+				{/* Vad som gäller när användaren accepterar cookies */}
 				<div className="col-start-2 col-span-10 bg-white shadow-md rounded-lg p-4 sm:p-6 md:p-8 lg:p-10">
 					{/* Sektion 1 */}
 					<section className="mb-6">

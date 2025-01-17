@@ -6,8 +6,8 @@ import RecipeCard from "./RecipeCard"; // Anta att RecipeCard är din komponent
 
 
 const RecipeCarousel = ({ recipes }) => {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [recipesPerPage, setRecipesPerPage] = useState(4);
+	const [currentIndex, setCurrentIndex] = useState(0); // State för att hålla reda på aktuell sida i karusellen
+	const [recipesPerPage, setRecipesPerPage] = useState(4); // State för att dynamiskt sätta antalet recept som visas per sida beroende på skärmstorlek
 
 	// Funktion för att uppdatera antalet kort baserat på skärmstorlek
 	const updateRecipesPerPage = () => {
@@ -31,22 +31,22 @@ const RecipeCarousel = ({ recipes }) => {
 		return () => window.removeEventListener("resize", updateRecipesPerPage);
 	}, []);
 
-	// Calculate total number of pages
+	// Beräkna totala antal sidor baserat på recept och recept per sida
 	const totalPages = Math.ceil(recipes.length / recipesPerPage);
 
-	// Get the recipes to display on the current page
+	// Filtrera ut recepten som ska visas på den aktuella sidan
 	const currentRecipes = recipes.slice(
 		currentIndex * recipesPerPage,
 		(currentIndex + 1) * recipesPerPage
 	);
 
-	// Handle navigation
+	// Gå till nästa sida
 	const nextPage = () => {
 		if (currentIndex < totalPages - 1) {
 			setCurrentIndex((prev) => prev + 1);
 		}
 	};
-
+    // Gå till föregående sida
 	const prevPage = () => {
 		if (currentIndex > 0) {
 			setCurrentIndex((prev) => prev - 1);
@@ -55,7 +55,7 @@ const RecipeCarousel = ({ recipes }) => {
 
 	return (
 		<div className="relative w-full grid grid-cols-12 items-center">
-			{/* Navigation Buttons */}
+			{/* Knapp för att navigera till föregående sida */}
 			<button
 				onClick={prevPage}
 				className="absolute left-2 md:left-8 lg:left-14 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
@@ -63,7 +63,7 @@ const RecipeCarousel = ({ recipes }) => {
 			>
 				<FontAwesomeIcon icon={faChevronLeft} />
 			</button>
-
+            {/* Receptkorten som visas i karusellen */}
 			<div className="col-start-2 col-span-10 flex items-center gap-2 overflow-hidden">
 				{currentRecipes.map((recipe, index) => (
 					<div
@@ -78,8 +78,7 @@ const RecipeCarousel = ({ recipes }) => {
 								: "sm:w-1/4"
 						} flex-shrink-0`}
 					>
-			
-
+						{/* Renderar receptkort */}
 						<RecipeCard
 							key={recipe.id}
 							id={recipe.id}
@@ -102,6 +101,7 @@ const RecipeCarousel = ({ recipes }) => {
 					</div>
 				))}
 			</div>
+			{/* Knapp för att navigera till nästa sida */}
 			<button
 				onClick={nextPage}
 				className="absolute right-2 md:right-8 lg:right-14 top-1/2 transform -translate-y-1/2 bg-whiteFull rounded-full shadow-md w-10 h-10 flex items-center justify-center z-10"
@@ -109,8 +109,7 @@ const RecipeCarousel = ({ recipes }) => {
 			>
 				<FontAwesomeIcon icon={faChevronRight} />
 			</button>
-
-			{/* Pagination Dots */}
+			{/* Paginering med prickar för att visa vilken sida som är aktiv */}
 			<div className="col-start-2 col-span-10 flex justify-center mt-8 space-x-2">
 				{Array.from({ length: totalPages }).map((_, index) => (
 					<button

@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+//Tar emot props  Rubrik, beskrivning, bild
 function Newsletter({ title, description, img }) {
 	const [isActive, setIsActive] = useState(false);
-
+/* Få en grön boarder runt kortet när man trycker på den */
 	return (
 		<div
 			className={`relative cursor-pointer transition-all duration-300
@@ -14,6 +15,7 @@ function Newsletter({ title, description, img }) {
       rounded-lg shadow-lg`}
 			onClick={() => setIsActive(!isActive)}
 		>
+			{/* Bild beskrivning och rubrik för korten */}
 			<img 
 				src={img}
 				alt="food"

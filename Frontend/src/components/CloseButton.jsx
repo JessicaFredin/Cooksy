@@ -13,6 +13,7 @@ function CloseButton({ size = "md", color = "#333", onClick }) {
 			onClick={onClick}
 			className={`flex items-center justify-center ${sizes[size]} text-${color}-500 hover:text-${color}-700 z-50 bg-green-100 rounded-full w-[35px] h-[35px]`}
 		>
+			{/* Kryss ikonen*/}
 			<Icon icon="ion:close" width="30" height="30" />
 		</button>
 	)

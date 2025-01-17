@@ -29,7 +29,7 @@ function Search({ onSearch }) {
 
 	return (
 		<div className="relative flex items-center h-[35px]">
-			{/* Sliding Input Field */}
+			{/* Sökbaren som dyker upp när man trycker på förstoringsglaset*/}
 			<form
 				onSubmit={handleSearch}
 				className={`absolute right-[30px] flex items-center h-[35px] bg-white shadow-md rounded-full transition-all duration-300 ${
@@ -47,7 +47,7 @@ function Search({ onSearch }) {
 							placeholder="Search for recipe..."
 							className="flex-1 h-full px-6 text-gray-400 placeholder-gray-200 focus:outline-none bg-transparent"
 						/>
-						{/* Inner Submit Button */}
+						{/* Sökknapp */}
 						<button
 							type="submit"
 							className="absolute right-2 w-[25px] h-[25px] bg-pink-500 rounded-full flex items-center justify-center shadow-sm"
@@ -61,7 +61,7 @@ function Search({ onSearch }) {
 				)}
 			</form>
 
-			{/* Outer Toggle Button */}
+			{/* Förstoringsglaset för att sökbaren ska dyka upp */}
 			<button
 				type="button"
 				onClick={toggleSearch}

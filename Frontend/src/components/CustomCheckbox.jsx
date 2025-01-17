@@ -5,8 +5,7 @@ import { CheckIcon } from "../assets/icons/CheckIcon";
 const CustomCheckbox = ({ labelUnit, labelIngredient, checked, onChange }) => {
 	// Lokal state för att hantera om checkboxen är markerad
 	const [isChecked, setIsChecked] = useState(checked || false);
-    {/*handleCheckboxChange - Hanterar klick på checkboxen,  Uppdaterar isChecked state, Kör onChange callback med den nya statusen (true/false).
-   */}
+    {/*handleCheckboxChange - Hanterar klick på checkboxen,  Uppdaterar isChecked state, Kör onChange callback med den nya statusen (true/false).*/}
 	const handleCheckboxChange = () => {
 		setIsChecked(!isChecked); // Byter status på checkboxen
 		if (onChange) onChange(!isChecked); // Om onChange är definierad, kör den med den nya statusen

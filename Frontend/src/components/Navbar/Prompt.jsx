@@ -13,16 +13,14 @@ import { Icon } from "@iconify/react";
 function Prompt({ setView }) {
 	return (
 		<div className="relative bg-white rounded-lg shadow-lg p-6 overflow-hidden w-[600px]">
-			{/* Top Curve */}
+			{/* component for log in popup*/}
 			<div className="absolute top-[0px] left-[0px]">
 				<TopCurve />
 			</div>
-
-			{/* Bottom Curve */}
 			<div className="absolute bottom-[0px] left-[0px]">
 				<BottomCurve />
 			</div>
-
+			{/* Information of want you get if you are loggd in*/}
 			<div className="flex items-center justify-center flex-col py-6">
 				<div className="flex items-center justify-center h-full w-full my-6">
 					<div className="text-left">
@@ -37,7 +35,6 @@ function Prompt({ setView }) {
 
 				<ul className="space-y-4 mb-6 w-[400px]">
 					<li className="flex items-start space-x-4">
-						{/* Circle Icon */}
 						<span className="bg-red-100 text-red-500 rounded-full flex items-center justify-center w-10 h-10 flex-shrink-0">
 							<FontAwesomeIcon
 								icon={faHeart}
@@ -45,7 +42,7 @@ function Prompt({ setView }) {
 							/>
 						</span>
 
-						{/* Text */}
+						{/* Information of want you get if you are loggd in */}
 						<span className="text-left">
 							Easily keep track of your recipes by having them all
 							in one place.
@@ -53,14 +50,13 @@ function Prompt({ setView }) {
 					</li>
 
 					<li className="flex items-start space-x-4">
-						{/* Circle Icon */}
 						<span className="bg-green-100 text-green-500 rounded-full flex items-center justify-center w-10 h-10 flex-shrink-0">
 							<FontAwesomeIcon
 								icon={faFolder}
 								className="w-5 h-5"
 							/>
 						</span>
-						{/* Text */}
+						{/* Information of want you get if you are loggd in */}
 						<span className="text-left">
 							Save your favorites in practical folders! Why not
 							create your own weekly menus?
@@ -68,21 +64,20 @@ function Prompt({ setView }) {
 					</li>
 
 					<li className="flex items-center space-x-4">
-						{/* Circle Icon */}
 						<span className="bg-blue-100 text-blue-500 rounded-full flex items-center justify-center w-10 h-10 flex-shrink-0">
 							<Icon
 								icon="feather:book-open"
 								className="w-5 h-5"
 							/>
 						</span>
-						{/* Text */}
+						{/* Information of want you get if you are loggd in */}
 						<span className="text-left">
 							Save articles with tips, tests, and interviews you
 							want to revisit!
 						</span>
 					</li>
 				</ul>
-
+				{/* Knappar för att logga in eller skapa konto */}
 				<div className="flex space-x-4 pb-8">
 					<Button size="medium" onClick={() => setView("LogIn")}>
 						Log in

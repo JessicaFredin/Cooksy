@@ -37,14 +37,14 @@ function MealPlanCard({
 	return (
 		<>
 			<div className="w-40 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col relative hover:shadow-xl transition-shadow duration-300">
-				{/* Image Section */}
+				{/* Bild på receptet */}
 				<div className="relative h-30">
 					<img
 						src={image}
 						alt={dishName}
 						className="w-full h-full object-cover"
 					/>
-					{/* Author Section */}
+					{/* Bild på den som har lagt upp receptet */}
 					<div className="relative">
 						<div className="absolute bottom-0 right-0 bg-green-500 text-black px-4 flex items-center w-[calc(100%-15%)] rounded-tl-lg">
 							<p className="text-xs flex-grow ">{authorName}</p>
@@ -59,7 +59,7 @@ function MealPlanCard({
 					</div>
 				</div>
 
-				{/* Content Section */}
+				{/* Titel på receptet */}
 				<div className="p-4 flex flex-col flex-grow">
 					<div className="h-10 mb-2">
 						<h3 className="text-sm text-gray-800 line-clamp-2">
@@ -68,10 +68,12 @@ function MealPlanCard({
 					</div>
 					<div className="flex justify-between items-center text-gray-600 mt-2">
 						<div className="flex items-center space-x-1">
+							{/* Vilken huvudingridient receptet har */}
 							<CategoryIcon />
 							<span className="text-xs">{categoryName}</span>
 						</div>
 						<div className="flex items-center space-x-1">
+							{/* tidslängden för receptet tillagning */}
 							<TimeIcon />
 							<span className="text-xs">{time}</span>
 						</div>
@@ -79,12 +81,14 @@ function MealPlanCard({
 					<div className="border-t border-gray-200 my-2"></div>
 					<div className="flex justify-between items-center">
 						<div className="flex items-center space-x-1">
+							{/* Antalet stjärner som receptet har */}
 							<StarRating totalStars={5} staticRating={rating} size="0.6rem" />
 							<span className="text-xs text-gray-600">
 								({reviews})
 							</span>
 						</div>
 						<div className="flex items-center space-x-1">
+							{/* Receptets komentarer och antalet */}
 							<CommentIcon />
 							<span className="text-xs text-gray-600">
 								{commentsCount}

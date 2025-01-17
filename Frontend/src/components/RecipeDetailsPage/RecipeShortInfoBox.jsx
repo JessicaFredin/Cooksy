@@ -23,7 +23,7 @@ function RecipeShortInfoBox({ category, cookingTime, ingredientsCount }) {
 	return (
 		<div className="grid grid-cols-3 gap-4">
 			<div className="flex flex-col items-center justify-center border-2 border-green-500 p-2 rounded-2xl">
-				{/* <img className="w-10 md:w-7 lg:w-10" src={icon}/> */}
+				{/* Infomarion om tid,huvudingridient och antalet ingridienser */}
 				{IconComponent && <IconComponent />}
 				<h4 className="md:text-sm lg:text-lg">{category}</h4>
 			</div>

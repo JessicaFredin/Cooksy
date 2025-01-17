@@ -13,7 +13,7 @@ function Cookies() {
         </div>
         </div>
 
-        {/* Intro paragraf */}
+        {/* Intro paragraf med sex sektioner på vanliga frågor om cookies och hemsidans användning av cookies*/}
         <div className="col-start-2 col-span-10 bg-white shadow-md rounded-lg p-4 sm:p-6 md:p-8 lg:p-10">
           <p className="text-black text-base sm:text-lg md:text-xl mb-6">
             This Cookies Policy explains how Cooksy uses cookies and similar tracking

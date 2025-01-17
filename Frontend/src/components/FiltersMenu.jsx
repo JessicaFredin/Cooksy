@@ -1,91 +1,120 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DropdownCategory from "./DropdownCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FilterIcon } from "../assets/icons/FilterIcon";
+import axios from "axios";
+// import { useRecipes } from "../contexts/RecipesContext";
 
 function FiltersMenu() {
 	const [isOpen, setIsOpen] = useState(false); // Anger om menyn är öppen eller inte.
 	const [isVisible, setIsVisible] = useState(false); // Styr om menyn ska animeras in/ut
-    // Data för filtreringskategorier och deras alternativ
-	const categories = [
-		{
-			title: "Calories (per portion)",
-			options: [
-				"0-100 kcal",
-				"100-200 kcal",
-				"200-400 kcal",
-				"400-600 kcal",
-				"600-800 kcal",
-				"800+ kcal",
-			],
-		},
-		{
-			title: "Time",
-			options: [
-				"0-30 min",
-				"31-60 min",
-				"61-90 min",
-				"91-120 min",
-				"121-150 min",
-				"150+ min",
-			],
-		},
-		{
-			title: "Meal Type",
-			options: ["Breakfast", "Lunch", "Dinner", "Snacks"],
-		},
-		{
-			title: "Diet",
-			options: ["Vegan", "Vegetarian", "Keto", "Paleo"],
-		},
-		{
-			title: "Protein Type",
-			options: [
-				"Chicken",
-				"Beef",
-				"Fish",
-				"Lentils",
-				"Seafood",
-				"Egg",
-				"Lamb",
-			],
-		},
-		{
-			title: "Recipes Without",
-			options: [
-				"Dairy",
-				"Eggs",
-				"Nuts",
-				"Gluten",
-				"Fish",
-				"Seeds",
-				"Flour",
-				"Milk",
-				"Cheese",
-				"Sugar",
-				"Soy",
-				"Cream",
-			],
-		},
-		{
-			title: "World Cuisine",
-			options: [
-				"Italian",
-				"Indian",
-				"Chinese",
-				"Mexican",
-				"Swedish",
-				"Asian",
-				"American",
-				"Middle Eastern",
-			],
-		},
-		{
-			title: "Ingredient",
-			options: ["Tomatoes", "Cheese", "Chicken", "Basil"],
-		},
-	];
+	const [categories, setCategories] = useState([]);
+	// const [selectedFilters, setSelectedFilters] = useState({});
+	// const [recipeCount, setRecipeCount] = useState(0);
+	// const { setFilteredRecipes } = useRecipes(); // ✅ Use global state
+
+	useEffect(() => {
+		const fetchFilters = async () => {
+			try {
+				const response = await axios.get(
+					`${import.meta.env.VITE_APP_BACKEND_URL}/filters`
+				);
+
+				const formattedCategories = Object.entries(response.data).map(
+					([title, options]) => ({
+						title,
+						options,
+					})
+				);
+				setCategories(formattedCategories);
+			} catch (error) {
+				console.error("Error fetching filters:", error);
+			}
+		};
+
+		fetchFilters();
+	}, []);
+
+	// // Data för filtreringskategorier och deras alternativ
+	// const categories = [
+	// 	{
+	// 		title: "Calories (per portion)",
+	// 		options: [
+	// 			"0-100 kcal",
+	// 			"100-200 kcal",
+	// 			"200-400 kcal",
+	// 			"400-600 kcal",
+	// 			"600-800 kcal",
+	// 			"800+ kcal",
+	// 		],
+	// 	},
+	// 	{
+	// 		title: "Time",
+	// 		options: [
+	// 			"0-30 min",
+	// 			"31-60 min",
+	// 			"61-90 min",
+	// 			"91-120 min",
+	// 			"121-150 min",
+	// 			"150+ min",
+	// 		],
+	// 	},
+	// 	{
+	// 		title: "Meal Type",
+	// 		options: ["Breakfast", "Lunch", "Dinner", "Snacks"],
+	// 	},
+	// 	{
+	// 		title: "Diet",
+	// 		options: ["Vegan", "Vegetarian", "Keto", "Paleo"],
+	// 	},
+	// 	{
+	// 		title: "Protein Type",
+	// 		options: [
+	// 			"Chicken",
+	// 			"Beef",
+	// 			"Fish",
+	// 			"Lentils",
+	// 			"Seafood",
+	// 			"Egg",
+	// 			"Lamb",
+	// 		],
+	// 	},
+	// 	{
+	// 		title: "Recipes Without",
+	// 		options: [
+	// 			"Dairy",
+	// 			"Eggs",
+	// 			"Nuts",
+	// 			"Gluten",
+	// 			"Fish",
+	// 			"Seeds",
+	// 			"Flour",
+	// 			"Milk",
+	// 			"Cheese",
+	// 			"Sugar",
+	// 			"Soy",
+	// 			"Cream",
+	// 		],
+	// 	},
+	// 	{
+	// 		title: "World Cuisine",
+	// 		options: [
+	// 			"Italian",
+	// 			"Indian",
+	// 			"Chinese",
+	// 			"Mexican",
+	// 			"Swedish",
+	// 			"Asian",
+	// 			"American",
+	// 			"Middle Eastern",
+	// 		],
+	// 	},
+	// 	{
+	// 		title: "Ingredient",
+	// 		options: ["Tomatoes", "Cheese", "Chicken", "Basil"],
+	// 	},
+	// ];
 
 	// Funtion för att öppna menyn
 	const openMenu = () => {
@@ -99,12 +128,42 @@ function FiltersMenu() {
 		setTimeout(() => setIsOpen(false), 300); // Väntar på animationen
 	};
 
+	// const handleFilterChange = async (category, option) => {
+	// 	console.log("here");
+	// 	const updatedFilters = { ...selectedFilters, [category]: option };
+	// 	setSelectedFilters(updatedFilters);
+
+	// 	try {
+	// 		const params = new URLSearchParams(updatedFilters).toString();
+	// 		console.log(params);
+	// 		const response = await axios.get(
+	// 			`${
+	// 				import.meta.env.VITE_APP_BACKEND_URL
+	// 			}/filters/recipes/count?${params}`
+	// 		);
+	// 		setRecipeCount(response.data.count);
+	// 	} catch (error) {
+	// 		console.error("Error fetching recipe count:", error);
+	// 	}
+	// };
+
+	const applyFilters = async () => {
+		try {
+			// const params = new URLSearchParams(selectedFilters).toString();
+			// const response = await axios.get(
+			// 	`${
+			// 		import.meta.env.VITE_APP_BACKEND_URL
+			// 	}/filters/recipes?${params}`
+			// );
+			// setFilteredRecipes(response.data);
+			closeMenu(); // Close filter menu after applying
+		} catch (error) {
+			console.error("Error applying filters:", error);
+		}
+	};
+
 	return (
-		<div
-			className={
-				isOpen ? "" : "h-auto overflow-auto"
-			}
-		>
+		<div className={isOpen ? "" : "h-auto overflow-auto"}>
 			{/* Knapp för att öppna filtret */}
 			<button
 				onClick={openMenu}
@@ -143,18 +202,31 @@ function FiltersMenu() {
 
 						{/* Renderar kategorier och deras alternativ */}
 						<div className="p-4">
-							{categories.map((category, index) => (
+							{/* {categories.map((category, index) => (
 								<DropdownCategory
 									key={index}
 									title={category.title}
 									options={category.options}
 									isLast={index === categories.length - 1}
 								/>
+							))} */}
+
+							{categories.map((category, index) => (
+								<DropdownCategory
+									key={index}
+									title={category.title}
+									options={category.options}
+									isLast={index === categories.length - 1}
+									// onSelect={handleFilterChange} // ✅ Pass the filter change handler
+								/>
 							))}
 
 							{/* Apply-knapp för att tillämpa filtren */}
 							<div className="mt-6">
-								<button className="w-full px-6 py-3 bg-pink-500 text-white font-semibold rounded-full flex items-center justify-center gap-2">
+								<button
+									onClick={applyFilters}
+									className="w-full px-6 py-3 bg-pink-500 text-white font-semibold rounded-full flex items-center justify-center gap-2"
+								>
 									85 recipes found
 									<FontAwesomeIcon icon={faArrowRight} />
 								</button>

@@ -54,7 +54,7 @@ function Contact() {
 
 	return (
 		<div className="bg-white min-h-screen sm:p-6 md:p-8 lg:p-12 grid grid-cols-12 gap-4">
-			{/* Rubrik och introduktion placerat i kolumn 2 */}
+			{/* Rubrik och introduktion placerat från kolumn 2 till 10*/}
 			<div className="col-start-2 col-span-10">
 				<div className="col-start-2 col-span-10">
 					<HeadingWithLine text="Contact" />
@@ -68,11 +68,11 @@ function Contact() {
 				</p>
 			</div>
 
-			{/* Formulär container centrerat med mx-auto */}
+			{/* Formulär container centreras på sidan */}
 			<div className="col-start-2 col-span-10 flex justify-center">
 				<div className="bg-white shadow-md rounded-lg p-4 sm:p-6 md:p-8 lg:p-10 w-full max-w-md sm:max-w-lg">
 					<form onSubmit={handleSubmit} className="space-y-6">
-						{/* Namnfält i grid */}
+						{/* För och efternamn fält */}
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div>
 								<label className="block text-black text-sm sm:text-base font-semibold mb-1">
@@ -116,7 +116,7 @@ function Contact() {
 							/>
 						</div>
 
-						{/* Subject */}
+						{/* Ämne */}
 						<div>
 							<label className="block text-black text-sm sm:text-base font-semibold mb-1">
 								Subject <span className="text-pink-400">*</span>
@@ -165,6 +165,7 @@ function Contact() {
 					</form>
 				</div>
 			</div>
+			{/* kontakt info om de vill maila */}
 			<div className="col-start-2 col-span-10 text-center mt-8">
 				<p className="text-black text-sm sm:text-base">
 					If your inquiry is urgent, please feel free to reach us by

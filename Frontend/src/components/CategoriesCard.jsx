@@ -11,7 +11,7 @@ function CategoriesCard({ img, title }) {
 					alt={title}
 					className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
 				/>
-				{/* Text overlay */}
+				{/* Rubriken för categorin */}
 				<div className="absolute inset-0 flex items-end justify-center">
 					<span className="text-lg font-semibold mb-4 bg-white py-1 px-10 rounded-full">
 						{title}

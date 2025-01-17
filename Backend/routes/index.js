@@ -9,6 +9,7 @@ import comments from "./comments.js";
 import search from "./search.js";
 import user from "./user.js"
 import top_contributors from "./top_contributors.js"
+import filters from "./filters.js"
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/comments", comments); // Comments routes
 app.use("/search", search); // Search routes
 app.use("/user", user); // User routes
 app.use("/top_contributors", top_contributors); // Top Contributors routes
+app.use("/filters", filters); // Filters routes
 
 
 // Example default route

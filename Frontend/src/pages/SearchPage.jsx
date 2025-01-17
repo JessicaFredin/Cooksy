@@ -9,21 +9,24 @@ import NoResultsImg from "../assets/images/NoResults.png";
 import GreenRing from "../assets/svg/GreenRing";
 import FiltersMenu from "../components/FiltersMenu";
 import SortMenu from "../components/SortMenu";
+import SearchField from "../components/SearchField";
 
 const SearchPage = () => {
+	//Hanterar sökresultat och laddningsstatus via SearchContext
 	const { searchResults, handleSearch, loading } = useSearch();
-	const [activeTab, setActiveTab] = useState("recipes");
-	const location = useLocation();
+	const [activeTab, setActiveTab] = useState("recipes"); // Aktiverad flik (standard: "recipes")
+	const location = useLocation(); // Hämtar aktuell URL och sökparametrar
 
+	//Hämta sökfrågan från URL
 	const searchParams = new URLSearchParams(location.search);
 	const query = searchParams.get("query");
-
+	//Utför en sökning när en ny sökfråga finns
 	useEffect(() => {
 		if (query) {
 			handleSearch(query); // Fetch search results
 		}
 	}, [query]);
-
+	//Hanterar rendering av sökresultat baserat på aktiv flik
 	const renderContent = () => {
 		const currentResults = searchResults[activeTab];
 		console.log(currentResults);
@@ -33,6 +36,7 @@ const SearchPage = () => {
 		}
 
 		if (!currentResults || currentResults.length === 0) {
+			// Om inga resultat hittas
 			return (
 				<div className="flex flex-col justify-center items-center">
 					<h3 className="text-center font-medium md:text-3xl font-pacifico m-16">
@@ -47,22 +51,11 @@ const SearchPage = () => {
 			);
 		}
 
-		// Render Recipes
+		// Rendera receptresultat
 		if (activeTab === "recipes") {
 			return (
 				<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
 					{currentResults.map((recipe) => (
-						// <RecipeCard
-						// 	key={recipe.id}
-						// 	image={recipe.image_url}
-						// 	dishName={recipe.title}
-						// 	categoryName={recipe.category}
-						// 	time={`${recipe.cooking_time_minutes} min`}
-						// 	rating={recipe.average_rating}
-						// 	reviews={recipe.review_count}
-						//   commentsCount={recipe.total_comments}
-						// />
-
 						<RecipeCard
 							key={recipe.id}
 							id={recipe.id}
@@ -87,7 +80,7 @@ const SearchPage = () => {
 			);
 		}
 
-		// Render Profiles
+		// Renderar Profiler
 		if (activeTab === "profiles") {
 			return (
 				<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-4">
@@ -108,13 +101,14 @@ const SearchPage = () => {
 			);
 		}
 
-		// Render Articles
+		//Rendera artiklar
 		if (activeTab === "articles") {
 			return (
 				<div className="space-y-6">
-					{currentResults.map((article) => (
+					{currentResults.map((article, index) => (
 						<Blogpost
-							key={article.id}
+							key={index}
+							id={article.id}
 							title={article.title}
 							description={article.description}
 							image={article.image_url}
@@ -128,7 +122,7 @@ const SearchPage = () => {
 
 	return (
 		<div className="grid grid-cols-12 gap-x-4 mt-32">
-			{/* Header */}
+			{/* Rubrik */}
 			<div className="col-start-2 col-span-10">
 				<HeadingWithLine text={`Results for "${query}"`} />
 			</div>
@@ -155,6 +149,9 @@ const SearchPage = () => {
 			{/* Filters */}
 			<div className="col-start-2 col-span-10 flex items-center justify-between mt-12 mb-8">
 				<FiltersMenu />
+				<div className="w-1/2">
+					<SearchField />
+				</div>
 				<SortMenu />
 			</div>
 

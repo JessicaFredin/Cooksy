@@ -11,7 +11,7 @@ const Comment = ({ comment, onReply }) => {
 	const [replyText, setReplyText] = useState(""); // Texten som skrivs in när användaren svarar
 	const [likes, setLikes] = useState(comment.likes_count); // Antal likes för kommentaren
 	const [dislikes, setDislikes] = useState(comment.dislikes_count); // Antal dislikes för kommentaren
-	const [isVoting, setIsVoting] = useState(false); // Prevent double voting
+	const [isVoting, setIsVoting] = useState(false); // Förhindra dubbelröstning
 
 	// Funktion för att hantera röstning på kommentarer.
 	const handleVote = async (voteType) => {
@@ -19,7 +19,7 @@ const Comment = ({ comment, onReply }) => {
 		setIsVoting(true);
 
 		try {
-			// Send the vote to the backend
+			// Skicka rösten till backend
 			const response = await axios.post(
 				`${import.meta.env.VITE_APP_BACKEND_URL}/comments/votes/${
 					comment.comment_id
@@ -28,17 +28,17 @@ const Comment = ({ comment, onReply }) => {
 				{ withCredentials: true }
 			);
 
-			// Extract the updated likes and dislikes from the response
+			// Extrahera uppdaterade gilla- och ogilla-markeringar från svaret
 			const { likes: updatedLikes, dislikes: updatedDislikes } =
 				response.data;
 
-			// Update state with the new values
+			// Uppdatera tillstånd med de nya värdena
 			setLikes(updatedLikes);
 			setDislikes(updatedDislikes);
 		} catch (err) {
-			console.error("Error handling vote:", err); // Log any errors
+			console.error("Error handling vote:", err); 
 		} finally {
-			setIsVoting(false); // Enable voting again
+			setIsVoting(false); // Tillåta röstning
 		}
 	};
 

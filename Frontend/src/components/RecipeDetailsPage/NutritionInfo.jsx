@@ -1,4 +1,4 @@
-
+/* Data för fördelar som nutrienterna i receptet inehåller */
 function NutritionInfo(){
     const  nutritionData = [
           { name: "Protein", ingredient: "chicken", benefit: "Vital for muscle repair and overall body maintenance." },

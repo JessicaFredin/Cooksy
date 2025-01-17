@@ -19,11 +19,12 @@ function ProfileCard({
 	followers,
 }) {
 	const [isFollowing, setIsFollowing] = useState(false);
-
+    
+	// Funktion för att hantera följ-knappens klick
 	const handleFollowClick = () => {
 		setIsFollowing((prev) => !prev);
 	};
-
+    // Klasser och dimensioner beroende på storlek
 	const sizeClasses = {
 		medium: {
 			container: "w-64 h-96",
@@ -47,15 +48,17 @@ function ProfileCard({
 			buttonSize: "large",
 		},
 	};
-
+    // Hämta rätt klass baserat på den angivna storleken
 	const sizeClass = sizeClasses[size] || sizeClasses.medium;
 
 	return (
 		<div className="">
+			{/* Länk till användarens profilsida */}
 			<Link to={`/user/${id}`}>
 				<div
 					className={`bg-white rounded-lg flex flex-col items-center p-5 relative shadow-lg ${sizeClass.container}`}
 				>
+					{/* Visa topcontributor-ikoner endast för "large" och "xl"-storlekar */}
 					{size === "xl" && (
 						<div className="absolute -top-6 right-2 z-10">
 							<TopContributorOne />
@@ -71,6 +74,7 @@ function ProfileCard({
   <div
     className={`rounded-full overflow-hidden mb-4 z-10 ${sizeClass.profileImage}`}
   >
+	{/* Visa placeholder om profilbilden saknas */}
     <img
       src={profileImage || PlaceholderProfileImage}
       alt={`${name}'s profile`}
@@ -86,7 +90,7 @@ function ProfileCard({
     <p>{name}</p>
   </div>
 </div>
-
+                    {/* Info om recept och följare */}
 					<div className="space-y-2 mb-4 w-full px-4 mt-2">
 						<div
 							className={`flex items-center gap-2 ${sizeClass.iconText}`}
@@ -101,7 +105,7 @@ function ProfileCard({
 							{followers} followers
 						</div>
 					</div>
-
+					{/* Extra beskrivning endast för "xl"-storlek */}
 					{size === "xl" && (
 						<div className="bg-green-100 text-black p-4 w-full rounded-lg mb-4 max-h-[100px] min-h-[100px]">
 							Exploring new recipes is always an adventure, and I
@@ -109,11 +113,11 @@ function ProfileCard({
 							creations!
 						</div>
 					)}
-
+					{/* Följ-knapp */}
 					<div className="flex justify-end w-full mt-auto">
 						<Button
 							size={sizeClass.buttonSize}
-							variant={isFollowing ? "green" : "default"} // Använder variant
+							variant={isFollowing ? "green" : "default"} // Ändra knappens utseende beroende på om användaren följer
 							onClick={handleFollowClick}
 						>
 							{isFollowing ? "Following" : "Follow"}

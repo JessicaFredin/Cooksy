@@ -41,7 +41,7 @@ const MySavedRecipesFolderPage = () => {
 				{data.recipes.map((recipe, index) => (
 					<div key={index} className="flex justify-center">
 						<RecipeCard
-							image={recipe.img} // Importera eller använd relevant bild här.
+							image={recipe.img} 
 							dishName={recipe.name}
 							categoryName={recipe.category}
 							time={recipe.time}
